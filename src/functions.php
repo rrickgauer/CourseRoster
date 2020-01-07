@@ -212,20 +212,7 @@ function add_school_forms_submission($name, $state, $city, $website)
   $result = $pdo->exec($sql);
 }
 
-// prints out all the school names
-function printSchoolListNames()
-{
-  $pdo = dbConnect();
 
-  $sql = "SELECT SchoolID, Name FROM School ORDER BY Name";
-  $result = $pdo->query($sql);
-
-  while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-    $schoolID = $row['SchoolID'];
-    $name = $row['Name'];
-    echo "<a href=\"school.php?sid=$schoolID\" class=\"list-group-item\"><b>$name</b></a>";
-  }
-}
 
 // searches for a school
 function schoolSearchString($items)

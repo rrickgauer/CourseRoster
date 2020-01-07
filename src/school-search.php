@@ -14,20 +14,9 @@
             <input class="form-control" id="myInput" type="text" placeholder="Search.." autofocus><br>
 
             <div class="list-group" id="myList">
-                <?php printSchoolListNames(); ?>
+
             </div>
 
         </div>
     </body>
 </html>
-
-<script>
-$(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myList a").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
-</script>
