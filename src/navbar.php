@@ -1,32 +1,24 @@
-<nav class="navbar navbar-default custom-font" style="background-color: #0099ff">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" id="navbar-white" class="navbar-toggle blue-button" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand blue-button" href="courses.php">Course Roster</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a class="blue-button" href="student-search.php">Students</a></li>
-        <li><a class="blue-button" href="classes.php">Your courses</a></li>
-        <li><a class="blue-button" href="following.php">Following</a></li>
-      </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-      <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown text-white">
-          <a class="dropdown-toggle blue-button" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-              <li><a style="color:black" href="account-info.php">Settings</a></li>
-              <li><a style="color:black" href="about.php">About</a></li>
-              <li><a style="color:black" href="contact-us.php">Contact us</a></li>
-              <li><a style="color:black" href="logout.php">Logout</a></li>
-          </ul>
-        </li>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" href="classes.php">Roster</a></li>
+      <li class="nav-item"><a class="nav-link" href="courses.php">Course Search</a></li>
+      <li class="nav-item"><a class="nav-link" href="following.php">Following</a></li>
+      <li class="nav-item"><a class="nav-link" href="student-search.php">Students</a></li>
 
-      </ul>
-    </div>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="account-info.php">Settings</a>
+          <a class="dropdown-item" href="logout.php">Logout</a>
+        </div>
+      </li>
+
+
+    </ul>
   </div>
 </nav>

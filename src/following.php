@@ -2,20 +2,21 @@
 <?php include('functions.php'); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <?php include('head.php'); ?>
-    <title>Following</title>
-  </head>
-  <body>
-    <div class="container">
 
-      <?php include('navbar.php'); ?>
+<head>
+  <?php include('head.php'); ?>
+  <title>Following</title>
+</head>
 
-      <?php
+<body>
+
+  <?php include('navbar.php'); ?>
+  <div class="container">
+
+    <?php
 
       // calculate how many people the student is following
         $pdo = dbConnect();
-
         $sql = "SELECT COUNT(*) FROM Student_Followers WHERE Student_Followers.FollowerID=" . $_SESSION['userID'];
 
         $result = $pdo->query($sql);
@@ -23,19 +24,14 @@
         $numFollowing = $result2[0];
       ?>
 
+    <h1 class="custom-font">People you are following
+      <span class="badge blue-background" id="following-badge"><?php echo $numFollowing; ?></span>
+    </h1>
 
 
-      <h1 class="custom-font">People you are following
-        <span class="badge blue-background" id="following-badge"><?php echo $numFollowing; ?></span>
-      </h1>
-
-
-      <div class="list-group">
+    <div class="list-group">
 
       <?php
-
-
-
         $sql = "SELECT Student_Followers.StudentID, First, Last FROM Student_Followers, Student WHERE Student.StudentID=Student_Followers.StudentID AND Student_Followers.FollowerID=" . $_SESSION['userID'];
 
         $result = $pdo->query($sql);
@@ -52,7 +48,8 @@
 
 
     </div>
-    </div>
+  </div>
 
-  </body>
+</body>
+
 </html>
