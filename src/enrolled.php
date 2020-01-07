@@ -1,5 +1,9 @@
-<?php session_start(); ?>
-<?php include('functions.php'); ?>
+<?php
+session_start();
+include('functions.php');
+$enrolledCourses = getEnrolledCourses($_SESSION['userID']);
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -13,35 +17,40 @@
   <?php include('navbar.php'); ?>
 
   <div class="container">
-    <?php
-    if (isset($_POST['classID']))
-        dropEnrolledCourse($_SESSION['userID'], $_POST['classID']);
-    ?>
 
     <p class="login-title"><span class="blue-font">Courses </span>you are enrolled in</p>
 
-    <div class="table-responsive">
-      <form class="form" action="enrolled.php" method="post">
-        <table class="table table-striped" id="student-schedule">
-          <thead>
-            <tr>
-              <th>Dept</th>
-              <th>Number</th>
-              <th>Title</th>
-              <th>Select</th>
-            </tr>
-          </thead>
+    <?php
+      while ($course = $enrolledCourses->fetch(PDO::FETCH_ASSOC)) {
+        printClassCard($course['cid'], $course['Dept'], $course['Number'], $course['Title'], $course['count']);
+      }
+    ?>
 
-          <tbody>
-            <?php printStudentCoursesTable($_SESSION['userID']); ?>
-          </tbody>
-
-        </table>
-        <button type="submit" class="blue-button btn btn-primary form-control">Drop class</button>
-      </form>
-      <br><br><br>
-    </div>
   </div>
+
+  <script>
+
+  $(document).ready(function() {
+    $(".card-enrolled").on("click", function() {
+      window.location.href = "class.php?classID=" + $(this).data("class-id");
+    });
+  });
+
+  </script>
+
 </body>
 
 </html>
+
+<?php
+
+function printClassCard($classID, $dept, $number, $title, $count) {
+  echo "<div class=\"card card-enrolled\" data-class-id=\"$classID\">
+    <div class=\"card-body\">
+      <h5>$dept-$number: $title</h5>
+      <p><span class=\"badge badge-secondary\">Students: $count</span></p>
+    </div>
+  </div>";
+}
+
+?>

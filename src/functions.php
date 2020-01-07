@@ -354,28 +354,22 @@ function printCourseStudents($classID)
     }
 }
 
-function printStudentCoursesTable($studentID)
-{
-    $pdo = dbConnect();
-    $sql = "select Enrolled.ClassID, Class.Dept, Class.Number, Class.Title from Enrolled, Class where Enrolled.ClassID=Class.ClassID and Enrolled.StudentID=".$studentID;
-    $result = $pdo->query($sql);
 
-    while ($row = $result->fetch(PDO::FETCH_ASSOC))
-    {
-      echo '<tr>';
-      echo '<td>' . $row['Dept'] . '</td>';
-      echo '<td>' . $row['Number'] . '</td>';
-      echo '<td>' . $row['Title'] . '</td>';
-      echo "<td><input type=\"radio\" name=\"classID\" value=\"" . $row['ClassID'] . "\"></td>";
-      echo '</tr>';
-    }
-}
 
 function getSchoolInfo($schoolID)
 {
     $pdo = dbConnect();
     $results = $pdo->query("SELECT * FROM School WHERE SchoolID=$schoolID;");
     return $results->fetch(PDO::FETCH_ASSOC);
+}
+
+function getEnrolledCourses($studentID) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Enrolled.ClassID as cid, (SELECT COUNT(Enrolled.StudentID) FROM Enrolled WHERE ClassID=cid) AS count, Class.Dept, Class.Number, Class.Title FROM Enrolled LEFT JOIN Class ON Enrolled.ClassID=Class.ClassID WHERE Enrolled.StudentID=:StudentID GROUP BY cid');
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':StudentID', $studentID, PDO::PARAM_INT);
+  $sql->execute();
+  return $sql;
 }
 
 
