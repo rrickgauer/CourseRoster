@@ -1,0 +1,144 @@
+.blue-button {
+  background-color: #0099ff !important;
+  color: white !important;
+}
+
+#navbar-white.blue-button span {
+  background-color: white !important;
+
+}
+
+.blue-button:hover {
+    background-color: #ff6600 !important;
+}
+
+.orange-hover:hover {
+  background-color: #ff6600 !important;
+}
+
+.blue-background {
+  background-color: #0099ff !important;
+  color: white !important;
+}
+
+#following-badge {
+  font-size: 25px;
+}
+
+#current-roster.h3 {
+  padding: 0;
+  margin: 0;
+}
+
+
+.student-search-results-border {
+  border-top: 1px solid #000 !important;
+  font-size: 16px;
+  padding: 10px 10px 10px 10px;
+
+}
+
+.student-search-results-border:hover {
+  background-color: #d9d9d9;
+}
+
+span.email-text-right {
+  text-align: right !important;
+}
+
+
+@media screen and (min-width: 600px) {
+  #login-space-above {
+    margin-top: 15%;
+  }
+}
+
+@font-face {
+  font-family: customFont;
+  src: url("fonts/Simply-Rounded.ttf");
+}
+
+h1.custom-font {
+  font-size: 45px;
+  font-family: customFont;
+}
+
+.custom-font {
+  font-family: customFont;
+}
+
+.navbar-default {
+  background-color: white;
+  background-image: none;
+  background-repeat: no-repeat;
+ }
+
+ b.black {
+   color: white;
+ }
+
+span.blue-font {
+  color: #0099ff;
+}
+
+span.orange-font {
+  color: #ff6600;
+}
+
+.login-title {
+  font-size: 45px;
+  font-family: customFont;
+}
+
+.login-title-large {
+  font-size: 60px;
+  font-family: customFont;
+}
+
+.button-enroll {
+  display: inline-block;
+  background-color: #ff6600 !important;
+  border: none;
+  color: #FFFFFF !important;
+  text-align: center;
+  font-size: 20px !important;
+  font-family: customFont !important;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button-enroll span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button-enroll span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button-enroll:hover span {
+  padding-right: 25px;
+}
+
+.button-enroll:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+#profile-pic {
+  width: 300px;
+  height: 300px;
+}
+
+#about-text {
+    font-size: 20px;
+}
