@@ -51,7 +51,7 @@
           $_SESSION['userID'] = $studentID;
 
           // load enrolled page
-          header("Location: school-search.php");
+          header("Location: courses.php");
 
         }
       ?>

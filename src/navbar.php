@@ -6,7 +6,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand blue-button" href="school-search.php">Course Roster</a>
+      <a class="navbar-brand blue-button" href="courses.php">Course Roster</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
