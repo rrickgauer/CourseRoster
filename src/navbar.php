@@ -5,8 +5,8 @@
 
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" href="classes.php">Roster</a></li>
-      <li class="nav-item"><a class="nav-link" href="courses.php">Course Search</a></li>
+      <li class="nav-item"><a class="nav-link" href="enrolled.php">Roster</a></li>
+      <li class="nav-item"><a class="nav-link" href="course-search.php">Course Search</a></li>
       <li class="nav-item"><a class="nav-link" href="following.php">Following</a></li>
       <li class="nav-item"><a class="nav-link" href="student-search.php">Students</a></li>
 

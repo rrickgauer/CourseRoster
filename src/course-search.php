@@ -1,10 +1,11 @@
 <?php session_start(); ?>
+<?php include('functions.php'); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
   <?php include('head.php'); ?>
-  <title>Courses - Course Roster</title>
+  <title>Course search</title>
 </head>
 
 <body>
@@ -12,11 +13,10 @@
   <?php include('navbar.php'); ?>
 
   <div class="container">
+    <h1>Course search</h1>
 
-    <h1 class="custom-font">Courses</h1>
 
   </div>
-
 </body>
 
 </html>

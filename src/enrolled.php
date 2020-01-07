@@ -1,88 +1,47 @@
 <?php session_start(); ?>
+<?php include('functions.php'); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <?php include('head.php'); ?>
-    <title>Find a course</title>
-  </head>
-  <body>
-    <div class="container">
-      <?php include('navbar.php'); ?>
 
-      <h1 class="custom-font">Find a course</h1>
+<head>
+  <?php include('head.php'); ?>
+  <title>Your classes</title>
+</head>
 
-      <form class="form-inline" action="enrolled.php" method="post">
+<body>
 
-        <div class="form-group">
-          <label for="school">School:</label>
-          <select name="school" id="school" class="form-control">
+  <?php include('navbar.php'); ?>
 
-            <?php
-              include('functions.php');
-              $pdo = dbConnect();
-              $sql = "SELECT SchoolID, Name from School ORDER BY Name;";
-              $result = $pdo->query($sql);
+  <div class="container">
+    <?php
+    if (isset($_POST['classID']))
+        dropEnrolledCourse($_SESSION['userID'], $_POST['classID']);
+    ?>
 
-              while($row = $result->fetch(PDO::FETCH_ASSOC))
-              {
-                echo "<option value=\"".$row['SchoolID']."\" class=\"form-control\">".$row['Name']."</option>";
-              }
-            ?>
-          </select>
-        </div>
+    <p class="login-title"><span class="blue-font">Courses </span>you are enrolled in</p>
 
-        <div class="form-group">
-          <label for="dept">Department:</label>
-          <select class="form-control" name="dept" id="dept">
-            <?php
-              $sql = "SELECT DISTINCT Dept from Class ORDER BY Dept;";
-              $result = $pdo->query($sql);
+    <div class="table-responsive">
+      <form class="form" action="enrolled.php" method="post">
+        <table class="table table-striped" id="student-schedule">
+          <thead>
+            <tr>
+              <th>Dept</th>
+              <th>Number</th>
+              <th>Title</th>
+              <th>Select</th>
+            </tr>
+          </thead>
 
-              while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                echo "<option value=\"".$row['Dept']."\">".$row['Dept']."</option>";
-              }
+          <tbody>
+            <?php printStudentCoursesTable($_SESSION['userID']); ?>
+          </tbody>
 
-            ?>
-          </select>
-        </div>
-
-        <input type="submit" value="Submit" class="form-control btn blue-button">
-      </form><br>
-
-
-
-      <div class="list-group">
-        <?php
-          if (isset($_POST['dept']) && isset($_POST['school']))
-          {
-            $dept = $_POST['dept'];
-            $schoolID = $_POST['school'];
-            $sql = "SELECT Class.ClassID, Dept, Number, Title, COUNT(Enrolled.ClassID) AS Count FROM Class LEFT JOIN Enrolled ON Class.ClassID=Enrolled.ClassID WHERE Dept=\"$dept\" AND SchoolID=$schoolID GROUP BY Class.ClassID";
-
-            $result = $pdo->query($sql);
-
-            echo "<h2 class=\"custom-font\">$dept courses</h2>";
-
-            // print the list of classes in the selected department
-            while($row = $result->fetch(PDO::FETCH_ASSOC))
-            {
-              $id = $row['ClassID'];
-              $title = $row['Title'];
-              $dept = $row['Dept'];
-              $number = $row['Number'];
-
-              $item = getCourseListItem($row['ClassID'], $row['Dept'], $row['Number'], $row['Title'], $row['Count']);
-              echo $item;
-            }
-
-            // link to submit a new course not on the website
-            echo "<br><p class=\"text-center\">Don't see your course here? Submit a <a href=\"new-class.php\"> new course</a></p>";
-          }
-        ?>
-
-
-      </div>
-
+        </table>
+        <button type="submit" class="blue-button btn btn-primary form-control">Drop class</button>
+      </form>
+      <br><br><br>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
