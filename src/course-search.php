@@ -14,7 +14,7 @@
   <?php include('navbar.php'); ?>
 
   <div class="container">
-    <h1>Course search</h1>
+    <h1 class="custom-font">Course search</h1>
 
     <!-- dept select -->
     <select class="form-control" name="dept" id="dept-select">

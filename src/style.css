@@ -67,12 +67,6 @@ h1.custom-font {
   font-family: customFont;
 }
 
-.navbar-default {
-  background-color: white;
-  background-image: none;
-  background-repeat: no-repeat;
- }
-
  b.black {
    color: white;
  }
@@ -156,4 +150,34 @@ span.orange-font {
 #classes-section .card-body {
   padding-top: 0;
   padding-bottom: 0;
+}
+
+#navbar {
+  background-color: #0099ff;
+}
+
+#navbar li a {
+  color: white;
+  font-family: customFont;
+  display: block;
+}
+
+#navbar li {
+  display: block;
+}
+
+
+
+#navbar button {
+  6
+  color: white;
+}
+
+#navbar li:hover,
+#navbar li.selected {
+  background-color: #ff6600;
+}
+
+#navbar a.dropdown-item {
+  color: black;
 }

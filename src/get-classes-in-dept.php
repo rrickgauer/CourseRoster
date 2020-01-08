@@ -18,9 +18,6 @@ while ($class = $classes->fetch(PDO::FETCH_ASSOC)) {
 echo '</div>';
 
 
-
-
-
 // functions
 function printCard($class) {
   $classID = $class['cid'];
