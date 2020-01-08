@@ -137,20 +137,23 @@ span.orange-font {
     font-size: 20px;
 }
 
-#classes-section .card {
+
+.class-card {
   margin: 20px;
+
 }
 
-#classes-section .card-header,
-#classes-section .card-footer {
+.class-card .card-header,
+.class-card .card-footer {
   background-color: inherit;
   border: 0;
 }
 
-#classes-section .card-body {
+.class-card .card-body {
   padding-top: 0;
   padding-bottom: 0;
 }
+
 
 #navbar {
   background-color: #0099ff;

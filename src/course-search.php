@@ -26,6 +26,7 @@
       ?>
     </select>
 
+    <!-- get-classes-in-dept.php -->
     <div id="classes-section"></div>
 
   </div>

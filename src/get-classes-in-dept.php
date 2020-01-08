@@ -26,7 +26,7 @@ function printCard($class) {
   $title = $class['Title'];
   $count = $class['enrollmentCount'];
 
-  echo "<div class=\"card\" data-class-id=\"$classID\" onresize=\"getSize()\">
+  echo "<div class=\"card class-card\" data-class-id=\"$classID\" onresize=\"getSize()\">
           <div class=\"card-header\">
             <h3>$dept-$number</h3>
           </div>
@@ -36,7 +36,6 @@ function printCard($class) {
           <div class=\"card-footer\">
             <span class=\"badge badge-primary\"><i class='bx bxs-user' ></i> $count</span>
             <a href=\"class.php?classID=$classID\" class=\"float-right\"><i class='bx bx-link-external' ></i></a>
-
           </div>
     </div>";
 }
