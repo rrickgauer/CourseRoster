@@ -21,13 +21,47 @@
       <input type="text" class="form-control" id="student-search-input" autofocus placeholder="Enter name">
     </div>
 
-
-
-
-
+    <!-- get-students-from-search.php -->
+    <div id="student-search-results"></div>
 
 
   </div>
+
+
+  <script>
+    $(document).ready(function() {
+      $("#student-search-input").on("keyup", studentSearch);
+    });
+
+
+    function studentSearch() {
+
+      var query = $("#student-search-input").val();
+      if (query.length >= 2) {
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var e = this.responseText;
+            $("#student-search-results").html(e);
+          }
+        };
+
+        var link = 'get-students-from-search.php?query=' + query;
+        xhttp.open("GET", link, true);
+        xhttp.send();
+      }
+
+      else {
+        $("#student-search-results").html('');
+      }
+    }
+  </script>
+
+
+
+
+
 </body>
 
 </html>

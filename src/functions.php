@@ -378,6 +378,30 @@ function getClassesInDept($dept) {
   return $sql;
 }
 
+function searchForStudents($query) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Student.StudentID, Student.First, Student.Last, Student.Email FROM Student WHERE Student.First LIKE :first OR Student.Last LIKE :last');
+
+  $first = "%$query%";
+  $first = filter_var($first, FILTER_SANITIZE_STRING);
+  $sql->bindValue(':first', $first, PDO::PARAM_STR);
+
+  $last = "%$query%";
+  $last = filter_var($last, FILTER_SANITIZE_STRING);
+  $sql->bindValue(':last', $last, PDO::PARAM_STR);
+
+  $sql->execute();
+  return $sql;
+}
+
+function getStudentCard($studentID, $first, $last, $email) {
+  return "<div class=\"card\" data-student-id=\"$studentID\">
+          <div class=\"card-body\">
+            <h3>$first $last</h3>
+            <p>$email</p>
+          </div>
+        </div>";
+}
 
 
 
