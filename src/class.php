@@ -3,6 +3,7 @@
   if (!isset($_GET['classID'])) header("Location: school-search.php");
   include('functions.php');
   $class = getCourseInformation($_GET['classID']);
+  $enrolledStudents = getStudentsEnrolledInClass($_GET['classID']);
 ?>
 
 <!DOCTYPE html>
@@ -38,20 +39,54 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="panel blue-background">
-        <div class="panel-heading">
-          <h4 class="custom-font">Current roster</h4>
-        </div>
-        <div class="list-group">
 
-          <?php printCourseStudents($_GET['classID']); ?>
+     <table class="table table-sm table-hover">
+       <thead>
+         <tr>
+           <th>First</th>
+           <th>Last</th>
+           <th>Email</th>
+         </tr>
+       </thead>
 
-        </div>
-      </div>
-    </div>
+       <tbody>
+
+         <?php
+
+         while ($student = $enrolledStudents->fetch(PDO::FETCH_ASSOC)) {
+           $studentID = $student['StudentID'];
+           $first = $student['First'];
+           $last = $student['Last'];
+           $email = $student['Email'];
+
+           echo "<tr data-student-id=\"$studentID\">";
+           echo "<td>$first</td>";
+           echo "<td>$last</td>";
+           echo "<td>$email</td>";
+           echo '</tr>';
+         }
+         ?>
+       </tbody>
+     </table>
+
+
+
 
   </div>
+
+  <script>
+
+  $(document).ready(function() {
+    $("tr").on("click", function() {
+      window.location.href = 'student.php?studentID=' + $(this).data("student-id");
+    });
+  });
+
+  </script>
+
+
+
+
 </body>
 
 </html>

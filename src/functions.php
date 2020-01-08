@@ -335,23 +335,13 @@ function getStudentID($email)
     return $row['StudentID'];
 }
 
-function printCourseStudents($classID)
-{
-    $pdo = dbConnect();
-
-    $classID = $_GET['classID'];
-    $sql = "SELECT Student.StudentID, First, Last FROM Student, Enrolled WHERE Student.StudentID=Enrolled.StudentID AND Enrolled.ClassID=$classID";
-
-    $result = $pdo->query($sql);
-
-    while($row = $result->fetch(PDO::FETCH_ASSOC))
-    {
-      $studentID = $row['StudentID'];
-      $first = $row['First'];
-      $last = $row['Last'];
-
-      echo "<a href=\"student.php?studentID=$studentID\" class=\"list-group-item\"><b>$first $last</b></a>";
-    }
+function getStudentsEnrolledInClass($classID) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Student.StudentID, Student.First, Student.Last, Student.Email FROM Student WHERE Student.StudentID IN (SELECT Enrolled.StudentID FROM Enrolled WHERE Enrolled.ClassID=:classID) ORDER BY Last ASC');
+  $classID = filter_var($classID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':classID', $classID, PDO::PARAM_INT);
+  $sql->execute();
+  return $sql;
 }
 
 
