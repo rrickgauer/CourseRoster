@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="css/select2-bootstrap4.css" />
 
 <!-- boxicons -->
-<script src="https://unpkg.com/boxicons@latest/dist/boxicons.js"></script>
+<link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.4/css/boxicons.min.css' rel='stylesheet'>
 
 <!-- my css -->
 <link rel="stylesheet" type="text/css" href="style.css" />

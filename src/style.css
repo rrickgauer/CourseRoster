@@ -142,3 +142,18 @@ span.orange-font {
 #about-text {
     font-size: 20px;
 }
+
+#classes-section .card {
+  margin: 20px;
+}
+
+#classes-section .card-header,
+#classes-section .card-footer {
+  background-color: inherit;
+  border: 0;
+}
+
+#classes-section .card-body {
+  padding-top: 0;
+  padding-bottom: 0;
+}

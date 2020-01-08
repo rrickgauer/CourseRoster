@@ -37,8 +37,8 @@ function printCard($class) {
             <h5>$title</h5>
           </div>
           <div class=\"card-footer\">
-            <span class=\"badge badge-primary\">$count</span>
-            <a href=\"class.php?classID=$classID\" class=\"float-right\"><box-icon name='link-external'></box-icon></a>
+            <span class=\"badge badge-primary\"><i class='bx bxs-user' ></i> $count</span>
+            <a href=\"class.php?classID=$classID\" class=\"float-right\"><i class='bx bx-link-external' ></i></a>
 
           </div>
     </div>";
