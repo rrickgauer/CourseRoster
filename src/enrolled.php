@@ -21,21 +21,14 @@ $enrolledCourses = getEnrolledCourses($_SESSION['userID']);
     <p class="login-title"><span class="blue-font">Courses </span>you are enrolled in</p>
 
     <div class="card-deck">
-
     <?php
-
       $count = 0;
-
       while ($course = $enrolledCourses->fetch(PDO::FETCH_ASSOC)) {
-
         if ($count == 3) {
           echo '</div><div class="card-deck">';
           $count = 0;
         }
-
-
         printClassCard($course['cid'], $course['Dept'], $course['Number'], $course['Title'], $course['count']);
-
         $count++;
       }
     ?>
@@ -58,7 +51,7 @@ function printClassCard($classID, $dept, $number, $title, $count) {
     <h5>$title</h5>
    </div>
     <div class=\"card-footer\">
-      <span class=\"badge badge-primary\"><i class='bx bxs-user' ></i> $count</span>
+      <span class=\"badge badge-orange\"><i class='bx bxs-user' ></i> $count</span>
       <a href=\"class.php?classID=$classID\" class=\"float-right\"><i class='bx bx-link-external' ></i></a>
     </div>
   </div>";

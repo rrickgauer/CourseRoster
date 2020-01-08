@@ -140,7 +140,10 @@ span.orange-font {
 
 .class-card {
   margin: 20px;
+}
 
+.class-card .card-header {
+  font-family: customFont;
 }
 
 .class-card .card-header,
@@ -152,6 +155,16 @@ span.orange-font {
 .class-card .card-body {
   padding-top: 0;
   padding-bottom: 0;
+  color: #666666;
+}
+
+.badge-primary {
+  background-color: #0099ff;
+}
+
+.badge-orange {
+  background-color: #ff6600;
+  color: white;
 }
 
 
@@ -172,7 +185,6 @@ span.orange-font {
 
 
 #navbar button {
-  6
   color: white;
 }
 
