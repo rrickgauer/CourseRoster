@@ -23,8 +23,6 @@
 
     <!-- get-students-from-search.php -->
     <div id="student-search-results"></div>
-
-
   </div>
 
 
@@ -32,7 +30,6 @@
     $(document).ready(function() {
       $("#student-search-input").on("keyup", studentSearch);
     });
-
 
     function studentSearch() {
 
@@ -56,12 +53,13 @@
         $("#student-search-results").html('');
       }
     }
+
+    function gotoStudentPage(studentCard) {
+      var studentID = $(studentCard).data("student-id");
+      window.location.href = 'student.php?studentID=' + studentID;
+
+    }
   </script>
-
-
-
-
-
 </body>
 
 </html>

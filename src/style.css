@@ -71,6 +71,10 @@ h1.custom-font {
    color: white;
  }
 
+.blue-font {
+  color: #0099ff;
+}
+
 span.blue-font {
   color: #0099ff;
 }
@@ -182,8 +186,6 @@ span.orange-font {
   display: block;
 }
 
-
-
 #navbar button {
   color: white;
 }
@@ -195,4 +197,22 @@ span.orange-font {
 
 #navbar a.dropdown-item {
   color: black;
+}
+
+.student-card {
+  margin-top: 5px;
+}
+
+.student-card:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.student-card .card-body{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.student-card .card-body p {
+  margin-bottom: 5px;
 }
