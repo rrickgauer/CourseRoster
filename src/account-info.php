@@ -1,4 +1,13 @@
-<?php session_start(); ?>
+<?php
+session_start();
+include('functions.php');
+
+if (isset($_POST['first']) && isset($_POST['last']) && isset($_POST['email'])) {
+  $successfulUpdate = updateStudentInfo($_SESSION['userID'], $_POST['first'], $_POST['last'], $_POST['email']);
+}
+
+$student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -11,63 +20,55 @@
 
   <?php include('navbar.php'); ?>
   <div class="container">
-    <h1 class="custom-font">Your profile</h1>
+    <h1 class="custom-font text-center">Account settings</h1>
 
     <?php
-        include('db-info.php');
+    if (isset($successfulUpdate)) {
+      printUpdateAlert($successfulUpdate);
+    }
+    ?>
 
-        try {
-          $pdo = new PDO("mysql:host=$host;dbname=$dbName",$user,$password);
-          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    <form class="form form-compact" method="post">
 
-          $sql = "SELECT First, Last, Email FROM Student WHERE StudentID=".$_SESSION['userID'];
-          $result = $pdo->query($sql);
-          $userInfo = $result->fetch(PDO::FETCH_ASSOC);
-
-        } catch(PDOexception $e) {
-            echo "connection failed" . $e->getMessage();
-        }
-      ?>
-
-    <form class="form-horizontal" action="update-info.php" method="post">
       <div class="form-group">
-        <label class="control-label col-sm-1" for="first">First</label>
-        <div class="col-sm-11">
-          <input class="form-control" type="text" name="first" value="<?php echo $userInfo['First']; ?>">
-        </div>
+        <label for="first">First name</label>
+        <input type="text" class="form-control" name="first" id="first" placeholder="Enter first name" value="<?php echo $student['First']; ?>" required>
       </div>
 
       <div class="form-group">
-        <label class="control-label col-sm-1" for="last">Last</label>
-        <div class="col-sm-11">
-          <input class="form-control" type="text" name="last" value="<?php echo $userInfo['Last']; ?>">
-        </div>
+        <label for="last">Last name</label>
+        <input type="text" class="form-control" name="last" id="last" placeholder="Enter last name" value="<?php echo $student['Last']; ?>" required>
       </div>
 
       <div class="form-group">
-        <label class="control-label col-sm-1" for="email">Email</label>
-        <div class="col-sm-11">
-          <input class="form-control" type="email" name="email" value="<?php echo $userInfo['Email']; ?>">
-        </div>
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" value="<?php echo $student['Email']; ?>" required>
       </div>
 
-      <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-11">
-          <input type="submit" class="blue-button btn btn-primary" value="Save"><br><br>
-          <p><b>Update your </b><a href="update-password.php"><b>password</b></a></p>
-        </div>
-      </div>
+      <input type="submit" name="submit" value="Update" class="btn btn-primary float-right">
+      <p>Update your <a href="update-password.php">password</a></p>
     </form>
+
+
 
   </div>
   <script>
     $(document).ready(function() {
       $("#nav-item-more").toggleClass("active");
       $("#nav-item-settings").toggleClass("active");
+      $('.toast').toast('show');
     });
-
   </script>
 </body>
 
 </html>
+
+<?php
+function printUpdateAlert($successfulUpdate) {
+  if ($successfulUpdate == true) {
+    echo getAlert('Success!', 'success', 'Your information was updated successfully.');
+  } else {
+    echo getAlert('Error', 'danger', 'There was an error in updating your information.');
+  }
+}
+?>

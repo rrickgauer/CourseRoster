@@ -279,5 +279,29 @@ span.orange-font {
   padding: 0;
   margin-right: 20px;
   margin-left: 20px;
+}
 
+.btn-primary {
+  background-color: #0099ff;
+  border-color: #0099ff;
+}
+
+.btn-primary:hover {
+  background-color: #ff6600;
+  border-color: #ff6600;
+}
+
+.btn:focus,
+.btn-primary:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.form-group label {
+  font-weight: bold;
+}
+
+.form-compact {
+  padding-left: 150px;
+  padding-right: 150px;
 }
