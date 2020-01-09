@@ -46,14 +46,28 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
     <div class="tab-content" id="pills-tabContent">
 
+      <!-- enrolled courses -->
+      <div class="tab-pane fade show active" id="pills-courses" role="tabpanel" aria-labelledby="pills-courses-tab">
 
-      <div class="tab-pane fade show active" id="pills-courses" role="tabpanel" aria-labelledby="pills-home-tab">
-        <h3>Courses content</h3>
+        <?php
+        $enrolledCourses = getEnrolledCourses($_SESSION['userID']);
+        echo '<div class="card-deck">';
+        $count = 0;
+        while ($course = $enrolledCourses->fetch(PDO::FETCH_ASSOC)) {
+
+          if ($count == 3) {
+            echo '</div><div class="card-deck">';
+            $count = 0;
+          }
+          echo getClassCard($course['cid'], $course['Dept'], $course['Number'], $course['Title'], $course['count']);
+          $count++;
+        }
+
+        echo '</div>';
+        ?>
       </div>
 
-
-
-      <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-profile-tab">
+      <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
 
         <h3>Followers content</h3>
       </div>
@@ -61,7 +75,7 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
 
 
-      <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-contact-tab">
+      <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-following-tab">
 
         <h3>Following content</h3>
 
