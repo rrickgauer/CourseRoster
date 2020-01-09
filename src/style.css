@@ -5,11 +5,10 @@
 
 #navbar-white.blue-button span {
   background-color: white !important;
-
 }
 
 .blue-button:hover {
-    background-color: #ff6600 !important;
+  background-color: #ff6600 !important;
 }
 
 .orange-hover:hover {
@@ -30,12 +29,10 @@
   margin: 0;
 }
 
-
 .student-search-results-border {
   border-top: 1px solid #000 !important;
   font-size: 16px;
   padding: 10px 10px 10px 10px;
-
 }
 
 .student-search-results-border:hover {
@@ -45,7 +42,6 @@
 span.email-text-right {
   text-align: right !important;
 }
-
 
 @media screen and (min-width: 600px) {
   #login-space-above {
@@ -67,9 +63,9 @@ h1.custom-font {
   font-family: customFont;
 }
 
- b.black {
-   color: white;
- }
+b.black {
+  color: white;
+}
 
 .blue-font {
   color: #0099ff;
@@ -138,9 +134,8 @@ span.orange-font {
 }
 
 #about-text {
-    font-size: 20px;
+  font-size: 20px;
 }
-
 
 .class-card {
   margin: 20px;
@@ -170,7 +165,6 @@ span.orange-font {
   background-color: #ff6600;
   color: white;
 }
-
 
 #navbar {
   background-color: #0099ff;
@@ -208,7 +202,7 @@ span.orange-font {
   cursor: pointer;
 }
 
-.student-card .card-body{
+.student-card .card-body {
   padding-top: 10px;
   padding-bottom: 10px;
 }
