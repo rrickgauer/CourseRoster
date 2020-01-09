@@ -355,6 +355,24 @@ function getStudentInfo($studentID) {
   return $sql;
 }
 
+function getStudentFollowers($studentID) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Student.StudentID, Student.First, Student.Last, Student.Email from Student where Student.StudentID in (select Student_Followers.FollowerID from Student_Followers where Student_Followers.StudentID = :studentID)');
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+  $sql->execute();
+  return $sql;
+}
+
+function getStudentFollowing($studentID) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Student.StudentID, Student.First, Student.Last, Student.Email from Student where Student.StudentID in (select Student_Followers.StudentID from Student_Followers where Student_Followers.FollowerID = :studentID)');
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+  $sql->execute();
+  return $sql;
+}
+
 
 
 

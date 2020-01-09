@@ -69,7 +69,20 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
       <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
 
-        <h3>Followers content</h3>
+        <?php
+
+        $followers = getStudentFollowers($student['StudentID']);
+
+        while ($follower = $followers->fetch(PDO::FETCH_ASSOC)) {
+          echo getStudentCard($follower['StudentID'], $follower['First'], $follower['Last'], $follower['Email']);
+        }
+
+
+
+        ?>
+
+
+
       </div>
 
 
