@@ -373,6 +373,33 @@ function getStudentFollowing($studentID) {
   return $sql;
 }
 
+function updateStudentInfo($studentID, $first, $last, $email) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('UPDATE Student SET First=:first, Last=:last, Email=:email WHERE Student.StudentID=:studentID');
+
+  $first     = filter_var($first, FILTER_SANITIZE_STRING);
+  $last      = filter_var($last, FILTER_SANITIZE_STRING);
+  $email     = filter_var($email, FILTER_SANITIZE_STRING);
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+
+  $sql->bindParam(':first', $first, PDO::PARAM_STR);
+  $sql->bindParam(':last', $last, PDO::PARAM_STR);
+  $sql->bindParam(':email', $email, PDO::PARAM_STR);
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+
+  return $sql->execute();
+}
+
+function getAlert($heading = '', $type = 'success', $message = '') {
+  return "<div class=\"alert alert-$type alert-dismissible fade show\" role=\"alert\">
+    <strong>$heading </strong>
+    $message
+    <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+      <span aria-hidden=\"true\">&times;</span>
+    </button>
+  </div>";
+}
+
 
 
 
