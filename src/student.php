@@ -23,7 +23,7 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
 
     <div class="row">
       <div class="col-sm-12 col-md-10">
-        <h1><?php echo $student['First'] . ' ' . $student['Last']; ?></h1>
+        <h1 class="custom-font"><?php echo $student['First'] . ' ' . $student['Last']; ?></h1>
         <h5><?php echo $student['Email']; ?></h5>
         <p><i class='bx bx-chalkboard'></i> <?php echo $student['coursesCount']; ?></p>
       </div>
@@ -50,6 +50,11 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
       ?>
     </div>
   </div>
+<script>
+$(document).ready(function() {
+  $("#nav-item-students").toggleClass("active");
+});
 
+</script>
 </body>
 </html>

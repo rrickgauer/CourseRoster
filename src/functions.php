@@ -143,11 +143,12 @@ function printSchoolDepts($schoolID)
 
 function getCourseInformation($classID)
 {
-    $pdo = dbConnect();
-    $sql = "SELECT * FROM Class WHERE ClassID=\"$classID\"";
-    $result = $pdo->query($sql);
-    $class = $result->fetch(PDO::FETCH_ASSOC);
-    return $class;
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Class.ClassID, Class.Dept, Class.Number, Class.Title, count(Enrolled.StudentID) as count from Class left join Enrolled on Class.ClassID=Enrolled.ClassID where Class.ClassID=:classID GROUP by Class.ClassID');
+  $classID = filter_var($classID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':classID', $classID, PDO::PARAM_INT);
+  $sql->execute();
+  return $sql;
 }
 
 // searches for a student given user submitted keyword
@@ -183,7 +184,7 @@ function getStudentID($email)
 
 function getStudentsEnrolledInClass($classID) {
   $pdo = dbConnect();
-  $sql = $pdo->prepare('SELECT Student.StudentID, Student.First, Student.Last, Student.Email FROM Student WHERE Student.StudentID IN (SELECT Enrolled.StudentID FROM Enrolled WHERE Enrolled.ClassID=:classID) ORDER BY Last ASC');
+  $sql = $pdo->prepare('SELECT Student.StudentID, Student.First, Student.Last, Student.Email FROM Student WHERE Student.StudentID IN (SELECT Enrolled.StudentID FROM Enrolled WHERE Enrolled.ClassID=:classID) ORDER BY Last ASC, First ASC');
   $classID = filter_var($classID, FILTER_SANITIZE_NUMBER_INT);
   $sql->bindParam(':classID', $classID, PDO::PARAM_INT);
   $sql->execute();

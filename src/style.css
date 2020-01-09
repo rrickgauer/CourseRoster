@@ -1,5 +1,6 @@
 body {
   margin-bottom: 30px;
+  background-color: #ededed;
 }
 
 .blue-button {
@@ -148,7 +149,7 @@ span.orange-font {
 
 .class-card .card-header {
   font-family: customFont;
-  /* color: #0099ff; */
+  color: #0099ff;
 }
 
 .class-card .card-header,
@@ -174,6 +175,7 @@ span.orange-font {
 
 #navbar {
   background-color: #0099ff;
+  margin-bottom: 40px;
 }
 
 #navbar .navbar {
@@ -190,11 +192,6 @@ span.orange-font {
 #navbar li a {
   color: white;
   font-family: customFont;
-  /* display: block; */
-}
-
-#navbar li {
-  /* display: block; */
 }
 
 #navbar button {
@@ -207,10 +204,6 @@ span.orange-font {
 }
 
 #navbar .nav-link {
-  /* margin-top: 5px;
-  margin-bottom: 5px;
-  margin-right: 5px;
-  margin-left: 5px; */
   padding: 0;
   border-bottom: 5px solid;
   border-bottom-color: #0099ff;
@@ -236,6 +229,10 @@ span.orange-font {
   margin-top: 5px;
 }
 
+.student-card .header {
+  color: #0099ff;
+}
+
 .student-card:hover {
   background-color: #f2f2f2;
   cursor: pointer;
@@ -251,8 +248,7 @@ span.orange-font {
 }
 
 #home-summary {
-  margin: 20px;
-
+  margin: 0px 200px;
 }
 
 #home-summary .name {
@@ -280,7 +276,7 @@ span.orange-font {
 #home-content .nav-pills {
   margin-bottom: 20px;
   padding-top: 20px;
-  border-top: 1px solid #e6e6e6;
+  border-top: 1px solid #a6a6a6;
 }
 
 #home-content .nav-link {
