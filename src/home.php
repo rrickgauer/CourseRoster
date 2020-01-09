@@ -70,18 +70,34 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
         <?php
         $followers = getStudentFollowers($student['StudentID']);
+        echo '<div class="card-deck">';
+        $count = 0;
         while ($follower = $followers->fetch(PDO::FETCH_ASSOC)) {
+          if ($count == 3) {
+            echo '</div><div class="card-deck">';
+            $count = 0;
+          }
           echo getStudentCard($follower['StudentID'], $follower['First'], $follower['Last'], $follower['Email']);
+          $count++;
         }
+        echo '</div>';
         ?>
       </div>
 
       <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-following-tab">
         <?php
         $followings = getStudentFollowing($student['StudentID']);
+        echo '<div class="card-deck">';
+        $count = 0;
         while ($following = $followings->fetch(PDO::FETCH_ASSOC)) {
+          if ($count == 3) {
+            echo '</div><div class="card-deck">';
+            $count = 0;
+          }
           echo getStudentCard($following['StudentID'], $following['First'], $following['Last'], $following['Email']);
+          $count++;
         }
+        echo '</div>';
         ?>
 
       </div>
