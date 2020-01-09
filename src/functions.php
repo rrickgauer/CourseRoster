@@ -228,6 +228,31 @@ function searchForStudents($query) {
   return $sql;
 }
 
+
+function searchForStudentEnrolledCourses($studentID, $query) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Enrolled.ClassID as cid, (SELECT COUNT(Enrolled.StudentID) FROM Enrolled WHERE ClassID=cid) AS count, Class.Dept, Class.Number, Class.Title FROM Enrolled LEFT JOIN Class ON Enrolled.ClassID=Class.ClassID WHERE Enrolled.StudentID=:StudentID and (Class.Dept like :dept or Class.Title like :title) GROUP BY cid');
+
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindValue(':StudentID', $studentID, PDO::PARAM_INT);
+
+  $dept = "%$query%";
+  $dept = filter_var($dept, FILTER_SANITIZE_STRING);
+  $sql->bindValue(':dept', $dept, PDO::PARAM_STR);
+
+  $title = "%$query%";
+  $title = filter_var($title, FILTER_SANITIZE_STRING);
+  $sql->bindValue(':title', $title, PDO::PARAM_STR);
+
+  $sql->execute();
+  return $sql;
+}
+
+
+
+
+
+
 function getStudentCard($studentID, $first, $last, $email, $enrollmentCount, $followerCount) {
   return "<div class=\"card student-card\" data-student-id=\"$studentID\">
           <div class=\"card-header\">
@@ -365,6 +390,20 @@ function insertStudent($first, $last, $email, $password) {
 
 }
 
+function printClassCardDeck($cards) {
+  echo '<div class="card-deck">';
+
+  $count = 0;
+  while ($card = $cards->fetch(PDO::FETCH_ASSOC)) {
+    if ($count == 3) {
+      echo '</div><div class="card-deck">';
+      $count = 0;
+    }
+
+    echo getClassCard($card['cid'], $card['Dept'], $card['Number'], $card['Title'], $card['count']);
+    $count++;
+  }
+}
 
 
 

@@ -55,35 +55,34 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div role="separator" class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
+                <h6 class="dropdown-header">View</h6>
+                <a class="dropdown-item active" href="#">Card</a>
+                <a class="dropdown-item" href="#">Table</a>
               </div>
             </div>
           </div>
 
-          <?php
-            $enrolledCourses = getEnrolledCourses($_SESSION['userID']);
-            echo '<div class="card-deck">';
-            $count = 0;
-            while ($course = $enrolledCourses->fetch(PDO::FETCH_ASSOC)) {
-
-              if ($count == 3) {
-                echo '</div><div class="card-deck">';
-                $count = 0;
-              }
-              echo getClassCard($course['cid'], $course['Dept'], $course['Number'], $course['Title'], $course['count']);
-              $count++;
-            }
-
-            echo '</div>';
-          ?>
+          <div id="enrolled-courses-cards"></div>
         </div>
 
         <!-- followers -->
         <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class='bx bx-search'></i></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Search" id="followers-search-input">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
+              <div class="dropdown-menu">
+                <h6 class="dropdown-header">View</h6>
+                <a class="dropdown-item active" href="#">Card</a>
+                <a class="dropdown-item" href="#">Table</a>
+              </div>
+            </div>
+          </div>
+
           <?php
             $followers = getStudentFollowers($student['StudentID']);
             echo '<div class="card-deck">';
@@ -102,20 +101,36 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
         <!-- following -->
         <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-following-tab">
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class='bx bx-search'></i></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Search" id="following-search-input">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
+              <div class="dropdown-menu">
+                <h6 class="dropdown-header">View</h6>
+                <a class="dropdown-item active" href="#">Card</a>
+                <a class="dropdown-item" href="#">Table</a>
+              </div>
+            </div>
+          </div>
+
           <?php
-        $followings = getStudentFollowing($student['StudentID']);
-        echo '<div class="card-deck">';
-        $count = 0;
-        while ($following = $followings->fetch(PDO::FETCH_ASSOC)) {
-          if ($count == 3) {
-            echo '</div><div class="card-deck">';
-            $count = 0;
+          $followings = getStudentFollowing($student['StudentID']);
+          echo '<div class="card-deck">';
+          $count = 0;
+          while ($following = $followings->fetch(PDO::FETCH_ASSOC)) {
+            if ($count == 3) {
+              echo '</div><div class="card-deck">';
+              $count = 0;
+            }
+            echo getStudentCard($following['sid'], $following['First'], $following['Last'], $following['Email'], $following['enrollmentCount'], $student['followersCount']);
+            $count++;
           }
-          echo getStudentCard($following['sid'], $following['First'], $following['Last'], $following['Email'], $following['enrollmentCount'], $student['followersCount']);
-          $count++;
-        }
-        echo '</div>';
-        ?>
+          echo '</div>';
+          ?>
 
         </div>
       </div>
@@ -132,11 +147,31 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
   <script>
     $(document).ready(function() {
       $("#nav-item-home").toggleClass("active");
+      $("#enrolled-courses-search-input").on("keyup", filterEnrolledCourses);
+      filterEnrolledCourses();
     });
 
     function gotoStudentPage(studentCard) {
       var studentID = $(studentCard).data("student-id");
       window.location.href = 'student.php?studentID=' + studentID;
+    }
+
+    function filterEnrolledCourses() {
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var e = this.responseText;
+          $("#enrolled-courses-cards").html(e);
+        }
+      };
+
+      var listID = $("#todo-list-card").attr("data-listid");
+      var query = $("#enrolled-courses-search-input").val();
+      var link = 'get-user-courses-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query;
+
+      xhttp.open("GET", link, true);
+      xhttp.send();
     }
   </script>
 
