@@ -42,8 +42,6 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       </li>
     </ul>
 
-
-
     <div class="tab-content" id="pills-tabContent">
 
       <!-- enrolled courses -->
@@ -67,6 +65,7 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
         ?>
       </div>
 
+      <!-- followers -->
       <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
         <?php
         $followers = getStudentFollowers($student['StudentID']);
@@ -84,6 +83,7 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
         ?>
       </div>
 
+      <!-- following -->
       <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-following-tab">
         <?php
         $followings = getStudentFollowing($student['StudentID']);
@@ -116,6 +116,14 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
 
   </div>
+  <script>
+
+  function gotoStudentPage(studentCard) {
+    var studentID = $(studentCard).data("student-id");
+    window.location.href = 'student.php?studentID=' + studentID;
+  }
+
+  </script>
 
 </body>
 
