@@ -305,3 +305,37 @@ span.orange-font {
   padding-left: 150px;
   padding-right: 150px;
 }
+
+input.invalid,
+input.invalid:focus {
+  background-color: #ff8080
+}
+
+.new-password-group #new-password-2,
+.new-password-group #new-password-1,
+.new-password-group i {
+  display: inline;
+}
+
+.new-password-group {
+  width: 100%;
+}
+
+#old-password,
+#new-password-1,
+#new-password-2 {
+  width: 90%;
+}
+
+.new-password-group .password-status {
+  font-size: 20px;
+  width: 10%;
+}
+
+.password-status .bxs-check-circle {
+  color: #4dff4d;
+}
+
+.password-status .bxs-error {
+  color: #ff8080;
+}

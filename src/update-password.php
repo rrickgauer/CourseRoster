@@ -2,44 +2,80 @@
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <?php include('head.php'); ?>
-    <title>Update password</title>
-  </head>
-  <body>
-    <div class="container">
-      <?php include('navbar.php'); ?>
 
-      <h1 class="custom-font text-center">Update your password</h1><br>
+<head>
+  <?php include('head.php'); ?>
+  <title>Update password</title>
+</head>
 
-      <div class="row">
-        <div class="col-md-2 col-lg-3"></div>
+<body>
+  <?php include('navbar.php'); ?>
+  <div class="container">
 
-        <div class="col-md-8 col-lg-6">
-          <form action="update-password.php" method="post">
-            <input class="form-control" type="password" name="old-password" placeholder="Old password" required><br>
-            <input class="form-control" type="password" name="new-password" placeholder="New password" required><br>
-            <input class="form-control" type="password" name="new-password-confirm" placeholder="Confirm new password" required><br>
-            <input type="submit" class="btn blue-button form-control" name="submit-new-password" value="Save"><br>
-          </form>
+    <h1 class="custom-font text-center">Update your password</h1>
 
-          <?php
-            if (isset($_POST['old-password']) && isset($_POST['new-password']) && isset($_POST['new-password-confirm'])) {
-              include('functions.php');
-              $update = updatePassword($_SESSION['userID'], $_POST['old-password'], $_POST['new-password'], $_POST['new-password-confirm']);
+    <form class="form form-compact form-password" method="post">
+      <input type="password" class="form-control" id="old-password" name="old-password" placeholder="Old password" required autofocus><br>
 
-              if($update == true) {
-                echo "<br><div class=\"alert alert-success\"><strong>Sucess!</strong> Your password has been updated.</div>";
-              }
-              else {
-                echo "<br><div class=\"alert alert-warning\"><strong>Warning!</strong> Password not updated. Please try again.</div>";
-              }
-            }
-          ?>
-
-        </div>
-        <div class="col-md-2 col-lg-3"></div>
+      <div class="new-password-group">
+        <input type="password" class="form-control" id="new-password-1" name="new-password-1" placeholder="Confirm new password" required>
       </div>
-    </div>
-  </body>
+
+      <br>
+
+      <div class="new-password-group" id="new-password-group-2">
+        <input type="password" class="form-control" id="new-password-2" name="new-password-2" placeholder="Confirm new password" required>
+        <span class="password-status"></span>
+      </div>
+
+      <br>
+
+      <input type="submit" value="Save" id="save-password-btn" class="btn btn-primary" disabled> <br> <br>
+      <p>Update your <a href="account-info.php">account settings</a></p>
+    </form>
+
+
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      $("#new-password-1, #new-password-2").on("keyup", validatNewPassword);
+    });
+
+    function validatNewPassword() {
+      var password1 = $("#new-password-1").val();
+      var password2 = $("#new-password-2").val();
+
+      if (isNewPasswordsNonEmpty()) {
+        if (areNewPasswordsEqual() == false) {
+          $("#new-password-2").addClass("invalid");
+          $(".password-status").html("<i class='bx bxs-error'></i>");
+          $("#save-password-btn").prop("disabled", true);
+
+        } else {
+          $("#new-password-2").removeClass("invalid");
+          $(".password-status").html("<i class='bx bxs-check-circle'></i>");
+          $("#save-password-btn").prop("disabled", false);
+        }
+      }
+
+    }
+
+    function areNewPasswordsEqual() {
+      return ($("#new-password-1").val() == $("#new-password-2").val());
+    }
+
+    function isNewPasswordsNonEmpty() {
+      var password1 = $("#new-password-1").val();
+      var password2 = $("#new-password-2").val();
+      return (password1.length > 0 && password2.length > 0)
+    }
+  </script>
+
+
+
+
+
+</body>
+
 </html>
