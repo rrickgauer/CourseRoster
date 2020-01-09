@@ -3,6 +3,15 @@
 include('functions.php');
 session_start();
 
+if ($_SESSION['userID'] == $_GET['studentID']) {
+  header('Location: enrolled.php');
+  exit;
+}
+$student = getStudentInfo($_GET['studentID'])->fetch(PDO::FETCH_ASSOC);
+$enrolledCourses = getEnrolledCourses($_GET['studentID']);
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -10,13 +19,7 @@ session_start();
 
 <head>
   <?php include('head.php'); ?>
-  <title>
-    <?php
-    // get students first and last names
-    $names = getStudentFirstLastNames($_GET['studentID']);
-    echo $names['First'] . ' ' . $names['Last'];
-    ?>
-  </title>
+  <title><?php echo $student['First'] . ' ' . $student['Last']; ?></title>
 </head>
 
 <body>
@@ -28,10 +31,12 @@ session_start();
 
     <div class="row">
       <div class="col-sm-12 col-md-10">
-        <p class="login-title">
-          <?php echo $names['First'] . ' ' . $names['Last'] . "'s"; ?>
-          <span class="blue-font"> courses</span>
-        </p>
+
+        <h1><?php echo $student['First'] . ' ' . $student['Last']; ?></h1>
+        <h5><?php echo $student['Email']; ?></h5>
+        <p><i class='bx bx-chalkboard'></i> <?php echo $student['count']; ?></p>
+
+
       </div>
 
       <div class="col-sm-12 col-md-2">
@@ -42,9 +47,36 @@ session_start();
       </div>
     </div>
 
-    <div class="list-group">
-      <?php printStudentCourses($_GET['studentID']); ?>
+
+    <div class="card-deck">
+
+      <?php
+
+      $count = 0;
+      while ($course = $enrolledCourses->fetch(PDO::FETCH_ASSOC)) {
+        if ($count == 3) {
+          echo '</div><div class="card-deck">';
+          $count = 0;
+        }
+
+        echo getClassCard($course['cid'], $course['Dept'], $course['Number'], $course['Title'], $course['count']);
+
+        $count++;
+      }
+
+
+      ?>
+
     </div>
+
+
+
+
+
+
+
+
+
 
   </div>
 
