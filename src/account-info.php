@@ -56,7 +56,6 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
     $(document).ready(function() {
       $("#nav-item-more").toggleClass("active");
       $("#nav-item-settings").toggleClass("active");
-      $('.toast').toast('show');
     });
   </script>
 </body>
