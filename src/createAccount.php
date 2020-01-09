@@ -42,29 +42,18 @@ if (isset($_POST['first']) && isset($_POST['last']) && isset($_POST['email']) &&
     }
     ?>
 
-    <form class="form" action="createAccount.php" method="post">
+    <form class="form form-compact" action="createAccount.php" method="post">
       <input class="form-control" type="text" name="first" placeholder="First name" required><br>
       <input class="form-control" type="text" name="last" placeholder="Last name" required><br>
       <input class="form-control" type="email" name="email" placeholder="Email" required><br>
       <input class="form-control" type="password" name="password" placeholder="Password" required><br>
-      <input class="form-control blue-button" type="submit" name="createButton" value="Create account">
+      <input class="btn btn-primary form-control" type="submit" name="createButton" value="Sign up">
     </form>
 
     <br>
     <p class="text-center">Already have an account?
       <a href="login.php"> Log in</a>
     </p>
-
-    <section>
-      <div class="row">
-        <div class="col-sm-12 col-lg-12">
-          <ul class="list-inline text-center">
-            <li><a href="about.php">About</a></li>
-            <li><a href="contact-us.php">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-    </section>
 
   </div>
 </body>
