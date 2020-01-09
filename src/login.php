@@ -53,7 +53,7 @@
               else {
                 session_start();
                 $_SESSION['userID'] = $student['StudentID'];
-                header("Location: enrolled.php");
+                header("Location: home.php");
               }
 
             } catch(PDOexception $e) {
