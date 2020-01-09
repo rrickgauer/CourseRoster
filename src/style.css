@@ -1,3 +1,7 @@
+body {
+  margin-bottom: 30px;
+}
+
 .blue-button {
   background-color: #0099ff !important;
   color: white !important;
@@ -185,20 +189,37 @@ span.orange-font {
 #navbar li a {
   color: white;
   font-family: customFont;
-  display: block;
+  /* display: block; */
 }
 
 #navbar li {
-  display: block;
+  /* display: block; */
 }
 
 #navbar button {
   color: white;
 }
 
-#navbar li:hover,
-#navbar li.active {
-  background-color: #ff6600;
+#navbar .nav-link:hover,
+#navbar .nav-link.active {
+  border-bottom: 5px solid #ff6600;
+}
+
+#navbar .nav-link {
+  /* margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  margin-left: 5px; */
+  padding: 0;
+  border-bottom: 5px solid;
+  border-bottom-color: #0099ff;
+}
+
+#navbar .nav-item {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 #navbar .dropdown-item.active,
@@ -248,7 +269,7 @@ span.orange-font {
 
 #home-summary .number {
   font-weight: bold;
-  color: #ff6600;
+  color: #0099ff;
 }
 
 #home-content {
