@@ -18,52 +18,6 @@ function dbConnect()
 }
 
 
-
-function quote($s) {
-  $quotes = "\"$s\"";
-  return $quotes;
-}
-
-
-function studentExists($email)
-{
-  include('db-info.php');
-
-  try {
-    // connect to database
-    $pdo = new PDO("mysql:host=$host;dbname=$dbName",$user,$password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // retrieve user info
-    $sql = "SELECT * FROM Student where Email=\"$email\"";
-    $result = $pdo->query($sql);
-    $dbPassword = $result->fetch(PDO::FETCH_ASSOC);
-
-    // check if old password passed in equals password in the database
-    if ($old == $dbPassword['Password'] && $new == $new2)
-    {
-      // update user's password
-      $sql = "UPDATE Student SET Password=\"$new\" WHERE StudentID=$userID";
-      $return = $pdo->exec($sql);
-
-      return true;
-    }
-
-    // passwords do not match
-    // return to the update password page and do nothing
-    else {
-      return false;
-    }
-
-  // could not connect to database
-  } catch(PDOexception $e) {
-      echo "connection failed" . $e->getMessage();
-  }
-
-}
-
-
-
 function insertPotentialCourse($dept, $number, $title, $studentID)
 {
     $pdo = dbConnect();
@@ -395,6 +349,17 @@ function updateStudentPassword($studentID, $oldPassword, $newPassword) {
   } else {
     return false;
   }
+}
+
+function validateLoginAttempt($email, $password) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Student.StudentID FROM Student WHERE Student.Email=:email AND Student.Password=:password LIMIT 1');
+  $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+  $password = filter_var($password, FILTER_SANITIZE_STRING);
+  $sql->bindParam(':email', $email, PDO::PARAM_STR);
+  $sql->bindParam(':password', $password, PDO::PARAM_STR);
+  $sql->execute();
+  return $sql;
 }
 
 

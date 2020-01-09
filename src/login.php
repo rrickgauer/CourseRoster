@@ -1,3 +1,24 @@
+<?php
+
+include('functions.php');
+
+if (isset($_POST['email']) && isset($_POST['password'])) {
+
+  $student = validateLoginAttempt($_POST['email'], $_POST['password']);
+
+  if ($student->rowCount() == 1) {
+    session_start();
+    $userID = $student->fetch(PDO::FETCH_ASSOC);
+    $_SESSION['userID'] = $userID['StudentID'];
+    header('Location: home.php');
+    exit;
+  } else {
+    $incorrectLoginAttempt = true;
+  }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -16,6 +37,14 @@
                 <span class="orange-font">Roster</span>
               </h1>
 
+              <?php
+              if (isset($incorrectLoginAttempt)) {
+                if ($incorrectLoginAttempt == true) {
+                  echo getAlert('Login unsuccessful!', 'danger');
+                }
+              }
+              ?>
+
             <form action="login.php" method="post">
               <input class="form-control" type="email" name="email" placeholder="Email" required><br>
               <input class="form-control" type="password" name="password" placeholder="Password" required><br>
@@ -31,39 +60,6 @@
           <div class="col-md-2 col-lg-3"></div>
         </div>
       </header>
-
-        <?php
-          if (isset($_POST['email']) && isset($_POST['password']))
-          {
-            include('db-info.php');
-
-            try {
-              $pdo = new PDO("mysql:host=$host;dbname=$dbName",$user,$password);
-              $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-              $email = $_POST['email'];
-              $password = $_POST['password'];
-              $sql = "SELECT StudentID FROM Student WHERE Email=\"$email\" AND Password=\"$password\"";
-              $result = $pdo->query($sql);
-              $student = $result->fetch(PDO::FETCH_ASSOC);
-
-              if (!isset($student['StudentID'])) {
-                echo "incorrect login attempt";
-              }
-              else {
-                session_start();
-                $_SESSION['userID'] = $student['StudentID'];
-                header("Location: home.php");
-              }
-
-            } catch(PDOexception $e) {
-            echo "connection failed" . $e->getMessage();
-            }
-          }
-        ?>
-
-
-
 
       <section>
         <div class="row">
