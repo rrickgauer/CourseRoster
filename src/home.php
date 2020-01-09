@@ -49,7 +49,7 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
         <!-- enrolled courses -->
         <div class="tab-pane fade show active" id="pills-courses" role="tabpanel" aria-labelledby="pills-courses-tab">
 
-          <div class="input-group">
+          <div class="input-group" id="enrolled-courses-toolbar">
             <div class="input-group-prepend">
               <span class="input-group-text"><i class='bx bx-search'></i></span>
             </div>
@@ -57,14 +57,22 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
               <div class="dropdown-menu">
+
+
+
                 <h6 class="dropdown-header">View</h6>
-                <a class="dropdown-item active" href="#">Card</a>
-                <a class="dropdown-item" href="#">Table</a>
+                <a class="dropdown-item view active" data-view-type="card" href="#">Card</a>
+                <a class="dropdown-item view" data-view-type="table" href="#">Table</a>
+
+
+
               </div>
             </div>
           </div>
 
-          <div id="enrolled-courses-cards"></div>
+          <div id="enrolled-courses-cards">
+
+          </div>
         </div>
 
         <!-- followers -->
@@ -147,9 +155,15 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
   </div>
   <script>
+    var coursesView = "card";
+
     $(document).ready(function() {
       $("#nav-item-home").toggleClass("active");
       $("#enrolled-courses-search-input").on("keyup", filterEnrolledCourses);
+
+      $("#enrolled-courses-toolbar .view").on("click", updateCoursesView);
+
+
       filterEnrolledCourses();
     });
 
@@ -170,10 +184,22 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
       var listID = $("#todo-list-card").attr("data-listid");
       var query = $("#enrolled-courses-search-input").val();
-      var link = 'get-user-courses-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query;
+      var link = 'get-user-courses-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + coursesView;
 
       xhttp.open("GET", link, true);
       xhttp.send();
+    }
+
+    function updateCoursesView() {
+      if (coursesView == "card") {
+        coursesView = "table";
+      } else {
+        coursesView = "card";
+      }
+
+      filterEnrolledCourses();
+
+      $("#enrolled-courses-toolbar .view").toggleClass("active");
     }
   </script>
 

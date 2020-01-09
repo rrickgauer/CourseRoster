@@ -367,3 +367,12 @@ input.invalid:focus {
 .form-password input {
   margin-bottom: 20px;
 }
+
+table {
+  background-color: white;
+  /* border-color: black !important; */
+}
+
+table * {
+  border-bottom-color: black !important;
+}
