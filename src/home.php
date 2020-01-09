@@ -47,22 +47,39 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
         <!-- enrolled courses -->
         <div class="tab-pane fade show active" id="pills-courses" role="tabpanel" aria-labelledby="pills-courses-tab">
 
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class='bx bx-search'></i></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Search" id="enrolled-courses-search-input">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <div role="separator" class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a>
+              </div>
+            </div>
+          </div>
+
           <?php
-        $enrolledCourses = getEnrolledCourses($_SESSION['userID']);
-        echo '<div class="card-deck">';
-        $count = 0;
-        while ($course = $enrolledCourses->fetch(PDO::FETCH_ASSOC)) {
-
-          if ($count == 3) {
-            echo '</div><div class="card-deck">';
+            $enrolledCourses = getEnrolledCourses($_SESSION['userID']);
+            echo '<div class="card-deck">';
             $count = 0;
-          }
-          echo getClassCard($course['cid'], $course['Dept'], $course['Number'], $course['Title'], $course['count']);
-          $count++;
-        }
+            while ($course = $enrolledCourses->fetch(PDO::FETCH_ASSOC)) {
 
-        echo '</div>';
-        ?>
+              if ($count == 3) {
+                echo '</div><div class="card-deck">';
+                $count = 0;
+              }
+              echo getClassCard($course['cid'], $course['Dept'], $course['Number'], $course['Title'], $course['count']);
+              $count++;
+            }
+
+            echo '</div>';
+          ?>
         </div>
 
         <!-- followers -->
