@@ -69,8 +69,8 @@
         <div class="row">
           <div class="col-sm-12 col-lg-12">
             <ul class="list-inline text-center">
-              <li><a href="about.php">About</a></li>
-              <li><a href="contact-us.php">Contact</a></li>
+              <li class="list-inline-item"><a href="about.php">About</a></li>
+              <li class="list-inline-item"><a href="contact-us.php">Contact</a></li>
             </ul>
           </div>
         </div>
