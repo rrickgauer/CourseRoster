@@ -1,4 +1,13 @@
-<?php session_start(); ?>
+<?php
+session_start();
+include('functions.php');
+
+// if new password was submitted check if it matches old password
+if (isset($_POST['old-password']) && isset($_POST['new-password-1']) && isset($_POST['new-password-2'])) {
+  $succesfulUpdate = updateStudentPassword($_SESSION['userID'], $_POST['old-password'], $_POST['new-password-1']);
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -12,25 +21,32 @@
   <?php include('navbar.php'); ?>
   <div class="container">
 
-    <h1 class="custom-font text-center">Update your password</h1>
+    <h1 class="custom-font text-center">Update password</h1>
 
     <form class="form form-compact form-password" method="post">
-      <input type="password" class="form-control" id="old-password" name="old-password" placeholder="Old password" required autofocus><br>
+      <?php
+      if (isset($succesfulUpdate)) {
+        isPasswordUpdated($succesfulUpdate);
+      }
+      ?>
 
+      <!-- old password -->
+      <input type="password" class="form-control" id="old-password" name="old-password" placeholder="Old password" required autofocus>
+
+      <!-- new password 1 -->
       <div class="new-password-group">
         <input type="password" class="form-control" id="new-password-1" name="new-password-1" placeholder="Confirm new password" required>
       </div>
 
-      <br>
 
+
+      <!-- new-password 2 -->
       <div class="new-password-group" id="new-password-group-2">
         <input type="password" class="form-control" id="new-password-2" name="new-password-2" placeholder="Confirm new password" required>
         <span class="password-status"></span>
       </div>
 
-      <br>
-
-      <input type="submit" value="Save" id="save-password-btn" class="btn btn-primary" disabled> <br> <br>
+      <input type="submit" value="Save" id="save-password-btn" class="btn btn-primary" disabled>
       <p>Update your <a href="account-info.php">account settings</a></p>
     </form>
 
@@ -79,3 +95,16 @@
 </body>
 
 </html>
+
+<?php
+
+function isPasswordUpdated($succesfulUpdate) {
+  if ($succesfulUpdate == true) {
+    echo getAlert('Success!', 'success', 'Your password has been updated.');
+  } else {
+    echo getAlert('Error!', 'danger', 'Please enter your correct password.');
+
+  }
+}
+
+?>

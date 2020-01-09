@@ -339,3 +339,7 @@ input.invalid:focus {
 .password-status .bxs-error {
   color: #ff8080;
 }
+
+.form-password input {
+  margin-bottom: 20px;
+}

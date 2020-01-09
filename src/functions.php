@@ -17,31 +17,7 @@ function dbConnect()
 
 }
 
-function updatePassword($userID, $old, $new, $new2)
-{
 
-    $pdo = dbConnect();
-
-    // get the users current password
-    $sql = "SELECT Password FROM Student WHERE StudentID=$userID";
-    $result = $pdo->query($sql);
-    $dbPassword = $result->fetch(PDO::FETCH_ASSOC);
-
-    // check if old password passed in equals password in the database
-    if ($old == $dbPassword['Password'] && $new == $new2) {
-
-      // update user's password
-      $sql = $pdo->prepare("UPDATE Student SET Password=? WHERE StudentID=?");
-      $sql->execute(array($new, $userID));
-
-      return true;
-    }
-
-    // passwords do not match
-    // return to the update password page and do nothing
-    else
-        return false;
-}
 
 function quote($s) {
   $quotes = "\"$s\"";
@@ -398,6 +374,27 @@ function getAlert($heading = '', $type = 'success', $message = '') {
       <span aria-hidden=\"true\">&times;</span>
     </button>
   </div>";
+}
+
+function updateStudentPassword($studentID, $oldPassword, $newPassword) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('UPDATE Student SET Student.Password=:newPassword WHERE Student.StudentID=:studentID AND Student.Password=:oldPassword');
+
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $oldPassword = filter_var($oldPassword, FILTER_SANITIZE_STRING);
+  $newPassword = filter_var($newPassword, FILTER_SANITIZE_STRING);
+
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+  $sql->bindParam(':oldPassword', $oldPassword, PDO::PARAM_STR);
+  $sql->bindParam(':newPassword', $newPassword, PDO::PARAM_STR);
+
+  $sql->execute();
+
+  if ($sql->rowCount() == 1) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 
