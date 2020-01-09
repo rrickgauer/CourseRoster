@@ -3,7 +3,7 @@ include('functions.php');
 session_start();
 
 if ($_SESSION['userID'] == $_GET['studentID']) {
-  header('Location: enrolled.php');
+  header('Location: home.php');
   exit;
 }
 $student = getStudentInfo($_GET['studentID'])->fetch(PDO::FETCH_ASSOC);
