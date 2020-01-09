@@ -90,7 +90,14 @@ if (isset($_POST['old-password']) && isset($_POST['new-password-1']) && isset($_
 
 
 
+  <script>
 
+  $(document).ready(function() {
+    $("#nav-item-more").toggleClass("active");
+    $("#nav-item-settings").toggleClass("active");
+  });
+
+  </script>
 
 </body>
 
