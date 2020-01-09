@@ -143,6 +143,7 @@ span.orange-font {
 
 .class-card .card-header {
   font-family: customFont;
+  /* color: #0099ff; */
 }
 
 .class-card .card-header,
@@ -209,4 +210,58 @@ span.orange-font {
 
 .student-card .card-body p {
   margin-bottom: 5px;
+}
+
+#home-summary {
+  margin: 20px;
+
+}
+
+#home-summary .name {
+  font-family: customFont;
+}
+
+#home-summary .name,
+#home-summary .settings-link {
+  font-size: 36px;
+}
+
+#home-summary .home-count-stat {
+  margin-right: 20px;
+}
+
+#home-summary .number {
+  font-weight: bold;
+  color: #ff6600;
+}
+
+#home-content {
+  margin-top: 50px;
+}
+
+#home-content .nav-pills {
+  margin-bottom: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e6e6e6;
+}
+
+#home-content .nav-link {
+  color: black;
+  font-family: customFont;
+  font-size: 20px;
+}
+
+#home-content .nav-link.active {
+  border-bottom: 5px solid #0099ff;
+  background-color: inherit;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+#home-content .nav-link {
+  display: block;
+  padding: 0;
+  margin-right: 20px;
+  margin-left: 20px;
+
 }

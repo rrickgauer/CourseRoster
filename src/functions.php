@@ -325,7 +325,7 @@ function searchForStudents($query) {
 function getStudentCard($studentID, $first, $last, $email) {
   return "<div class=\"card student-card\" data-student-id=\"$studentID\" onclick=\"gotoStudentPage(this)\">
           <div class=\"card-body\">
-            <h3 class=\"custom-font blue-font\">$first $last</h3>
+            <h3 class=\"custom-font header\">$first $last</h3>
             <p>$email</p>
           </div>
         </div>";

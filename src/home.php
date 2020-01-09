@@ -22,32 +22,32 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
     <div id="home-summary">
       <div class="name d-inline"><?php echo $student['First'] . ' ' . $student['Last']; ?></div>
-      <div class="d-inline float-right"><a href="account-info.php"><i class='bx bx-cog'></i></a></div><br>
-      <div class="d-inline home-count-stat"><?php echo $student['coursesCount']; ?> courses</div>
-      <div class="d-inline home-count-stat"><?php echo $student['followersCount']; ?> followers</div>
-      <div class="d-inline home-count-stat"><?php echo $student['followingCount']; ?> following</div>
+      <div class="settings-link d-inline float-right"><a href="account-info.php"><i class='bx bx-cog'></i></a></div><br>
+      <div class="d-inline home-count-stat"><span class="number"><?php echo $student['coursesCount'];   ?></span> courses</div>
+      <div class="d-inline home-count-stat"><span class="number"><?php echo $student['followersCount']; ?></span> followers</div>
+      <div class="d-inline home-count-stat"><span class="number"><?php echo $student['followingCount']; ?></span> following</div>
     </div>
 
 
+    <div id="home-content">
+      <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="pills-courses-tab" data-toggle="pill" href="#pills-courses" role="tab" aria-controls="pills-courses" aria-selected="true">Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="pills-followers-tab" data-toggle="pill" href="#pills-followers" role="tab" aria-controls="pills-followers" aria-selected="false">Followers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="pills-following-tab" data-toggle="pill" href="#pills-following" role="tab" aria-controls="pills-following" aria-selected="false">Following</a>
+        </li>
+      </ul>
 
-    <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="pills-courses-tab" data-toggle="pill" href="#pills-courses" role="tab" aria-controls="pills-courses" aria-selected="true">Courses</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="pills-followers-tab" data-toggle="pill" href="#pills-followers" role="tab" aria-controls="pills-followers" aria-selected="false">Followers</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" id="pills-following-tab" data-toggle="pill" href="#pills-following" role="tab" aria-controls="pills-following" aria-selected="false">Following</a>
-      </li>
-    </ul>
+      <div class="tab-content" id="pills-tabContent">
 
-    <div class="tab-content" id="pills-tabContent">
+        <!-- enrolled courses -->
+        <div class="tab-pane fade show active" id="pills-courses" role="tabpanel" aria-labelledby="pills-courses-tab">
 
-      <!-- enrolled courses -->
-      <div class="tab-pane fade show active" id="pills-courses" role="tabpanel" aria-labelledby="pills-courses-tab">
-
-        <?php
+          <?php
         $enrolledCourses = getEnrolledCourses($_SESSION['userID']);
         echo '<div class="card-deck">';
         $count = 0;
@@ -63,11 +63,11 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
         echo '</div>';
         ?>
-      </div>
+        </div>
 
-      <!-- followers -->
-      <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
-        <?php
+        <!-- followers -->
+        <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
+          <?php
         $followers = getStudentFollowers($student['StudentID']);
         echo '<div class="card-deck">';
         $count = 0;
@@ -81,11 +81,11 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
         }
         echo '</div>';
         ?>
-      </div>
+        </div>
 
-      <!-- following -->
-      <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-following-tab">
-        <?php
+        <!-- following -->
+        <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-following-tab">
+          <?php
         $followings = getStudentFollowing($student['StudentID']);
         echo '<div class="card-deck">';
         $count = 0;
@@ -100,12 +100,8 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
         echo '</div>';
         ?>
 
+        </div>
       </div>
-
-
-
-
-
     </div>
 
 
@@ -117,12 +113,10 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
   </div>
   <script>
-
-  function gotoStudentPage(studentCard) {
-    var studentID = $(studentCard).data("student-id");
-    window.location.href = 'student.php?studentID=' + studentID;
-  }
-
+    function gotoStudentPage(studentCard) {
+      var studentID = $(studentCard).data("student-id");
+      window.location.href = 'student.php?studentID=' + studentID;
+    }
   </script>
 
 </body>
