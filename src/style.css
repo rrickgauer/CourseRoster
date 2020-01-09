@@ -76,11 +76,7 @@ b.black {
   color: #0099ff;
 }
 
-span.blue-font {
-  color: #0099ff;
-}
-
-span.orange-font {
+.orange-font {
   color: #ff6600;
 }
 
@@ -174,7 +170,7 @@ span.orange-font {
 }
 
 #navbar {
-  background-color: #0099ff;
+  background-color: white;
   margin-bottom: 40px;
 }
 
@@ -190,7 +186,7 @@ span.orange-font {
 }
 
 #navbar li a {
-  color: white;
+  color: black;
   font-family: customFont;
 }
 
@@ -200,13 +196,13 @@ span.orange-font {
 
 #navbar .nav-link:hover,
 #navbar .nav-link.active {
-  border-bottom: 5px solid #ff6600;
+  border-bottom: 5px solid #0099ff;
 }
 
 #navbar .nav-link {
   padding: 0;
   border-bottom: 5px solid;
-  border-bottom-color: #0099ff;
+  border-bottom-color: white;
 }
 
 #navbar .nav-item {
@@ -228,12 +224,13 @@ span.orange-font {
 .class-card,
 .student-card {
   margin: 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
 }
 
 .class-card .card-header,
 .student-card .card-header {
   font-family: customFont;
-  color: #0099ff;
+  color: black;
 }
 
 .class-card .card-header,
@@ -257,26 +254,25 @@ span.orange-font {
 
 
 #home-summary {
-  margin: 0px 200px;
+  text-align: center;
+}
+
+#home-summary .home-count-stat {
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 #home-summary .name {
   font-family: customFont;
-}
-
-#home-summary .name,
-#home-summary .settings-link {
-  font-size: 36px;
-}
-
-#home-summary .home-count-stat {
-  margin-right: 20px;
+  font-size: 48px;
+  color: #0099ff;
 }
 
 #home-summary .number {
   font-weight: bold;
-  color: #0099ff;
 }
+
+
 
 #home-content {
   margin-top: 50px;
@@ -305,8 +301,8 @@ span.orange-font {
 #home-content .nav-link {
   display: block;
   padding: 0;
-  margin-right: 20px;
-  margin-left: 20px;
+  margin-right: 50px;
+  margin-left: 50px;
 }
 
 .btn-primary {

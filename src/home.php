@@ -22,7 +22,9 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
     <div id="home-summary">
       <div class="name d-inline"><?php echo $student['First'] . ' ' . $student['Last']; ?></div>
-      <div class="settings-link d-inline float-right"><a href="account-info.php"><i class='bx bx-cog'></i></a></div><br>
+      <!-- <div class="settings-link d-inline"><a href="account-info.php"><i class='bx bx-cog'></i></a></div> -->
+      <br>
+
       <div class="d-inline home-count-stat"><span class="number"><?php echo $student['coursesCount'];   ?></span> courses</div>
       <div class="d-inline home-count-stat"><span class="number"><?php echo $student['followersCount']; ?></span> followers</div>
       <div class="d-inline home-count-stat"><span class="number"><?php echo $student['followingCount']; ?></span> following</div>

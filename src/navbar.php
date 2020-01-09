@@ -6,7 +6,7 @@
 
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" id="nav-item-home" href="home.php">Course Roster</a></li>
+        <li class="nav-item"><a class="nav-link" id="nav-item-home" href="home.php"><span class="blue-font">Course</span> <span class="orange-font">Roster</span></a></li>
         <li class="nav-item"><a class="nav-link" id="nav-item-courses" href="course-search.php">Courses</a></li>
         <li class="nav-item"><a class="nav-link" id="nav-item-students" href="student-search.php">Students</a></li>
 
