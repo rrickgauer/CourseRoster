@@ -56,6 +56,8 @@
         var studentID = $(this).data("student-id");
         window.location.href = 'student.php?studentID=' + studentID;
       });
+
+      $("#nav-item-courses").toggleClass("active");
     });
   </script>
 
