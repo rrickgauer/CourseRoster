@@ -42,7 +42,7 @@
           echo '</div><div class="card-deck">';
           $count = 0;
         }
-        echo getStudentCard($student['StudentID'], $student['First'], $student['Last'], $student['Email']);
+        echo getStudentCard($student['sid'], $student['First'], $student['Last'], $student['Email'],  $student['enrollmentCount'], $student['followersCount']);
         $count++;
       }
       ?>

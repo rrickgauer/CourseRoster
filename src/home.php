@@ -68,19 +68,19 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
         <!-- followers -->
         <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
           <?php
-        $followers = getStudentFollowers($student['StudentID']);
-        echo '<div class="card-deck">';
-        $count = 0;
-        while ($follower = $followers->fetch(PDO::FETCH_ASSOC)) {
-          if ($count == 3) {
-            echo '</div><div class="card-deck">';
+            $followers = getStudentFollowers($student['StudentID']);
+            echo '<div class="card-deck">';
             $count = 0;
-          }
-          echo getStudentCard($follower['StudentID'], $follower['First'], $follower['Last'], $follower['Email']);
-          $count++;
-        }
-        echo '</div>';
-        ?>
+            while ($follower = $followers->fetch(PDO::FETCH_ASSOC)) {
+              if ($count == 3) {
+                echo '</div><div class="card-deck">';
+                $count = 0;
+              }
+              echo getStudentCard($follower['sid'], $follower['First'], $follower['Last'], $follower['Email'], $follower['enrollmentCount'], $follower['followersCount']);
+              $count++;
+            }
+            echo '</div>';
+          ?>
         </div>
 
         <!-- following -->
@@ -94,7 +94,7 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
             echo '</div><div class="card-deck">';
             $count = 0;
           }
-          echo getStudentCard($following['StudentID'], $following['First'], $following['Last'], $following['Email']);
+          echo getStudentCard($following['sid'], $following['First'], $following['Last'], $following['Email'], $following['enrollmentCount'], $student['followersCount']);
           $count++;
         }
         echo '</div>';
@@ -113,7 +113,6 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
   </div>
   <script>
-
     $(document).ready(function() {
       $("#nav-item-home").toggleClass("active");
     });

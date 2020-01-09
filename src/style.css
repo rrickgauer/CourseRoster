@@ -225,27 +225,36 @@ span.orange-font {
   color: black;
 }
 
+.class-card,
 .student-card {
-  margin-top: 5px;
+  margin: 20px;
 }
 
-.student-card .header {
+.class-card .card-header,
+.student-card .card-header {
+  font-family: customFont;
   color: #0099ff;
 }
 
-.student-card:hover {
-  background-color: #f2f2f2;
-  cursor: pointer;
+.class-card .card-header,
+.class-card .card-footer,
+.student-card .card-header,
+.student-card .card-footer {
+  background-color: inherit;
+  border: 0;
 }
 
-.student-card .card-body {
-  padding-top: 10px;
-  padding-bottom: 10px;
+.class-card .card-body,
+.student-card .card-body{
+  padding-top: 0;
+  padding-bottom: 0;
+  color: #666666;
 }
 
-.student-card .card-body p {
-  margin-bottom: 5px;
-}
+
+
+
+
 
 #home-summary {
   margin: 0px 200px;
@@ -285,7 +294,8 @@ span.orange-font {
   font-size: 20px;
 }
 
-#home-content .nav-link.active {
+#home-content .nav-link.active,
+#home-content .nav-link:hover {
   border-bottom: 5px solid #0099ff;
   background-color: inherit;
   border-bottom-right-radius: 0px;
