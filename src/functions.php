@@ -62,27 +62,6 @@ function dropEnrolledCourse($studentID, $classID)
     $sql->execute(array($studentID, $classID));
 }
 
-
-function createNewStudentAccount($first, $last, $email, $studentPassword)
-{
-
-    $pdo = dbConnect();
-    // prepare an insert statement
-    $sql = $pdo->prepare("INSERT INTO Student (StudentID, First, Last, Email, Password) VALUES (:UserID, :First, :Last, :Email, :Password)");
-
-    // clean up and bind input data
-    $zero = 0;
-    $sql->bindParam(':UserID', $zero);
-    $sql->bindParam(':First', $first);
-    $sql->bindParam(':Last', $last);
-    $sql->bindParam(':Email', $email);
-    $sql->bindParam(':Password', $studentPassword);
-
-    // execute insert statement
-    $sql->execute();
-}
-
-
 function getCourseListItem($id, $dept, $number, $title, $count)
 {
   $listItem = "<a href=\"class.php?classID=$id\" class=\"list-group-item\"><b>$dept $number</b> - <i> $title</i><span class=\"badge blue-button\">$count</span></a>";
@@ -361,6 +340,28 @@ function validateLoginAttempt($email, $password) {
   $sql->execute();
   return $sql;
 }
+
+function insertStudent($first, $last, $email, $password) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('INSERT INTO Student (First, Last, Email, Password) VALUES (:first, :last, :email, :password)');
+
+  $first    = filter_var($first, FILTER_SANITIZE_STRING);
+  $last     = filter_var($last, FILTER_SANITIZE_STRING);
+  $email    = filter_var($email, FILTER_SANITIZE_EMAIL);
+  $password = filter_var($password, FILTER_SANITIZE_STRING);
+
+  $sql->bindParam(':first', $first, PDO::PARAM_STR);
+  $sql->bindParam(':last', $last, PDO::PARAM_STR);
+  $sql->bindParam(':email', $email, PDO::PARAM_STR);
+  $sql->bindParam(':password', $password, PDO::PARAM_STR);
+
+  $sql->execute();
+  $sql = null;
+  $pdo = null;
+
+}
+
+
 
 
 
