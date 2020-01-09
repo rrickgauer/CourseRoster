@@ -29,6 +29,7 @@
   <script>
     $(document).ready(function() {
       $("#student-search-input").on("keyup", studentSearch);
+      $("#nav-item-students").toggleClass("active");
     });
 
     function studentSearch() {

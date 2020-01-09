@@ -171,6 +171,17 @@ span.orange-font {
   background-color: #0099ff;
 }
 
+#navbar .navbar {
+  padding: 0;
+}
+
+#navbar .nav-item {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
 #navbar li a {
   color: white;
   font-family: customFont;
@@ -186,8 +197,13 @@ span.orange-font {
 }
 
 #navbar li:hover,
-#navbar li.selected {
+#navbar li.active {
   background-color: #ff6600;
+}
+
+#navbar .dropdown-item.active,
+#navbar .dropdown-item:hover {
+  background-color: #cccccc
 }
 
 #navbar a.dropdown-item {

@@ -113,6 +113,11 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
   </div>
   <script>
+
+    $(document).ready(function() {
+      $("#nav-item-home").toggleClass("active");
+    });
+
     function gotoStudentPage(studentCard) {
       var studentID = $(studentCard).data("student-id");
       window.location.href = 'student.php?studentID=' + studentID;

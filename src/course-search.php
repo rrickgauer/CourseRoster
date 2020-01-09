@@ -39,6 +39,7 @@
         theme: 'bootstrap4',
       });
       $("#dept-select").on('change', printClasses);
+      $("#nav-item-courses").toggleClass("active");
     });
 
     function printClasses() {
