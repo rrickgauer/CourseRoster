@@ -213,26 +213,6 @@ function add_school_forms_submission($name, $state, $city, $website)
 }
 
 
-
-// searches for a school
-// function schoolSearchString($items)
-// {
-//   $sql = "SELECT SchoolID, Name, State, City FROM School";
-//   $result = " WHERE Name LIKE \"%". $items[0] . "%\"";
-//   $count = 1;
-//
-//   while($count < count($items)) {
-//     $item = $items[$count];
-//     $result = $result . " AND Name LIKE \"%$item%\"";
-//     $count++;
-//   }
-//
-//   $result = $result . ";";
-//   $sql = $sql . $result;
-//   return $sql;
-// }
-
-
 function printSchoolSearchResults($schoolID, $name) {
     echo "<a href=\"school.php?sid=$schoolID\" class=\"list-group-item\"><b>$name</b></a>";
 }
@@ -251,21 +231,6 @@ function printSchoolDepts($schoolID)
         echo "<span class=\"badge blue-button\">$count</span></a>";
     }
 }
-
-// prints all courses in a given department
-// function printSchoolCourses($schoolID, $dept)
-// {
-//     $pdo = dbConnect();
-//
-//     echo "<div class=\"panel-heading\"><h4 class=\"custom-font\">$dept</h4></div>";
-//
-//     $sql = "SELECT Class.ClassID, Dept, Number, Title, COUNT(Enrolled.ClassID) AS Count FROM Class LEFT JOIN Enrolled ON Class.ClassID=Enrolled.ClassID WHERE Dept=\"$dept\" AND SchoolID=$schoolID GROUP BY Class.ClassID;";
-//
-//     $result = $pdo->query($sql);
-//     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-//         echo getCourseListItem($row['ClassID'], $row['Dept'], $row['Number'], $row['Title'], $row['Count']);
-//     }
-// }
 
 function getCourseInformation($classID)
 {
@@ -314,15 +279,6 @@ function getStudentsEnrolledInClass($classID) {
   $sql->bindParam(':classID', $classID, PDO::PARAM_INT);
   $sql->execute();
   return $sql;
-}
-
-
-
-function getSchoolInfo($schoolID)
-{
-    $pdo = dbConnect();
-    $results = $pdo->query("SELECT * FROM School WHERE SchoolID=$schoolID;");
-    return $results->fetch(PDO::FETCH_ASSOC);
 }
 
 function getEnrolledCourses($studentID) {
@@ -392,7 +348,7 @@ function getClassCard($classID, $dept, $number, $title, $count) {
 
 function getStudentInfo($studentID) {
   $pdo = dbConnect();
-  $sql = $pdo->prepare('SELECT Student.StudentID, Student.First, Student.Last, Student.Email, COUNT(Enrolled.ClassID) as count FROM Student LEFT JOIN Enrolled ON Student.StudentID = Enrolled.StudentID WHERE Student.StudentID = :studentID GROUP BY Student.StudentID LIMIT 1');
+  $sql = $pdo->prepare('SELECT Student.StudentID, Student.First, Student.Last, Student.Email, (SELECT COUNT(Enrolled.ClassID) FROM Enrolled WHERE Enrolled.StudentID = Student.StudentID) AS coursesCount, (SELECT COUNT(Student_Followers.StudentID) FROM Student_Followers WHERE Student_Followers.StudentID=Student.StudentID) AS followersCount, (SELECT COUNT(Student_Followers.StudentID) FROM Student_Followers WHERE Student_Followers.FollowerID=Student.StudentID) AS followingCount FROM Student WHERE Student.StudentID=:studentID');
   $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
   $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
   $sql->execute();
