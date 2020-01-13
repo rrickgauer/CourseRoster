@@ -255,18 +255,18 @@ function searchForStudentEnrolledCourses($studentID, $query) {
 
 function getStudentCard($studentID, $first, $last, $email, $enrollmentCount, $followerCount) {
   return "<div class=\"card student-card\" data-student-id=\"$studentID\">
-          <div class=\"card-header\">
-            <h3 class=\"custom-font\">$first $last</h3>
-          </div>
-          <div class=\"card-body\">
-            <p>$email</p>
-          </div>
-          <div class=\"card-footer\">
-            <span class=\"badge badge-primary\"><i class='bx bx-chalkboard'></i> $enrollmentCount</span>
-            <span class=\"badge badge-orange\"><i class='bx bx-glasses'></i> $followerCount</span>
-            <a href=\"student.php?studentID=$studentID\" class=\"float-right\"><i class='bx bx-link-external' ></i></a>
-          </div>
-        </div>";
+  <div class=\"card-header\">
+    <h3 class=\"custom-font\">$first $last</h3>
+  </div>
+  <div class=\"card-body\">
+    <p>$email</p>
+  </div>
+  <div class=\"card-footer\">
+    <span class=\"badge badge-primary\"><i class='bx bx-chalkboard'></i> $enrollmentCount</span>
+    <span class=\"badge badge-orange\"><i class='bx bx-glasses'></i> $followerCount</span>
+    <a href=\"student.php?studentID=$studentID\" class=\"float-right\"><i class='bx bx-link-external' ></i></a>
+  </div>
+</div>";
 }
 
 function getClassCard($classID, $dept, $number, $title, $count) {
@@ -402,6 +402,75 @@ function printClassCardDeck($cards) {
 
     echo getClassCard($card['cid'], $card['Dept'], $card['Number'], $card['Title'], $card['count']);
     $count++;
+  }
+}
+
+function printStudentCardDeck($students) {
+  echo '<div class="card-deck">';
+  $count = 0;
+
+  while ($student = $students->fetch(PDO::FETCH_ASSOC)) {
+    if ($count == 3) {
+      echo '</div><div class="card-deck">';
+      $count = 0;
+    }
+
+    echo getStudentCard($student['sid'], $student['First'], $student['Last'], $student['Email'], $student['enrollmentCount'], $student['followersCount']);
+    $count++;
+  }
+
+  echo '</div>';
+}
+
+function getStudentFollowersByQuery($studentID, $query) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Student.StudentID as sid, Student.First, Student.Last, Student.Email, (select count(Enrolled.ClassID) from Enrolled where Enrolled.StudentID=sid) as enrollmentCount, (select count(Student_Followers.FollowerID) from Student_Followers WHERE Student_Followers.StudentID=sid) as followersCount from Student where Student.StudentID in (select Student_Followers.FollowerID from Student_Followers where Student_Followers.StudentID = :studentID) AND (Student.First like :first OR Student.Last LIKE :last) ORDER BY Student.Last ASC, Student.First ASC');
+
+
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+
+  $first = "%$query%";
+  $first = filter_var($first, FILTER_SANITIZE_STRING);
+  $sql->bindValue(':first', $first, PDO::PARAM_STR);
+
+  $last = "%$query%";
+  $last = filter_var($last, FILTER_SANITIZE_STRING);
+  $sql->bindValue(':last', $last, PDO::PARAM_STR);
+
+
+  $sql->execute();
+  return $sql;
+}
+
+function printStudentCardTable($students) {
+  echo '<table class="table">
+        <thead>
+          <tr>
+            <th>First</th>
+            <th>Last</th>
+            <th>Email</th>
+            <th>Courses</th>
+            <th>Followers</th>
+            <th>View</th>
+          </tr>
+        </thead><tbody>';
+
+
+  while ($student = $students->fetch(PDO::FETCH_ASSOC)) {
+
+    $id = $student['sid'];
+    $enrollmentCount = $student['enrollmentCount'];
+    $followerCount = $student['followersCount'];
+
+    echo '<tr>';
+    echo '<td>' . $student['First'] . '</td>';
+    echo '<td>' . $student['Last'] . '</td>';
+    echo '<td>' . $student['Email'] . '</td>';
+    echo "<td><span class=\"badge badge-primary\"><i class='bx bx-chalkboard'></i> $enrollmentCount</span></td>";
+    echo "<td><span class=\"badge badge-orange\"><i class='bx bx-glasses'></i> $followerCount</span></td>";
+    echo "<td><a href=\"student.php?studentID=$id\"><i class='bx bx-link-external'></i></a></td>";
+    echo '</tr>';
   }
 }
 

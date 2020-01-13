@@ -1,7 +1,6 @@
 <?php
-
-include('functions.php');
 session_start();
+include('functions.php');
 
 $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
@@ -28,6 +27,8 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       <div class="d-inline home-count-stat"><span class="number"><?php echo $student['followersCount']; ?></span> followers</div>
       <div class="d-inline home-count-stat"><span class="number"><?php echo $student['followingCount']; ?></span> following</div>
     </div>
+
+    <?php echo $_SESSION['userID']; ?>
 
 
     <div id="home-content">
@@ -80,26 +81,16 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
               <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
               <div class="dropdown-menu">
                 <h6 class="dropdown-header">View</h6>
-                <a class="dropdown-item active" href="#">Card</a>
-                <a class="dropdown-item" href="#">Table</a>
+                <a class="dropdown-item view active" href="#">Card</a>
+                <a class="dropdown-item view" href="#">Table</a>
               </div>
             </div>
           </div>
 
-          <?php
-            $followers = getStudentFollowers($student['StudentID']);
-            echo '<div class="card-deck">';
-            $count = 0;
-            while ($follower = $followers->fetch(PDO::FETCH_ASSOC)) {
-              if ($count == 3) {
-                echo '</div><div class="card-deck">';
-                $count = 0;
-              }
-              echo getStudentCard($follower['sid'], $follower['First'], $follower['Last'], $follower['Email'], $follower['enrollmentCount'], $follower['followersCount']);
-              $count++;
-            }
-            echo '</div>';
-          ?>
+          <div id="follower-cards">
+
+          </div>
+
         </div>
 
         <!-- following -->
@@ -149,12 +140,18 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
   </div>
   <script>
     var coursesView = "card";
+    var followersView = "card";
 
     $(document).ready(function() {
       $("#nav-item-home").toggleClass("active");
       $("#enrolled-courses-search-input").on("keyup", filterEnrolledCourses);
       $("#enrolled-courses-toolbar .view").on("click", updateCoursesView);
       filterEnrolledCourses();
+
+      $("#followers-search-input").on("keyup", filterFollowers);
+      $("#pills-followers .view").on("click", updateFollowersView);
+      filterFollowers();
+
     });
 
     function gotoStudentPage(studentCard) {
@@ -172,10 +169,24 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
         }
       };
 
-      var listID = $("#todo-list-card").attr("data-listid");
       var query = $("#enrolled-courses-search-input").val();
-      var link = 'get-user-courses-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + coursesView;
 
+      var link = 'get-user-courses-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + coursesView;
+      xhttp.open("GET", link, true);
+      xhttp.send();
+    }
+
+    function filterFollowers() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var e = this.responseText;
+          $("#follower-cards").html(e);
+        }
+      };
+
+      var query = $("#followers-search-input").val();
+      var link = 'get-followers-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + followersView;
       xhttp.open("GET", link, true);
       xhttp.send();
     }
@@ -191,11 +202,16 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       $("#enrolled-courses-toolbar .view").toggleClass("active");
     }
 
-    
+    function updateFollowersView() {
+      if (followersView == "card") {
+        followersView = "table";
+      } else {
+        followersView = "card";
+      }
 
-
-
-
+      filterFollowers();
+      $("#pills-followers .view").toggleClass("active");
+    }
   </script>
 
 </body>
