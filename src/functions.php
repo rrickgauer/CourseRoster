@@ -34,27 +34,6 @@ function insertPotentialCourse($dept, $number, $title, $studentID)
 
 }
 
-// tests to see if a student is enrolled in a course
-function isStudentEnrolled($studentID, $classID)
-{
-    // connect to database
-    $pdo = dbConnect();
-
-    // setup sql statement
-    $sql = "SELECT COUNT(*) FROM Enrolled WHERE Enrolled.StudentID=$studentID AND Enrolled.ClassID=$classID";
-
-    // get query
-    $result = $pdo->query($sql);
-    $row = $result->fetch(PDO::FETCH_ASSOC);
-
-    // if the count is 1 then the student is enrolled
-    if ($row['COUNT(*)'] == 1) return true;
-
-    // anything besides 1 means student is not enrolled
-    else return false;
-
-}
-
 function dropEnrolledCourse($studentID, $classID)
 {
     $pdo = dbConnect();
@@ -474,6 +453,26 @@ function printStudentCardTable($students) {
   }
 
   echo '</tbody></table></div>';
+}
+
+function isStudentEnrolled($studentID, $classID) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Enrolled.StudentID FROM Enrolled WHERE Enrolled.StudentID=:studentID AND Enrolled.ClassID=:classID LIMIT 1');
+
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $classID = filter_var($classID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+  $sql->bindParam(':classID', $classID, PDO::PARAM_INT);
+
+  $sql->execute();
+
+  if($sql->rowCount() == 1) {
+    return true;
+  } else {
+    return false;
+  }
+
+
 }
 
 
