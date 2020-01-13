@@ -462,6 +462,19 @@ function dropEnrolledCourse($studentID, $classID) {
   $sql->execute();
 }
 
+function enrollStudentInCourse($studentID, $classID) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('INSERT INTO Enrolled (StudentID, ClassID) VALUES (:studentID, :classID)');
+
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+
+  $classID = filter_var($classID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':classID', $classID, PDO::PARAM_INT);
+
+  $sql->execute();
+}
+
 
 
 
