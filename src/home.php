@@ -22,7 +22,6 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
     <div id="home-summary">
       <div class="name d-inline"><?php echo $student['First'] . ' ' . $student['Last']; ?></div>
-      <!-- <div class="settings-link d-inline"><a href="account-info.php"><i class='bx bx-cog'></i></a></div> -->
       <br>
 
       <div class="d-inline home-count-stat"><span class="number"><?php echo $student['coursesCount'];   ?></span> courses</div>
@@ -57,15 +56,9 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
               <div class="dropdown-menu">
-
-
-
                 <h6 class="dropdown-header">View</h6>
                 <a class="dropdown-item view active" data-view-type="card" href="#">Card</a>
                 <a class="dropdown-item view" data-view-type="table" href="#">Table</a>
-
-
-
               </div>
             </div>
           </div>
@@ -160,10 +153,7 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
     $(document).ready(function() {
       $("#nav-item-home").toggleClass("active");
       $("#enrolled-courses-search-input").on("keyup", filterEnrolledCourses);
-
       $("#enrolled-courses-toolbar .view").on("click", updateCoursesView);
-
-
       filterEnrolledCourses();
     });
 
@@ -198,9 +188,14 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       }
 
       filterEnrolledCourses();
-
       $("#enrolled-courses-toolbar .view").toggleClass("active");
     }
+
+    
+
+
+
+
   </script>
 
 </body>
