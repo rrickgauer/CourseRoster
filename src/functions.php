@@ -84,23 +84,6 @@ function delete_Student_Followers($studentID, $followerID) {
   $sql->execute([$studentID, $followerID]);
 }
 
-// 'contact us' form processing
-function contact_us_submission($first, $last, $email, $message)
-{
-  $pdo = dbConnect();
-  $sql = $pdo->prepare("INSERT INTO Contact_Form VALUES(0, ?, ?, ?, ?, \"CURDATE()\")");
-  $sql->execute([$first, $last, $email, $message]);
-}
-
-
-function add_school_forms_submission($name, $state, $city, $website)
-{
-  $pdo = dbConnect();
-  $sql = "INSERT INTO Add_School_Forms values (0, \"$name\", \"$state\", \"$city\", \"$website\", 'Pending');";
-  $result = $pdo->exec($sql);
-}
-
-
 function printSchoolDepts($schoolID)
 {
     $pdo = dbConnect();
