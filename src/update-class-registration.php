@@ -4,7 +4,7 @@ include_once('functions.php');
 
 
 if (isStudentEnrolled($_SESSION['userID'], $_GET['classID'])) {
-  // drop course
+  dropEnrolledCourse($_SESSION['userID'], $_GET['classID']);
 } else {
   // register course
 }

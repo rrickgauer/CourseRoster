@@ -34,13 +34,6 @@ function insertPotentialCourse($dept, $number, $title, $studentID)
 
 }
 
-function dropEnrolledCourse($studentID, $classID)
-{
-    $pdo = dbConnect();
-    $sql = $pdo->prepare("DELETE FROM Enrolled WHERE StudentID=? AND ClassID=?");
-    $sql->execute(array($studentID, $classID));
-}
-
 function getCourseListItem($id, $dept, $number, $title, $count)
 {
   $listItem = "<a href=\"class.php?classID=$id\" class=\"list-group-item\"><b>$dept $number</b> - <i> $title</i><span class=\"badge blue-button\">$count</span></a>";
@@ -454,9 +447,22 @@ function isStudentEnrolled($studentID, $classID) {
   } else {
     return false;
   }
-
-
 }
+
+function dropEnrolledCourse($studentID, $classID) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('DELETE FROM Enrolled WHERE Enrolled.StudentID=:studentID AND Enrolled.ClassID=:classID');
+
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+
+  $classID = filter_var($classID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':classID', $classID, PDO::PARAM_INT);
+
+  $sql->execute();
+}
+
+
 
 
 
