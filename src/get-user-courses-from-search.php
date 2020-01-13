@@ -5,9 +5,7 @@ $courses = searchForStudentEnrolledCourses($_GET['studentID'], $_GET['query']);
 
 
 if ($_GET['view'] == 'table') {
-
-  echo '<table class="table">';
-
+  echo '<br>';
   echo '<table class="table">
     <thead>
       <tr>

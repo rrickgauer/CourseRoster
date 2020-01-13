@@ -43,7 +43,7 @@ if (isset($_POST['first']) && isset($_POST['last']) && isset($_POST['email']) &&
     ?>
 
     <form class="form form-compact" action="createAccount.php" method="post">
-      <input class="form-control" type="text" name="first" placeholder="First name" required><br>
+      <input class="form-control" type="text" name="first" placeholder="First name" required autofocus><br>
       <input class="form-control" type="text" name="last" placeholder="Last name" required><br>
       <input class="form-control" type="email" name="email" placeholder="Email" required><br>
       <input class="form-control" type="password" name="password" placeholder="Password" required><br>

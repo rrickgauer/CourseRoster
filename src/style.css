@@ -370,9 +370,46 @@ input.invalid:focus {
 
 table {
   background-color: white;
-  /* border-color: black !important; */
 }
 
 table * {
   border-bottom-color: black !important;
+}
+
+@media (max-width: 768px) {
+  .form-compact {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .login-title {
+    font-size: 45px;
+    font-family: customFont;
+    margin-top: 100px;
+  }
+
+
+  #home-content .nav-link {
+    display: block;
+    padding: 0;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  #navbar {
+    background-color: #0099ff;
+  }
+
+  #navbar ul {
+    background-color: white;
+  }
+
+
+
+
+
+
+
+
+
 }

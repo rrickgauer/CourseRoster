@@ -444,7 +444,7 @@ function getStudentFollowersByQuery($studentID, $query) {
 }
 
 function printStudentCardTable($students) {
-  echo '<table class="table">
+  echo '<div class="table-responsive"><table class="table">
         <thead>
           <tr>
             <th>First</th>
@@ -472,6 +472,8 @@ function printStudentCardTable($students) {
     echo "<td><a href=\"student.php?studentID=$id\"><i class='bx bx-link-external'></i></a></td>";
     echo '</tr>';
   }
+
+  echo '</tbody></table></div>';
 }
 
 

@@ -28,9 +28,6 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       <div class="d-inline home-count-stat"><span class="number"><?php echo $student['followingCount']; ?></span> following</div>
     </div>
 
-    <?php echo $_SESSION['userID']; ?>
-
-
     <div id="home-content">
       <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
         <li class="nav-item">
@@ -87,9 +84,8 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
             </div>
           </div>
 
-          <div id="follower-cards">
-
-          </div>
+          <!-- get-followers-from-search.php -->
+          <div id="follower-cards"></div>
 
         </div>
 
