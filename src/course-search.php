@@ -23,7 +23,8 @@ $depts = getDistinctDepts();
   <?php include('navbar.php'); ?>
 
   <div class="container">
-    <h1 class="custom-font">Course search</h1>
+    <h1 class="custom-font blue-font text-center">Course search</h1>
+    <br>
 
     <!-- dept select -->
     <select class="form-control" name="dept" id="dept-select">

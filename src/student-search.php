@@ -19,7 +19,7 @@ if(!isset($_SESSION['userID']) || !isValidStudentID($_SESSION['userID'])) {
 
   <?php include('navbar.php'); ?>
   <div class="container">
-    <h1 class="custom-font">Student search</h1>
+    <h1 class="custom-font blue-font text-center">Student search</h1> <br>
 
     <div class="input-group input-group-lg">
       <div class="input-group-prepend">
