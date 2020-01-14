@@ -18,30 +18,6 @@ function dbConnect()
 }
 
 
-function insertPotentialCourse($dept, $number, $title, $studentID)
-{
-    $pdo = dbConnect();
-
-    $sql = $pdo->prepare("INSERT INTO Potential_Course values(0, ?, ?, ?, ?, CURDATE(), \"Working\")");
-    $sql->execute(array($dept, $number, $title, $student));
-
-    // potential course was submitted successfully
-    if ($result > 0) return true;
-
-    // error in submitting the potential course
-    else return false;
-
-
-}
-
-function getCourseListItem($id, $dept, $number, $title, $count)
-{
-  $listItem = "<a href=\"class.php?classID=$id\" class=\"list-group-item\"><b>$dept $number</b> - <i> $title</i><span class=\"badge blue-button\">$count</span></a>";
-  return $listItem;
-}
-
-
-
 
 function insert_Student_Followers($studentID, $followerID)
 {
@@ -127,10 +103,10 @@ function printStudentSearchResults($keyword)
 // get a studentId from a given email
 function getStudentID($email)
 {
-    $pdo = dbConnect();
-    $result = $pdo->query("SELECT StudentID FROM Student WHERE Email=\"$email\";");
-    $row = $result->fetch(PDO::FETCH_ASSOC);
-    return $row['StudentID'];
+  $pdo = dbConnect();
+  $result = $pdo->query("SELECT StudentID FROM Student WHERE Email=\"$email\";");
+  $row = $result->fetch(PDO::FETCH_ASSOC);
+  return $row['StudentID'];
 }
 
 function getStudentsEnrolledInClass($classID) {
@@ -519,6 +495,20 @@ function getStudentsEnrolledInClassByQuery($classID, $query) {
 
   $sql->execute();
   return $sql;
+}
+
+function isValidStudentID($studentID) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Student.StudentID FROM Student WHERE Student.StudentID=:studentID LIMIT 1');
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+  $sql->execute();
+
+  if ($sql->rowCount() == 1) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 

@@ -1,7 +1,19 @@
 <?php
   session_start();
-  if (!isset($_GET['classID'])) header("Location: school-search.php");
+
   include('functions.php');
+
+  if(!isset($_SESSION['userID']) || !isValidStudentID($_SESSION['userID'])) {
+    header('Location: login.php');
+    exit;
+  }
+
+  if (!isset($_GET['classID'])) {
+    header("Location: school-search.php");
+    exit;
+  }
+
+
   $class = getCourseInformation($_GET['classID'])->fetch(PDO::FETCH_ASSOC);
   $isUserEnrolled = isStudentEnrolled($_SESSION['userID'], $_GET['classID']);
 

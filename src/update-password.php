@@ -2,6 +2,11 @@
 session_start();
 include('functions.php');
 
+if(!isset($_SESSION['userID']) || !isValidStudentID($_SESSION['userID'])) {
+  header('Location: login.php');
+  exit;
+}
+
 // if new password was submitted check if it matches old password
 if (isset($_POST['old-password']) && isset($_POST['new-password-1']) && isset($_POST['new-password-2'])) {
   $succesfulUpdate = updateStudentPassword($_SESSION['userID'], $_POST['old-password'], $_POST['new-password-1']);

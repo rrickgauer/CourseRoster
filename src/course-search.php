@@ -1,6 +1,15 @@
-<?php session_start(); ?>
-<?php include('functions.php'); ?>
-<?php $depts = getDistinctDepts(); ?>
+<?php
+session_start();
+include('functions.php');
+
+if(!isset($_SESSION['userID']) || !isValidStudentID($_SESSION['userID'])) {
+  header('Location: login.php');
+  exit;
+}
+
+$depts = getDistinctDepts();
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 

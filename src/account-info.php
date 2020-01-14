@@ -2,6 +2,11 @@
 session_start();
 include('functions.php');
 
+if(!isset($_SESSION['userID']) || !isValidStudentID($_SESSION['userID'])) {
+  header('Location: login.php');
+  exit;
+}
+
 if (isset($_POST['first']) && isset($_POST['last']) && isset($_POST['email'])) {
   $successfulUpdate = updateStudentInfo($_SESSION['userID'], $_POST['first'], $_POST['last'], $_POST['email']);
 }

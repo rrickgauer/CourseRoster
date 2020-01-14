@@ -2,6 +2,11 @@
 session_start();
 include('functions.php');
 
+if(!isset($_SESSION['userID']) || !isValidStudentID($_SESSION['userID'])) {
+  header('Location: login.php');
+  exit;
+}
+
 $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
 ?>
