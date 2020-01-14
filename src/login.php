@@ -51,6 +51,9 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     <br>
     <p class="text-center">Don't have an account?<a href="createAccount.php"> Sign up</a></p>
 
+    <?php printFooter(); ?>
+
+
   </div>
 </body>
 

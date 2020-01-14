@@ -511,6 +511,9 @@ function isValidStudentID($studentID) {
   }
 }
 
+function printFooter() {
+  echo '<p class="footer">Made by&nbsp;<a href="https://www.ryanrickgauer.com/resume/index.html" target="_blank">Ryan Rickgauer</a>&nbsp;&copy; 2020</p>';
+}
 
 
 

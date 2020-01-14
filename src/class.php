@@ -59,6 +59,9 @@
     <!-- class-get-students-from-search.php -->
     <div id="data-view"></div>
 
+    <?php printFooter(); ?>
+
+
 
   </div>
 

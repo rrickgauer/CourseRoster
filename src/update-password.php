@@ -55,6 +55,8 @@ if (isset($_POST['old-password']) && isset($_POST['new-password-1']) && isset($_
       <p>Update your <a href="account-info.php">account settings</a></p>
     </form>
 
+    <?php printFooter(); ?>
+
 
   </div>
 

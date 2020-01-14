@@ -30,6 +30,9 @@ if(!isset($_SESSION['userID']) || !isValidStudentID($_SESSION['userID'])) {
 
     <!-- get-students-from-search.php -->
     <div id="student-search-results"></div>
+
+    <?php printFooter(); ?>
+
   </div>
 
 

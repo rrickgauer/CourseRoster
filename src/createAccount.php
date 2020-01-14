@@ -55,6 +55,9 @@ if (isset($_POST['first']) && isset($_POST['last']) && isset($_POST['email']) &&
       <a href="login.php"> Log in</a>
     </p>
 
+    <?php printFooter(); ?>
+
+
   </div>
 </body>
 

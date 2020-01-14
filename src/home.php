@@ -136,6 +136,7 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
 
 
+    <?php printFooter(); ?>
 
 
   </div>

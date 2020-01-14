@@ -49,6 +49,9 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
       }
       ?>
     </div>
+
+    <?php printFooter(); ?>
+
   </div>
 <script>
 $(document).ready(function() {

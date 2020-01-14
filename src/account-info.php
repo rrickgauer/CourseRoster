@@ -54,6 +54,7 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       <p>Update your <a href="update-password.php">password</a></p>
     </form>
 
+    <?php printFooter(); ?>
 
 
   </div>

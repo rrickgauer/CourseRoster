@@ -38,6 +38,9 @@ $depts = getDistinctDepts();
     <!-- get-classes-in-dept.php -->
     <div id="classes-section"></div>
 
+    <?php printFooter(); ?>
+
+
   </div>
 
   <script>
