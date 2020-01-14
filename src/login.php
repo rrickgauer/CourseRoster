@@ -4,17 +4,15 @@ include('functions.php');
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
 
-  $student = validateLoginAttempt($_POST['email'], $_POST['password']);
-
-  if ($student->rowCount() == 1) {
+  if (validateLoginAttempt($_POST['email'], $_POST['password'])) {
     session_start();
-    $userID = $student->fetch(PDO::FETCH_ASSOC);
-    $_SESSION['userID'] = $userID['StudentID'];
+    $_SESSION['userID'] = getStudentID($_POST['email']);
     header('Location: home.php');
     exit;
   } else {
     $incorrectLoginAttempt = true;
   }
+
 }
 
 ?>

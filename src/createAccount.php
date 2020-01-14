@@ -10,6 +10,7 @@ if (isset($_POST['first']) && isset($_POST['last']) && isset($_POST['email']) &&
    $_SESSION['userID'] = getStudentID($_POST['email']);
    header('Location: home.php');
    exit;
+
  } else {
    $emailExists = true;
  }

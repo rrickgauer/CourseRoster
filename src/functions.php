@@ -292,13 +292,27 @@ function updateStudentPassword($studentID, $oldPassword, $newPassword) {
 
 function validateLoginAttempt($email, $password) {
   $pdo = dbConnect();
-  $sql = $pdo->prepare('SELECT Student.StudentID FROM Student WHERE Student.Email=:email AND Student.Password=:password LIMIT 1');
+  $sql = $pdo->prepare('SELECT Student.Password FROM Student WHERE Student.Email=:email LIMIT 1');
+
   $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-  $password = filter_var($password, FILTER_SANITIZE_STRING);
   $sql->bindParam(':email', $email, PDO::PARAM_STR);
-  $sql->bindParam(':password', $password, PDO::PARAM_STR);
+
   $sql->execute();
-  return $sql;
+
+  if ($sql->rowCount() != 1) {
+    return false;
+  } else {
+
+    $hash = $sql->fetch(PDO::FETCH_ASSOC);
+    $hash = $hash['Password'];
+
+    return password_verify($password, $hash);
+  }
+
+
+
+
+
 }
 
 function insertStudent($first, $last, $email, $password) {
@@ -308,7 +322,9 @@ function insertStudent($first, $last, $email, $password) {
   $first    = filter_var($first, FILTER_SANITIZE_STRING);
   $last     = filter_var($last, FILTER_SANITIZE_STRING);
   $email    = filter_var($email, FILTER_SANITIZE_EMAIL);
+
   $password = filter_var($password, FILTER_SANITIZE_STRING);
+  $password = password_hash($password, PASSWORD_DEFAULT);
 
   $sql->bindParam(':first', $first, PDO::PARAM_STR);
   $sql->bindParam(':last', $last, PDO::PARAM_STR);
