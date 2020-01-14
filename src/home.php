@@ -66,9 +66,8 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
             </div>
           </div>
 
-          <div id="enrolled-courses-cards">
-
-          </div>
+          <!-- get-user-courses-from-search.php -->
+          <div id="enrolled-courses-cards"></div>
         </div>
 
         <!-- followers -->
@@ -106,26 +105,18 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
               <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
               <div class="dropdown-menu">
                 <h6 class="dropdown-header">View</h6>
-                <a class="dropdown-item active" href="#">Card</a>
-                <a class="dropdown-item" href="#">Table</a>
+                <a class="dropdown-item view active" href="#">Card</a>
+                <a class="dropdown-item view" href="#">Table</a>
               </div>
             </div>
           </div>
 
-          <?php
-          $followings = getStudentFollowing($student['StudentID']);
-          echo '<div class="card-deck">';
-          $count = 0;
-          while ($following = $followings->fetch(PDO::FETCH_ASSOC)) {
-            if ($count == 3) {
-              echo '</div><div class="card-deck">';
-              $count = 0;
-            }
-            echo getStudentCard($following['sid'], $following['First'], $following['Last'], $following['Email'], $following['enrollmentCount'], $student['followersCount']);
-            $count++;
-          }
-          echo '</div>';
-          ?>
+          <div id="following-cards">
+
+
+          </div>
+
+
 
         </div>
       </div>
@@ -143,6 +134,7 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
   <script>
     var coursesView = "card";
     var followersView = "card";
+    var followingView = "card";
 
     $(document).ready(function() {
       $("#nav-item-home").toggleClass("active");
@@ -154,6 +146,9 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       $("#pills-followers .view").on("click", updateFollowersView);
       filterFollowers();
 
+      $("#following-search-input").on("keyup", filterFollowing);
+      $("#pills-following .view").on("click", updateFollowingView);
+      filterFollowing();
     });
 
     function gotoStudentPage(studentCard) {
@@ -163,7 +158,6 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
     function filterEnrolledCourses() {
       var xhttp = new XMLHttpRequest();
-
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           var e = this.responseText;
@@ -172,7 +166,6 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       };
 
       var query = $("#enrolled-courses-search-input").val();
-
       var link = 'get-user-courses-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + coursesView;
       xhttp.open("GET", link, true);
       xhttp.send();
@@ -189,6 +182,21 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
       var query = $("#followers-search-input").val();
       var link = 'get-followers-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + followersView;
+      xhttp.open("GET", link, true);
+      xhttp.send();
+    }
+
+    function filterFollowing() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var e = this.responseText;
+          $("#following-cards").html(e);
+        }
+      };
+
+      var query = $("#following-search-input").val();
+      var link = 'get-following-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + followingView;
       xhttp.open("GET", link, true);
       xhttp.send();
     }
@@ -214,6 +222,19 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       filterFollowers();
       $("#pills-followers .view").toggleClass("active");
     }
+
+    function updateFollowingView() {
+      if (followingView == "card") {
+        followingView = "table";
+      } else {
+        followingView = "card";
+      }
+
+      filterFollowing();
+      $("#pills-following .view").toggleClass("active");
+    }
+
+
   </script>
 
 </body>
