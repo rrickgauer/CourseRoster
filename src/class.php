@@ -19,72 +19,95 @@
   <?php include('navbar.php'); ?>
   <div class="container">
 
-    <div class="card class-card">
-      <div class="card-header">
-        <h1 class="custom-font"><?php echo $class['Dept'] ." ". $class['Number']; ?></h1>
-      </div>
+    <h1 class="custom-font blue-font text-center"><?php echo $class['Dept'] ." ". $class['Number']; ?></h1>
+    <h3 class="custom-font text-center"><?php echo $class['Title']; ?>&nbsp;&nbsp;<span class="badge badge-orange h3"><i class='bx bxs-user'></i> <?php echo $class['count']; ?></span></h3>
 
-      <div class="card-body">
-        <h3 class="custom-font"> <?php echo $class['Title']; ?></h3>
-      </div>
 
-      <div class="card-footer">
-        <p class="h3"><span class="h3 badge badge-orange h3"><i class='bx bxs-user'></i> <?php echo $class['count']; ?></span>
-        <button type="button" name="button" class="btn btn-primary float-right" id="update-register-btn" data-class-id="<?php echo $_GET['classID']; ?>">
-          <?php
-          if ($isUserEnrolled == true) {
-            echo 'Drop';
-          } else {
-            echo 'Register';
-          }
-          ?>
-        </button></p>
-      </div>
+    <!-- register / drop -->
+    <button type="button" name="button" class="btn btn-primary" id="update-register-btn" data-class-id="<?php echo $_GET['classID']; ?>"><?php printDropRegisterButton($isUserEnrolled); ?></button>
 
+    <!-- input toolbar -->
+    <div class="input-group toolbar">
+      <input type="text" class="form-control" aria-label="Text input with dropdown button">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+        <div class="dropdown-menu">
+          <h6 class="dropdown-header">View</h6>
+          <button class="dropdown-item view active" onclick="setView('card')"><i class='bx bx-card'></i>&nbsp;Card</button>
+          <button class="dropdown-item view" onclick="setView('table')"><i class='bx bx-table'></i>&nbsp;Table</button>
+          <div role="separator" class="dropdown-divider"></div>
+        </div>
+      </div>
     </div>
 
+    <!-- class-get-students-from-search.php -->
+    <div id="data-view"></div>
 
 
-
-
-    <div class="card-deck">
-
-      <?php
-      $enrolledStudents = getStudentsEnrolledInClass($_GET['classID']);
-      $count = 0;
-      while ($student = $enrolledStudents->fetch(PDO::FETCH_ASSOC)) {
-        if ($count == 3) {
-          echo '</div><div class="card-deck">';
-          $count = 0;
-        }
-        echo getStudentCard($student['sid'], $student['First'], $student['Last'], $student['Email'],  $student['enrollmentCount'], $student['followersCount']);
-        $count++;
-      }
-      ?>
-
-    </div>
   </div>
 
   <script>
+
+  var view = 'card';
+
     $(document).ready(function() {
       $(".student-card").on("click", function() {
         var studentID = $(this).data("student-id");
         window.location.href = 'student.php?studentID=' + studentID;
       });
-
       $("#nav-item-courses").toggleClass("active");
 
       $("#update-register-btn").on("click", function() {
-        window.location.href = 'update-class-registration.php?classID=<?php echo $_GET['classID']; ?>';
+        var classID = "<?php echo $_GET['classID']; ?>";
+        window.location.href = 'update-class-registration.php?classID=' + classID;
       });
-
-
-
-
+      $(".toolbar input").on("keyup", searchForStudents);
+      searchForStudents();
 
     });
+
+    function searchForStudents() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var e = this.responseText;
+          $("#data-view").html(e);
+        }
+      };
+
+      var classID = "<?php echo $_GET['classID']; ?>";
+      var query = $(".toolbar input").val();
+      var link = 'class-get-students-from-search.php?view=' + view + '&query=' + query + '&classID=' + classID;
+
+      xhttp.open("GET", link, true);
+      xhttp.send();
+
+    }
+
+    function setView(newView) {
+      view = newView;
+      searchForStudents();
+      $(".toolbar .view").toggleClass("active");
+    }
+
+
+
+
+
   </script>
 
 </body>
 
 </html>
+
+<?php
+
+function printDropRegisterButton($isUserEnrolled) {
+  if ($isUserEnrolled == true) {
+    echo 'Drop';
+  } else {
+    echo 'Register';
+  }
+}
+
+?>
