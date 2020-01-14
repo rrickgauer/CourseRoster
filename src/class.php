@@ -24,13 +24,15 @@
 
 
     <!-- register / drop -->
-    <button type="button" name="button" class="btn btn-primary" id="update-register-btn" data-class-id="<?php echo $_GET['classID']; ?>"><?php printDropRegisterButton($isUserEnrolled); ?></button>
+    <button type="button" name="button" class="btn btn-primary custom-font" id="update-register-btn" data-class-id="<?php echo $_GET['classID']; ?>"><?php printDropRegisterButton($isUserEnrolled); ?></button>
+
+    <br><br>
 
     <!-- input toolbar -->
     <div class="input-group toolbar">
-      <input type="text" class="form-control" aria-label="Text input with dropdown button">
+      <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Search">
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
+        <button class="btn btn-outline-secondary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
         <div class="dropdown-menu">
           <h6 class="dropdown-header">View</h6>
           <button class="dropdown-item view active" onclick="setView('card')"><i class='bx bx-card'></i>&nbsp;Card</button>
@@ -39,6 +41,8 @@
         </div>
       </div>
     </div>
+
+    <br>
 
     <!-- class-get-students-from-search.php -->
     <div id="data-view"></div>
@@ -89,10 +93,6 @@
       searchForStudents();
       $(".toolbar .view").toggleClass("active");
     }
-
-
-
-
 
   </script>
 
