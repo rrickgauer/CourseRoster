@@ -9,7 +9,13 @@ if(!isset($_SESSION['userID']) || !isValidStudentID($_SESSION['userID'])) {
 
 // if new password was submitted check if it matches old password
 if (isset($_POST['old-password']) && isset($_POST['new-password-1']) && isset($_POST['new-password-2'])) {
-  $succesfulUpdate = updateStudentPassword($_SESSION['userID'], $_POST['old-password'], $_POST['new-password-1']);
+
+  if (isCorrectPassword($_SESSION['userID'], $_POST['old-password'])) {
+    updateStudentPassword($_SESSION['userID'], $_POST['new-password-1']);
+    $succesfulUpdate = true;
+  } else {
+    $succesfulUpdate = false;
+  }
 }
 
 ?>
