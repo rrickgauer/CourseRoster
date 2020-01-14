@@ -16,7 +16,7 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
 <head>
   <?php include('head.php'); ?>
-  <title></title>
+  <title>Course Roster - Home</title>
 </head>
 
 <body>
