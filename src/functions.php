@@ -33,17 +33,23 @@ function insert_Student_Followers($studentID, $followerID)
 
 }
 
-// checks if a student is follower of another student
-function isFollowing($studentID, $followerID)
-{
+function isFollowing($studentID, $followerID) {
   $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT StudentID FROM Student_Followers WHERE StudentID=:studentID AND FollowerID=:followerID LIMIT 1');
 
-  $sql = "SELECT 1 FROM Student_Followers WHERE StudentID=$studentID AND FollowerID=$followerID";
-  $result = $pdo->query($sql);
-  $row = $result->fetch(PDO::FETCH_ASSOC);
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
 
-  if ($row['1'] == 1) return true;
-  else return false;
+  $followerID = filter_var($followerID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':followerID', $followerID, PDO::PARAM_INT);
+
+  $sql->execute();
+
+  if ($sql->rowCount() == 1) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 
