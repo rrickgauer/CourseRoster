@@ -111,10 +111,8 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
             </div>
           </div>
 
-          <div id="following-cards">
-
-
-          </div>
+          <!-- get-following-from=search.php -->
+          <div id="following-cards"></div>
 
 
 

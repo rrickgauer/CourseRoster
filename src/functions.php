@@ -205,7 +205,7 @@ function getClassCard($classID, $dept, $number, $title, $count) {
     <h5>$title</h5>
    </div>
     <div class=\"card-footer\">
-      <span class=\"badge badge-orange\"><i class='bx bxs-user' ></i> $count</span>
+      <span class=\"badge badge-orange\"><i class='bx bxs-user'></i> $count</span>
       <a href=\"class.php?classID=$classID\" class=\"float-right\" data-toggle=\"tooltip\" title=\"View course\"><i class='bx bx-link-external' ></i></a>
     </div>
   </div>";
@@ -419,6 +419,35 @@ function getStudentFollowingByQuery($studentID, $query) {
 
   $sql->execute();
   return $sql;
+}
+
+function printCourseCardTable($courses) {
+  echo '<br>';
+  echo '<table class="table">
+    <thead>
+      <tr>
+        <th>Course</th>
+        <th>Title</th>
+        <th>Size</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+
+    <tbody>';
+
+    while ($course = $courses->fetch(PDO::FETCH_ASSOC)) {
+      echo '<tr>';
+
+      $classID = $course['cid'];
+
+      echo '<td>' . $course['Dept'] . '-' . $course['Number'] . '</td>';
+      echo '<td>' . $course['Title'] . '</td>';
+      echo '<td><span class="badge badge-orange"><i class="bx bxs-user"></i>&nbsp;' . $course['count'] . '</span></td>';
+      echo "<td><a href=\"class.php?classID=$classID\">View</a></td>";
+      echo '</tr>';
+
+    }
+  echo '</tbody></table>';
 }
 
 function printStudentCardTable($students) {
