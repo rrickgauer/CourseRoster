@@ -13,6 +13,7 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="nav-item-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
           <div class="dropdown-menu" aria-labelledby="nav-item-more">
+            <a class="dropdown-item" id="nav-item-profile" href="student.php?studentID=<?php echo $_SESSION['userID']; ?>">My profile</a>
             <a class="dropdown-item" id="nav-item-settings" href="account-info.php">Settings</a>
             <a class="dropdown-item" id="nav-item-logout" href="logout.php">Logout</a>
           </div>

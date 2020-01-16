@@ -1,13 +1,14 @@
 <?php
-include('functions.php');
 session_start();
+include('functions.php');
 
-if ($_SESSION['userID'] == $_GET['studentID']) {
-  header('Location: home.php');
+if(!isset($_SESSION['userID']) || !isValidStudentID($_SESSION['userID'])) {
+  header('Location: login.php');
   exit;
 }
+
 $student = getStudentInfo($_GET['studentID'])->fetch(PDO::FETCH_ASSOC);
-$enrolledCourses = getEnrolledCourses($_GET['studentID']);
+
 ?>
 
 <!DOCTYPE html>
@@ -15,75 +16,154 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
 
 <head>
   <?php include('head.php'); ?>
-  <title><?php echo $student['First'] . ' ' . $student['Last']; ?></title>
+  <title>Course Roster - Home</title>
 </head>
 
 <body>
   <?php include('navbar.php'); ?>
+
   <div class="container">
 
-    <div class="row">
-      <div class="col-sm-12 col-md-10">
-        <h1 class="custom-font blue-font"><?php echo $student['First'] . ' ' . $student['Last']; ?></h1>
-        <h5><?php echo $student['Email']; ?></h5>
-        <h5><span class="badge badge-primary"><i class='bx bx-chalkboard'></i> <?php echo $student['coursesCount']; ?></span></h5>
+    <div id="home-summary">
+
+      <div class="top-line">
+        <div class="name"><?php echo $student['First'] . ' ' . $student['Last']; ?> </div>
       </div>
 
-      <div class="col-sm-12 col-md-2">
-        <button class="btn btn-primary custom-font" id="update-following-btn">
-          <?php
-          if (isFollowing($_GET['studentID'], $_SESSION['userID'])) {
-            echo 'Following';
-          } else {
-            echo 'Follow';
-          }
-          ?>
-        </button>
-
+      <div class="second-line">
+        <div class="d-inline home-count-stat"><span class="number"><?php echo $student['coursesCount'];   ?></span> courses</div>
+        <div class="d-inline home-count-stat" id="followers-count-stat"><span class="number"><?php echo $student['followersCount']; ?></span> followers</div>
+        <div class="d-inline home-count-stat"><span class="number"><?php echo $student['followingCount']; ?></span> following</div>
       </div>
-    </div><br>
 
-    <h4>Enrolled courses</h4>
-    <div class="input-group toolbar">
-      <div class="input-group-prepend">
-        <span class="input-group-text"><i class='bx bx-search'></i></span>
-      </div>
-      <input type="text" class="form-control" placeholder="Search" id="course-search-input">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
-        <div class="dropdown-menu view-menu">
-          <h6 class="dropdown-header">View</h6>
-          <a class="dropdown-item view active" data-view-type="card" href="#">Card</a>
-          <a class="dropdown-item view" data-view-type="table" href="#">Table</a>
+      <?php isUserProfile(); ?>
+    </div>
+
+    <div id="home-content">
+      <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="pills-courses-tab" data-toggle="pill" href="#pills-courses" role="tab" aria-controls="pills-courses" aria-selected="true">Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="pills-followers-tab" data-toggle="pill" href="#pills-followers" role="tab" aria-controls="pills-followers" aria-selected="false">Followers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="pills-following-tab" data-toggle="pill" href="#pills-following" role="tab" aria-controls="pills-following" aria-selected="false">Following</a>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="pills-tabContent">
+
+        <!-- enrolled courses -->
+        <div class="tab-pane fade show active" id="pills-courses" role="tabpanel" aria-labelledby="pills-courses-tab">
+
+          <div class="input-group" id="enrolled-courses-toolbar">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class='bx bx-search'></i></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Search" id="enrolled-courses-search-input">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
+              <div class="dropdown-menu">
+                <h6 class="dropdown-header">View</h6>
+                <a class="dropdown-item view active" data-view-type="card" href="#">Card</a>
+                <a class="dropdown-item view" data-view-type="table" href="#">Table</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- get-user-courses-from-search.php -->
+          <div id="enrolled-courses-cards"></div>
+        </div>
+
+        <!-- followers -->
+        <div class="tab-pane fade" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab">
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class='bx bx-search'></i></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Search" id="followers-search-input">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
+              <div class="dropdown-menu">
+                <h6 class="dropdown-header">View</h6>
+                <a class="dropdown-item view active" href="#">Card</a>
+                <a class="dropdown-item view" href="#">Table</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- get-followers-from-search.php -->
+          <div id="follower-cards"></div>
+
+        </div>
+
+        <!-- following -->
+        <div class="tab-pane fade" id="pills-following" role="tabpanel" aria-labelledby="pills-following-tab">
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class='bx bx-search'></i></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Search" id="following-search-input">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
+              <div class="dropdown-menu">
+                <h6 class="dropdown-header">View</h6>
+                <a class="dropdown-item view active" href="#">Card</a>
+                <a class="dropdown-item view" href="#">Table</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- get-following-from=search.php -->
+          <div id="following-cards"></div>
+
+
+
         </div>
       </div>
     </div>
 
-    <div id="courses-section"></div>
-
     <?php printFooter(); ?>
+
 
   </div>
   <script>
-    var view = 'card';
+    var coursesView = "card";
+    var followersView = "card";
+    var followingView = "card";
 
     $(document).ready(function() {
-      searchCourses();
       $("#nav-item-students").toggleClass("active");
-      $('[data-toggle="tooltip"]').tooltip();
-      $("#course-search-input").on("keyup", searchCourses);
-      $(".view-menu .view").on("click", updateView);
+      $("#enrolled-courses-search-input").on("keyup", filterEnrolledCourses);
+      $("#enrolled-courses-toolbar .view").on("click", updateCoursesView);
+      filterEnrolledCourses();
+
+      $("#followers-search-input").on("keyup", filterFollowers);
+      $("#pills-followers .view").on("click", updateFollowersView);
+      filterFollowers();
+
+      $("#following-search-input").on("keyup", filterFollowing);
+      $("#pills-following .view").on("click", updateFollowingView);
+      filterFollowing();
 
       $("#update-following-btn").on("click", updateFollowing);
+
+
+      $(function () {
+        $("[data-toggle='tooltip']").tooltip();
+      });
     });
 
     function updateFollowing() {
       var xhttp = new XMLHttpRequest();
-
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          var e = this.responseText;
-          $("#update-following-btn").html(e);
+          filterFollowers();
+          $("#update-following-btn").html(this.responseText);
+          updateSummaryStats();
         }
       };
 
@@ -93,39 +173,135 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
       xhttp.send();
     }
 
-    function updateView() {
-      if (view == 'card') {
-        view = 'table';
-      } else {
-        view = 'card';
-      }
-
-      searchCourses();
-      $(".view-menu .view").toggleClass("active");
+    function updateSummaryStats() {
+      $.ajax({
+        type: "GET",
+        url: 'get-student-data.php',
+        data: {"studentID": "<?php echo $_GET['studentID']; ?>"},
+        success: function(response) {
+          var student = JSON.parse(response);
+          $("#followers-count-stat .number").text(student.followersCount);
+        }
+      });
     }
 
-    function searchCourses() {
+    function gotoStudentPage(studentCard) {
+      var studentID = $(studentCard).data("student-id");
+      window.location.href = 'student.php?studentID=' + studentID;
+    }
+
+    function filterEnrolledCourses() {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
           var e = this.responseText;
-          $("#courses-section").html(e);
+          $("#enrolled-courses-cards").html(e);
         }
       };
 
-      var link = getLinkForSeachCourses();
+      var userID = '<?php echo $_SESSION['userID']; ?>';
+      var query = $("#enrolled-courses-search-input").val();
+      var link = 'get-user-courses-from-search.php?studentID=<?php echo $_GET['studentID']; ?>' + '&query=' + query + '&view=' + coursesView + '&userID=' + userID;
       xhttp.open("GET", link, true);
       xhttp.send();
     }
 
-    function getLinkForSeachCourses() {
-      var studentID = "<?php echo $_GET['studentID']; ?>";
-      var query = $("#course-search-input").val();
-      var link = 'get-user-courses-from-search.php?studentID=' + studentID + '&view=' + view + '&query=' + query;
-      return link;
+    function filterFollowers() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var e = this.responseText;
+          $("#follower-cards").html(e);
+        }
+      };
+
+      var userID = '<?php echo $_SESSION['userID']; ?>';
+      var query = $("#followers-search-input").val();
+      var link = 'get-followers-from-search.php?studentID=<?php echo $_GET['studentID']; ?>' + '&query=' + query + '&view=' + followersView + '&userID=' + userID;
+      xhttp.open("GET", link, true);
+      xhttp.send();
     }
+
+    function filterFollowing() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var e = this.responseText;
+          $("#following-cards").html(e);
+        }
+      };
+
+      var userID = '<?php echo $_SESSION['userID']; ?>';
+      var query = $("#following-search-input").val();
+      var link = 'get-following-from-search.php?studentID=<?php echo $_GET['studentID']; ?>' + '&query=' + query + '&view=' + followingView + '&userID=' + userID;
+      xhttp.open("GET", link, true);
+      xhttp.send();
+    }
+
+    function updateCoursesView() {
+      if (coursesView == "card") {
+        coursesView = "table";
+      } else {
+        coursesView = "card";
+      }
+
+      filterEnrolledCourses();
+      $("#enrolled-courses-toolbar .view").toggleClass("active");
+    }
+
+    function updateFollowersView() {
+      if (followersView == "card") {
+        followersView = "table";
+      } else {
+        followersView = "card";
+      }
+
+      filterFollowers();
+      $("#pills-followers .view").toggleClass("active");
+    }
+
+    function updateFollowingView() {
+      if (followingView == "card") {
+        followingView = "table";
+      } else {
+        followingView = "card";
+      }
+
+      filterFollowing();
+      $("#pills-following .view").toggleClass("active");
+    }
+
+
   </script>
 
 </body>
 
 </html>
+
+<?php
+
+function isUserProfile() {
+  if ($_GET['studentID'] == $_SESSION['userID']) {
+    printAccountSettingsLink();
+  } else {
+    printFollowButton();
+  }
+}
+
+function printFollowButton() {
+  echo '<button class="btn btn-primary custom-font" id="update-following-btn">';
+
+  if (isFollowing($_GET['studentID'], $_SESSION['userID'])) {
+    echo 'Following';
+  } else {
+    echo 'Follow';
+  }
+
+  echo '</button>';
+}
+
+function printAccountSettingsLink() {
+  echo '<a href="account-info.php" class="btn btn-primary custom-font">Account settings</a>';
+}
+
+?>

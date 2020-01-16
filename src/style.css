@@ -202,21 +202,28 @@ a.dropdown-item {
   color: #666666;
 }
 
-#home-summary {
-  text-align: center;
+#home-summary .top-line .name {
+  /* display: inline-block; */
+  font-family: customFont;
+  font-size: 48px;
+  /* color: #0099ff; */
 }
+
+
+#home-summary button,
+#home-summary a {
+ margin-top: 10px;
+}
+
+#home-summary .second-line {
+  margin-right: 90px;
+}
+
 
 #home-summary .home-count-stat {
   margin-left: 5px;
   margin-right: 5px;
 }
-
-#home-summary .name {
-  font-family: customFont;
-  font-size: 48px;
-  color: #0099ff;
-}
-
 #home-summary .number {
   font-weight: bold;
 }
