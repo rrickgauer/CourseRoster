@@ -254,19 +254,24 @@ a.dropdown-item {
 
 .btn-primary {
   background-color: #0099ff;
+}
+
+.btn-primary:focus,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.btn-primary.focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus {
+  outline: none;
+  box-shadow: none;
+  background-color: #0099ff;
   border-color: #0099ff;
 }
 
 .btn-primary:hover {
   background-color: #ff6600;
-  border-color: #ff6600;
-}
-
-.btn:focus,
-.btn-primary:focus {
   outline: none;
-  box-shadow: none;
-  background-color: #0099ff;
+  border-color: #ff6600;
 }
 
 .form-group label {
@@ -280,7 +285,7 @@ a.dropdown-item {
 
 input.invalid,
 input.invalid:focus {
-  background-color: #ff8080
+  background-color: #ff8080;
 }
 
 .new-password-group #new-password-2,
