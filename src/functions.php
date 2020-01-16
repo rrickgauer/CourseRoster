@@ -282,20 +282,39 @@ function printStudentCardDeck($students) {
 }
 
 function getStudentCard($studentID, $first, $last, $email, $enrollmentCount, $followerCount, $following) {
-  return "<div class=\"card student-card\" data-student-id=\"$studentID\">
-  <div class=\"card-header\">
-    <h3 class=\"custom-font\">$first $last</h3>
-  </div>
-  <div class=\"card-body\">
-    <p>$email</p>
-    <p>$following</p>
-  </div>
-  <div class=\"card-footer\">
-    <span class=\"badge badge-primary\"><i class='bx bx-chalkboard'></i> $enrollmentCount</span>
-    <span class=\"badge badge-orange\"><i class='bx bx-glasses'></i> $followerCount</span>
-    <a href=\"student.php?studentID=$studentID\" class=\"float-right\" data-toggle=\"tooltip\" title=\"View student\"><i class='bx bx-link-external' ></i></a>
-  </div>
-</div>";
+
+  if ($following == 1) {
+    return "<div class=\"card student-card\" data-student-id=\"$studentID\">
+    <div class=\"card-header\">
+      <h3 class=\"custom-font\">$first $last</h3>
+    </div>
+    <div class=\"card-body\">
+      <p>$email</p>
+    </div>
+    <div class=\"card-footer\">
+      <span class=\"badge badge-secondary\">Following</span>
+      <span class=\"badge badge-primary\"><i class='bx bx-chalkboard'></i> $enrollmentCount</span>
+      <span class=\"badge badge-orange\"><i class='bx bx-glasses'></i> $followerCount</span>
+      <a href=\"student.php?studentID=$studentID\" class=\"float-right\" data-toggle=\"tooltip\" title=\"View student\"><i class='bx bx-link-external' ></i></a>
+    </div>
+  </div>";
+}
+
+  else {
+    return "<div class=\"card student-card\" data-student-id=\"$studentID\">
+    <div class=\"card-header\">
+      <h3 class=\"custom-font\">$first $last</h3>
+    </div>
+    <div class=\"card-body\">
+      <p>$email</p>
+    </div>
+    <div class=\"card-footer\">
+      <span class=\"badge badge-primary\"><i class='bx bx-chalkboard'></i> $enrollmentCount</span>
+      <span class=\"badge badge-orange\"><i class='bx bx-glasses'></i> $followerCount</span>
+      <a href=\"student.php?studentID=$studentID\" class=\"float-right\" data-toggle=\"tooltip\" title=\"View student\"><i class='bx bx-link-external' ></i></a>
+    </div>
+  </div>";
+  }
 }
 
 function getClassCard($classID, $dept, $number, $title, $count) {

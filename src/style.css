@@ -44,6 +44,11 @@ body {
   background-color: #d9d9d9;
 }
 
+.badge-new {
+  color: #f7f7cf
+
+}
+
 span.email-text-right {
   text-align: right !important;
 }
