@@ -44,6 +44,9 @@
 
     <!-- input toolbar -->
     <div class="input-group toolbar">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class='bx bx-search'></i></span>
+      </div>
       <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Search">
       <div class="input-group-append">
         <button class="btn btn-outline-secondary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
@@ -67,14 +70,8 @@
     var view = 'card';
 
     $(document).ready(function() {
-      $(".student-card").on("click", function() {
-        var studentID = $(this).data("student-id");
-        window.location.href = 'student.php?studentID=' + studentID;
-      });
       $("#nav-item-courses").toggleClass("active");
-
       $("#update-register-btn").on("click", updateClassEnrollment);
-
       $(".toolbar input").on("keyup", searchForStudents);
       searchForStudents();
     });
