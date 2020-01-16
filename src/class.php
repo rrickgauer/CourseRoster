@@ -40,6 +40,7 @@
 
     <br><br>
 
+
     <!-- input toolbar -->
     <div class="input-group toolbar">
       <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Search">
@@ -52,17 +53,14 @@
           <div role="separator" class="dropdown-divider"></div>
         </div>
       </div>
-    </div>
+    </div><br>
 
-    <br>
 
+    <h5 class="custom-font">Enrolled courses</h5>
     <!-- class-get-students-from-search.php -->
     <div id="data-view"></div>
 
     <?php printFooter(); ?>
-
-
-
   </div>
 
   <script>
@@ -120,7 +118,7 @@
 
 function printDropRegisterButton($isUserEnrolled) {
   if ($isUserEnrolled == true) {
-    echo 'Drop';
+    echo 'Enrolled';
   } else {
     echo 'Enroll';
   }
