@@ -322,11 +322,22 @@ function getStudentFollowers($studentID, $query = '') {
   return $sql;
 }
 
-function getStudentFollowing($studentID) {
+function getStudentFollowing($studentID, $query = '') {
   $pdo = dbConnect();
-  $sql = $pdo->prepare('SELECT Student.StudentID as sid, Student.First, Student.Last, Student.Email, (select count(Enrolled.ClassID) from Enrolled where Enrolled.StudentID=sid) as enrollmentCount , (select count(Student_Followers.FollowerID) from Student_Followers WHERE Student_Followers.StudentID=sid) as followersCount from Student where Student.StudentID in (select Student_Followers.StudentID from Student_Followers where Student_Followers.FollowerID = :studentID) ORDER BY Student.Last ASC, Student.First ASC');
+  $sql = $pdo->prepare('SELECT Student.StudentID as sid, Student.First, Student.Last, Student.Email, (select count(Enrolled.ClassID) from Enrolled where Enrolled.StudentID=sid) as enrollmentCount, (select count(Student_Followers.FollowerID) from Student_Followers WHERE Student_Followers.StudentID=sid) as followersCount from Student where Student.StudentID in (select Student_Followers.StudentID from Student_Followers where Student_Followers.FollowerID = :studentID) AND (Student.First like :first OR Student.Last LIKE :last) ORDER BY Student.Last ASC, Student.First ASC');
+
   $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
   $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+
+  $first = "%$query%";
+  $first = filter_var($first, FILTER_SANITIZE_STRING);
+  $sql->bindValue(':first', $first, PDO::PARAM_STR);
+
+  $last = "%$query%";
+  $last = filter_var($last, FILTER_SANITIZE_STRING);
+  $sql->bindValue(':last', $last, PDO::PARAM_STR);
+
+
   $sql->execute();
   return $sql;
 }
@@ -434,27 +445,6 @@ function insertStudent($first, $last, $email, $password) {
   $sql = null;
   $pdo = null;
 
-}
-
-function getStudentFollowingByQuery($studentID, $query) {
-  $pdo = dbConnect();
-  $sql = $pdo->prepare('SELECT Student.StudentID as sid, Student.First, Student.Last, Student.Email, (select count(Enrolled.ClassID) from Enrolled where Enrolled.StudentID=sid) as enrollmentCount, (select count(Student_Followers.FollowerID) from Student_Followers WHERE Student_Followers.StudentID=sid) as followersCount from Student where Student.StudentID in (select Student_Followers.StudentID from Student_Followers where Student_Followers.FollowerID = :studentID) AND (Student.First like :first OR Student.Last LIKE :last) ORDER BY Student.Last ASC, Student.First ASC');
-
-
-  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
-  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
-
-  $first = "%$query%";
-  $first = filter_var($first, FILTER_SANITIZE_STRING);
-  $sql->bindValue(':first', $first, PDO::PARAM_STR);
-
-  $last = "%$query%";
-  $last = filter_var($last, FILTER_SANITIZE_STRING);
-  $sql->bindValue(':last', $last, PDO::PARAM_STR);
-
-
-  $sql->execute();
-  return $sql;
 }
 
 function isStudentEnrolled($studentID, $classID) {
