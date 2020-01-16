@@ -30,10 +30,16 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
       </div>
 
       <div class="col-sm-12 col-md-2">
-        <?php if (isFollowing($_GET['studentID'], $_SESSION['userID']) == false)  { ?>
-        <a href="follow.php?studentID=<?php echo $_GET['studentID']; ?>" class="btn btn-lg blue-button custom-font" role="button">Follow</a>
-        <?php } else { ?>
-        <a href="unfollow.php?studentID=<?php echo $_GET['studentID']; ?>" class="btn btn-lg blue-button custom-font" role="button">Following</a> <?php } ?>
+        <button class="btn btn-primary custom-font" id="update-following-btn">
+          <?php
+          if (isFollowing($_GET['studentID'], $_SESSION['userID'])) {
+            echo 'Following';
+          } else {
+            echo 'Follow';
+          }
+          ?>
+        </button>
+
       </div>
     </div><br>
 
@@ -59,17 +65,39 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
 
   </div>
   <script>
-
-  var view = 'card';
+    var view = 'card';
 
     $(document).ready(function() {
+      searchCourses();
       $("#nav-item-students").toggleClass("active");
       $('[data-toggle="tooltip"]').tooltip();
       $("#course-search-input").on("keyup", searchCourses);
-      searchCourses();
-
       $(".view-menu .view").on("click", updateView);
+
+      $("#update-following-btn").on("click", updateFollowing);
     });
+
+    function updateFollowing() {
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var e = this.responseText;
+          $("#update-following-btn").html(e);
+        }
+      };
+
+      var studentID = "<?php echo $_GET['studentID']; ?>";
+      var link = 'update-following.php?studentID=' + studentID;
+      xhttp.open("GET", link, true);
+      xhttp.send();
+    }
+
+
+
+
+
+
 
     function updateView() {
       if (view == 'card') {
@@ -79,7 +107,6 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
       }
 
       searchCourses();
-
       $(".view-menu .view").toggleClass("active");
     }
 
@@ -98,16 +125,11 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
     }
 
     function getLinkForSeachCourses() {
-      var studentID = '<?php echo $_GET['studentID']; ?>';
+      var studentID = "<?php echo $_GET['studentID']; ?>";
       var query = $("#course-search-input").val();
       var link = 'get-user-courses-from-search.php?studentID=' + studentID + '&view=' + view + '&query=' + query;
       return link;
     }
-
-
-
-
-
   </script>
 
 
