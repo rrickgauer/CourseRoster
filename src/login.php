@@ -7,7 +7,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
   if (validateLoginAttempt($_POST['email'], $_POST['password'])) {
     session_start();
     $_SESSION['userID'] = getStudentID($_POST['email']);
-    header('Location: home.php');
+    header('Location: my-profile.php');
     exit;
   } else {
     $incorrectLoginAttempt = true;

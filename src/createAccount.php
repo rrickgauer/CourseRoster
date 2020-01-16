@@ -8,7 +8,7 @@ if (isset($_POST['first']) && isset($_POST['last']) && isset($_POST['email']) &&
    insertStudent($_POST['first'], $_POST['last'], $_POST['email'], $_POST['password']);
    session_start();
    $_SESSION['userID'] = getStudentID($_POST['email']);
-   header('Location: home.php');
+   header('Location: my-profile.php');
    exit;
 
  } else {
