@@ -118,11 +118,21 @@ function getStudentsEnrolledInClass($classID) {
   return $sql;
 }
 
-function getEnrolledCourses($studentID) {
+function getEnrolledCourses($studentID, $query = '') {
   $pdo = dbConnect();
-  $sql = $pdo->prepare('SELECT Enrolled.ClassID as cid, (SELECT COUNT(Enrolled.StudentID) FROM Enrolled WHERE ClassID=cid) AS count, Class.Dept, Class.Number, Class.Title FROM Enrolled LEFT JOIN Class ON Enrolled.ClassID=Class.ClassID WHERE Enrolled.StudentID=:StudentID GROUP BY cid');
+  $sql = $pdo->prepare('SELECT Enrolled.ClassID as cid, (SELECT COUNT(Enrolled.StudentID) FROM Enrolled WHERE ClassID=cid) AS count, Class.Dept, Class.Number, Class.Title FROM Enrolled LEFT JOIN Class ON Enrolled.ClassID=Class.ClassID WHERE Enrolled.StudentID=:StudentID and (Class.Dept like :dept or Class.Title like :title) GROUP BY cid');
+
   $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
-  $sql->bindParam(':StudentID', $studentID, PDO::PARAM_INT);
+  $sql->bindValue(':StudentID', $studentID, PDO::PARAM_INT);
+
+  $dept = "%$query%";
+  $dept = filter_var($dept, FILTER_SANITIZE_STRING);
+  $sql->bindValue(':dept', $dept, PDO::PARAM_STR);
+
+  $title = "%$query%";
+  $title = filter_var($title, FILTER_SANITIZE_STRING);
+  $sql->bindValue(':title', $title, PDO::PARAM_STR);
+
   $sql->execute();
   return $sql;
 }
@@ -159,25 +169,6 @@ function searchForStudents($query) {
   return $sql;
 }
 
-function searchForStudentEnrolledCourses($studentID, $query) {
-  $pdo = dbConnect();
-  $sql = $pdo->prepare('SELECT Enrolled.ClassID as cid, (SELECT COUNT(Enrolled.StudentID) FROM Enrolled WHERE ClassID=cid) AS count, Class.Dept, Class.Number, Class.Title FROM Enrolled LEFT JOIN Class ON Enrolled.ClassID=Class.ClassID WHERE Enrolled.StudentID=:StudentID and (Class.Dept like :dept or Class.Title like :title) GROUP BY cid');
-
-  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
-  $sql->bindValue(':StudentID', $studentID, PDO::PARAM_INT);
-
-  $dept = "%$query%";
-  $dept = filter_var($dept, FILTER_SANITIZE_STRING);
-  $sql->bindValue(':dept', $dept, PDO::PARAM_STR);
-
-  $title = "%$query%";
-  $title = filter_var($title, FILTER_SANITIZE_STRING);
-  $sql->bindValue(':title', $title, PDO::PARAM_STR);
-
-  $sql->execute();
-  return $sql;
-}
-
 function printStudentCardTable($students) {
   echo '<div class="table-responsive"><table class="table">
         <thead>
@@ -189,7 +180,7 @@ function printStudentCardTable($students) {
             <th>View</th>
           </tr>
         </thead><tbody>';
-        
+
   while ($student = $students->fetch(PDO::FETCH_ASSOC)) {
 
     $id = $student['sid'];
