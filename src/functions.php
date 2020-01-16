@@ -180,10 +180,6 @@ function searchForStudentEnrolledCourses($studentID, $query) {
 }
 
 
-
-
-
-
 function getStudentCard($studentID, $first, $last, $email, $enrollmentCount, $followerCount) {
   return "<div class=\"card student-card\" data-student-id=\"$studentID\">
   <div class=\"card-header\">
@@ -195,7 +191,7 @@ function getStudentCard($studentID, $first, $last, $email, $enrollmentCount, $fo
   <div class=\"card-footer\">
     <span class=\"badge badge-primary\"><i class='bx bx-chalkboard'></i> $enrollmentCount</span>
     <span class=\"badge badge-orange\"><i class='bx bx-glasses'></i> $followerCount</span>
-    <a href=\"student.php?studentID=$studentID\" class=\"float-right\"><i class='bx bx-link-external' ></i></a>
+    <a href=\"student.php?studentID=$studentID\" class=\"float-right\" data-toggle=\"tooltip\" title=\"View student\"><i class='bx bx-link-external' ></i></a>
   </div>
 </div>";
 }
@@ -210,7 +206,7 @@ function getClassCard($classID, $dept, $number, $title, $count) {
    </div>
     <div class=\"card-footer\">
       <span class=\"badge badge-orange\"><i class='bx bxs-user' ></i> $count</span>
-      <a href=\"class.php?classID=$classID\" class=\"float-right\"><i class='bx bx-link-external' ></i></a>
+      <a href=\"class.php?classID=$classID\" class=\"float-right\" data-toggle=\"tooltip\" title=\"View course\"><i class='bx bx-link-external' ></i></a>
     </div>
   </div>";
 }

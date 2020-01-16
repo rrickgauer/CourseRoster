@@ -56,6 +56,8 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
 <script>
 $(document).ready(function() {
   $("#nav-item-students").toggleClass("active");
+  $('[data-toggle="tooltip"]').tooltip();
+
 });
 
 </script>
