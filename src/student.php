@@ -23,9 +23,9 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
 
     <div class="row">
       <div class="col-sm-12 col-md-10">
-        <h1 class="custom-font"><?php echo $student['First'] . ' ' . $student['Last']; ?></h1>
+        <h1 class="custom-font blue-font"><?php echo $student['First'] . ' ' . $student['Last']; ?></h1>
         <h5><?php echo $student['Email']; ?></h5>
-        <p><i class='bx bx-chalkboard'></i> <?php echo $student['coursesCount']; ?></p>
+        <h5><span class="badge badge-primary"><i class='bx bx-chalkboard'></i> <?php echo $student['coursesCount']; ?></span></h5>
       </div>
 
       <div class="col-sm-12 col-md-2">
