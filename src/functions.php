@@ -71,7 +71,7 @@ function printSchoolDepts($schoolID)
 function getCourseInformation($classID)
 {
   $pdo = dbConnect();
-  $sql = $pdo->prepare('SELECT Class.ClassID, Class.Dept, Class.Number, Class.Title, count(Enrolled.StudentID) as count from Class left join Enrolled on Class.ClassID=Enrolled.ClassID where Class.ClassID=:classID GROUP by Class.ClassID');
+  $sql = $pdo->prepare('SELECT Class.ClassID, Class.Dept, Class.Number, Class.Title, count(Enrolled.StudentID) as count from Class left join Enrolled on Class.ClassID=Enrolled.ClassID where Class.ClassID=:classID GROUP by Class.ClassID LIMIT 1');
   $classID = filter_var($classID, FILTER_SANITIZE_NUMBER_INT);
   $sql->bindParam(':classID', $classID, PDO::PARAM_INT);
   $sql->execute();

@@ -32,7 +32,7 @@
   <div class="container">
 
     <h1 class="custom-font blue-font text-center"><?php echo $class['Dept'] ." ". $class['Number']; ?></h1>
-    <h3 class="custom-font text-center"><?php echo $class['Title']; ?>&nbsp;&nbsp;<span class="badge badge-orange h3"><i class='bx bxs-user'></i> <?php echo $class['count']; ?></span></h3>
+    <h3 class="custom-font text-center"><?php echo $class['Title']; ?>&nbsp;&nbsp;<span class="badge badge-orange h3" id="class-enrollment-badge"><i class='bx bxs-user'></i>&nbsp;<?php echo $class['count']; ?></span></h3>
 
 
     <!-- register / drop -->
@@ -64,8 +64,7 @@
   </div>
 
   <script>
-
-  var view = 'card';
+    var view = 'card';
 
     $(document).ready(function() {
       $(".student-card").on("click", function() {
@@ -74,14 +73,38 @@
       });
       $("#nav-item-courses").toggleClass("active");
 
-      $("#update-register-btn").on("click", function() {
-        var classID = "<?php echo $_GET['classID']; ?>";
-        window.location.href = 'update-class-registration.php?classID=' + classID;
-      });
+      $("#update-register-btn").on("click", updateClassEnrollment);
+
       $(".toolbar input").on("keyup", searchForStudents);
       searchForStudents();
-
     });
+
+    function updateClassEnrollment() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          searchForStudents();
+          $("#class-enrollment-badge").html('<i class="bx bxs-user"></i>&nbsp;' + this.responseText);
+          updateRegisterButtonText();
+        }
+      };
+
+      var classID = $("#update-register-btn").data("class-id");
+      var link = 'update-class-registration.php?classID=' + classID;
+
+      xhttp.open("GET", link, true);
+      xhttp.send();
+    }
+
+    function updateRegisterButtonText() {
+      var currentText = $("#update-register-btn").text();
+
+      if (currentText == 'Enroll') {
+        $("#update-register-btn").text("Enrolled");
+      } else {
+        $("#update-register-btn").text("Enroll");
+      }
+    }
 
     function searchForStudents() {
       var xhttp = new XMLHttpRequest();
@@ -92,7 +115,7 @@
         }
       };
 
-      var userID = '<?php echo $_SESSION['userID']; ?>';
+      var userID = "<?php echo $_SESSION['userID']; ?>";
       var classID = "<?php echo $_GET['classID']; ?>";
       var query = $(".toolbar input").val();
       var link = 'class-get-students-from-search.php?view=' + view + '&query=' + query + '&classID=' + classID + '&userID=' + userID;
@@ -107,7 +130,6 @@
       searchForStudents();
       $(".toolbar .view").toggleClass("active");
     }
-
   </script>
 
 </body>
