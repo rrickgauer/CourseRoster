@@ -242,7 +242,7 @@ function printCourseCardTable($courses) {
       echo '<td>' . $course['Dept'] . '-' . $course['Number'] . '</td>';
       echo '<td>' . $course['Title'] . '</td>';
       echo '<td><span class="badge badge-orange"><i class="bx bxs-user"></i>&nbsp;' . $course['count'] . '</span></td>';
-      echo "<td><a href=\"class.php?classID=$classID\">View</a></td>";
+      echo "<td><a href=\"class.php?classID=$classID\"><i class='bx bx-link-external'></i></a></td>";
       echo '</tr>';
 
     }
