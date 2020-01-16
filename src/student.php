@@ -12,6 +12,7 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <?php include('head.php'); ?>
   <title><?php echo $student['First'] . ' ' . $student['Last']; ?></title>
@@ -36,30 +37,87 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
       </div>
     </div>
 
-    <div class="card-deck">
-      <?php
-      $count = 0;
-      while ($course = $enrolledCourses->fetch(PDO::FETCH_ASSOC)) {
-        if ($count == 3) {
-          echo '</div><div class="card-deck">';
-          $count = 0;
-        }
-        echo getClassCard($course['cid'], $course['Dept'], $course['Number'], $course['Title'], $course['count']);
-        $count++;
-      }
-      ?>
+    <div class="input-group toolbar">
+      <div class="input-group-prepend">
+        <span class="input-group-text"><i class='bx bx-search'></i></span>
+      </div>
+      <input type="text" class="form-control" placeholder="Search" id="course-search-input">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
+        <div class="dropdown-menu view-menu">
+          <h6 class="dropdown-header">View</h6>
+          <a class="dropdown-item view active" data-view-type="card" href="#">Card</a>
+          <a class="dropdown-item view" data-view-type="table" href="#">Table</a>
+        </div>
+      </div>
     </div>
+
+    <div id="courses-section">
+
+    </div>
+
+
 
     <?php printFooter(); ?>
 
   </div>
-<script>
-$(document).ready(function() {
-  $("#nav-item-students").toggleClass("active");
-  $('[data-toggle="tooltip"]').tooltip();
+  <script>
 
-});
+  var view = 'card';
 
-</script>
+    $(document).ready(function() {
+      $("#nav-item-students").toggleClass("active");
+      $('[data-toggle="tooltip"]').tooltip();
+      $("#course-search-input").on("keyup", searchCourses);
+      searchCourses();
+
+      $(".view-menu .view").on("click", updateView);
+    });
+
+    function updateView() {
+      if (view == 'card') {
+        view = 'table';
+      } else {
+        view = 'card';
+      }
+
+      searchCourses();
+
+      $(".view-menu .view").toggleClass("active");
+    }
+
+    function searchCourses() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          var e = this.responseText;
+          $("#courses-section").html(e);
+        }
+      };
+
+      var link = getLinkForSeachCourses();
+      xhttp.open("GET", link, true);
+      xhttp.send();
+    }
+
+    function getLinkForSeachCourses() {
+      var studentID = '<?php echo $_GET['studentID']; ?>';
+      var query = $("#course-search-input").val();
+      var link = 'get-user-courses-from-search.php?studentID=' + studentID + '&view=' + view + '&query=' + query;
+      return link;
+    }
+
+
+
+
+
+  </script>
+
+
+
+
+
+
 </body>
+
 </html>
