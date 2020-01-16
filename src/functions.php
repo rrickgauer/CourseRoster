@@ -164,7 +164,7 @@ function getDistinctDepts() {
 
 function getClassesInDept($dept) {
   $pdo = dbConnect();
-  $sql = $pdo->prepare('SELECT Class.ClassID as cid, Class.Dept, Class.Number, Class.Title, (select count(*) from Enrolled where Enrolled.ClassID=cid) as enrollmentCount from Class where Dept=:dept ORDER BY NUMBER ASC');
+  $sql = $pdo->prepare('SELECT Class.ClassID as cid, Class.Dept, Class.Number, Class.Title, (select count(*) from Enrolled where Enrolled.ClassID=cid) as count from Class where Dept=:dept ORDER BY NUMBER ASC');
   $dept = filter_var($dept, FILTER_SANITIZE_STRING);
   $sql->bindParam(':dept', $dept, PDO::PARAM_STR);
   $sql->execute();
