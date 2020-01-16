@@ -18,8 +18,7 @@ function dbConnect()
 }
 
 
-
-function insert_Student_Followers($studentID, $followerID)
+function insertStudentFollower($studentID, $followerID)
 {
   $pdo = dbConnect();
 
@@ -53,7 +52,7 @@ function isFollowing($studentID, $followerID) {
 }
 
 
-function delete_Student_Followers($studentID, $followerID) {
+function removeStudentFollower($studentID, $followerID) {
   $pdo = dbConnect();
   $sql = $pdo->prepare("DELETE FROM Student_Followers WHERE StudentID=? AND FollowerID=?");
   $sql->execute([$studentID, $followerID]);
