@@ -33,7 +33,7 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
         <?php if (isFollowing($_GET['studentID'], $_SESSION['userID']) == false)  { ?>
         <a href="follow.php?studentID=<?php echo $_GET['studentID']; ?>" class="btn btn-lg blue-button custom-font" role="button">Follow</a>
         <?php } else { ?>
-        <a href="unfollow.php?studentID=<?php echo $_GET['studentID']; ?>" class="btn btn-lg blue-button custom-font" role="button">Unfollow</a> <?php } ?>
+        <a href="unfollow.php?studentID=<?php echo $_GET['studentID']; ?>" class="btn btn-lg blue-button custom-font" role="button">Following</a> <?php } ?>
       </div>
     </div>
 
