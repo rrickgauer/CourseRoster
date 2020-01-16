@@ -21,7 +21,7 @@ if(!isset($_SESSION['userID']) || !isValidStudentID($_SESSION['userID'])) {
   <div class="container">
     <h1 class="custom-font blue-font text-center">Student search</h1> <br>
 
-    <div class="input-group input-group-lg">
+    <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class='bx bx-search'></i></span>
       </div>
