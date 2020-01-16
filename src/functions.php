@@ -189,8 +189,7 @@ function printStudentCardTable($students) {
             <th>View</th>
           </tr>
         </thead><tbody>';
-
-
+        
   while ($student = $students->fetch(PDO::FETCH_ASSOC)) {
 
     $id = $student['sid'];
@@ -202,7 +201,7 @@ function printStudentCardTable($students) {
     echo '<td>' . $student['Email'] . '</td>';
     echo "<td><span class=\"badge badge-primary\"><i class='bx bx-chalkboard'></i> $enrollmentCount</span></td>";
     echo "<td><span class=\"badge badge-orange\"><i class='bx bx-glasses'></i> $followerCount</span></td>";
-    echo "<td><a href=\"student.php?studentID=$id\"><i class='bx bx-link-external'></i></a></td>";
+    echo "<td><a href=\"student.php?studentID=$id\" data-toggle=\"tooltip\" title=\"View student\"><i class='bx bx-link-external'></i></a></td>";
     echo '</tr>';
   }
 

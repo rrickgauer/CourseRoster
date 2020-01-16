@@ -147,6 +147,11 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       $("#following-search-input").on("keyup", filterFollowing);
       $("#pills-following .view").on("click", updateFollowingView);
       filterFollowing();
+
+      // $('[data-toggle="tooltip"]').tooltip();
+      $(function () {
+        $("[data-toggle='tooltip']").tooltip();
+      });
     });
 
     function gotoStudentPage(studentCard) {
