@@ -35,8 +35,9 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
         <?php } else { ?>
         <a href="unfollow.php?studentID=<?php echo $_GET['studentID']; ?>" class="btn btn-lg blue-button custom-font" role="button">Following</a> <?php } ?>
       </div>
-    </div>
+    </div><br>
 
+    <h4>Enrolled courses</h4>
     <div class="input-group toolbar">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class='bx bx-search'></i></span>
@@ -52,11 +53,7 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
       </div>
     </div>
 
-    <div id="courses-section">
-
-    </div>
-
-
+    <div id="courses-section"></div>
 
     <?php printFooter(); ?>
 

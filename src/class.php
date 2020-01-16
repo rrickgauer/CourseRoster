@@ -40,6 +40,7 @@
 
     <br><br>
 
+    <h4 class="custom-font">Current roster</h4>
 
     <!-- input toolbar -->
     <div class="input-group toolbar">
@@ -53,10 +54,9 @@
           <div role="separator" class="dropdown-divider"></div>
         </div>
       </div>
-    </div><br>
+    </div>
 
 
-    <h5 class="custom-font">Enrolled courses</h5>
     <!-- class-get-students-from-search.php -->
     <div id="data-view"></div>
 
