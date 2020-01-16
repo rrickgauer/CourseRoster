@@ -121,7 +121,7 @@ function printDropRegisterButton($isUserEnrolled) {
   if ($isUserEnrolled == true) {
     echo 'Drop';
   } else {
-    echo 'Register';
+    echo 'Enroll';
   }
 }
 
