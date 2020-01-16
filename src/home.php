@@ -120,11 +120,6 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
       </div>
     </div>
 
-
-
-
-
-
     <?php printFooter(); ?>
 
 
@@ -168,8 +163,9 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
         }
       };
 
+      var userID = '<?php echo $_SESSION['userID']; ?>';
       var query = $("#enrolled-courses-search-input").val();
-      var link = 'get-user-courses-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + coursesView;
+      var link = 'get-user-courses-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + coursesView + '&userID=' + userID;
       xhttp.open("GET", link, true);
       xhttp.send();
     }
@@ -183,8 +179,9 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
         }
       };
 
+      var userID = '<?php echo $_SESSION['userID']; ?>';
       var query = $("#followers-search-input").val();
-      var link = 'get-followers-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + followersView;
+      var link = 'get-followers-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + followersView + '&userID=' + userID;
       xhttp.open("GET", link, true);
       xhttp.send();
     }
@@ -198,8 +195,9 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
         }
       };
 
+      var userID = '<?php echo $_SESSION['userID']; ?>';
       var query = $("#following-search-input").val();
-      var link = 'get-following-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + followingView;
+      var link = 'get-following-from-search.php?studentID=<?php echo $_SESSION['userID']; ?>' + '&query=' + query + '&view=' + followingView + '&userID=' + userID;
       xhttp.open("GET", link, true);
       xhttp.send();
     }

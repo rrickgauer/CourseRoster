@@ -94,9 +94,10 @@
         }
       };
 
+      var userID = '<?php echo $_SESSION['userID']; ?>';
       var classID = "<?php echo $_GET['classID']; ?>";
       var query = $(".toolbar input").val();
-      var link = 'class-get-students-from-search.php?view=' + view + '&query=' + query + '&classID=' + classID;
+      var link = 'class-get-students-from-search.php?view=' + view + '&query=' + query + '&classID=' + classID + '&userID=' + userID;
 
       xhttp.open("GET", link, true);
       xhttp.send();

@@ -1,7 +1,7 @@
 <?php
 
 include_once('functions.php');
-$enrolledStudents = getStudentsEnrolledInClass($_GET['classID'], $_GET['query']);
+$enrolledStudents = getStudentsEnrolledInClass($_GET['userID'], $_GET['classID'], $_GET['query']);
 
 if (isset($_GET['view']) && $_GET['view'] == 'table') {
   printStudentCardTable($enrolledStudents);

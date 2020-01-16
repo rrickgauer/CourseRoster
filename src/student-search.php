@@ -55,7 +55,8 @@ if(!isset($_SESSION['userID']) || !isValidStudentID($_SESSION['userID'])) {
           }
         };
 
-        var link = 'get-students-from-search.php?query=' + query;
+        var userID = '<?php echo $_SESSION['userID']; ?>';
+        var link = 'get-students-from-search.php?query=' + query + '&userID=' + userID;
         xhttp.open("GET", link, true);
         xhttp.send();
       }
