@@ -93,12 +93,6 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
       xhttp.send();
     }
 
-
-
-
-
-
-
     function updateView() {
       if (view == 'card') {
         view = 'table';
@@ -131,11 +125,6 @@ $enrolledCourses = getEnrolledCourses($_GET['studentID']);
       return link;
     }
   </script>
-
-
-
-
-
 
 </body>
 
