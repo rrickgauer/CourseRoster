@@ -159,7 +159,6 @@ function searchForStudents($query) {
   return $sql;
 }
 
-
 function searchForStudentEnrolledCourses($studentID, $query) {
   $pdo = dbConnect();
   $sql = $pdo->prepare('SELECT Enrolled.ClassID as cid, (SELECT COUNT(Enrolled.StudentID) FROM Enrolled WHERE ClassID=cid) AS count, Class.Dept, Class.Number, Class.Title FROM Enrolled LEFT JOIN Class ON Enrolled.ClassID=Class.ClassID WHERE Enrolled.StudentID=:StudentID and (Class.Dept like :dept or Class.Title like :title) GROUP BY cid');
@@ -177,6 +176,98 @@ function searchForStudentEnrolledCourses($studentID, $query) {
 
   $sql->execute();
   return $sql;
+}
+
+function printStudentCardTable($students) {
+  echo '<div class="table-responsive"><table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Courses</th>
+            <th>Followers</th>
+            <th>View</th>
+          </tr>
+        </thead><tbody>';
+
+
+  while ($student = $students->fetch(PDO::FETCH_ASSOC)) {
+
+    $id = $student['sid'];
+    $enrollmentCount = $student['enrollmentCount'];
+    $followerCount = $student['followersCount'];
+
+    echo '<tr>';
+    echo '<td>' . $student['First'] . '&nbsp;' . $student['Last'] . '</td>';
+    echo '<td>' . $student['Email'] . '</td>';
+    echo "<td><span class=\"badge badge-primary\"><i class='bx bx-chalkboard'></i> $enrollmentCount</span></td>";
+    echo "<td><span class=\"badge badge-orange\"><i class='bx bx-glasses'></i> $followerCount</span></td>";
+    echo "<td><a href=\"student.php?studentID=$id\"><i class='bx bx-link-external'></i></a></td>";
+    echo '</tr>';
+  }
+
+  echo '</tbody></table></div>';
+}
+
+function printCourseCardTable($courses) {
+  echo '<br>';
+  echo '<table class="table">
+    <thead>
+      <tr>
+        <th>Course</th>
+        <th>Title</th>
+        <th>Size</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+
+    <tbody>';
+
+    while ($course = $courses->fetch(PDO::FETCH_ASSOC)) {
+      echo '<tr>';
+
+      $classID = $course['cid'];
+
+      echo '<td>' . $course['Dept'] . '-' . $course['Number'] . '</td>';
+      echo '<td>' . $course['Title'] . '</td>';
+      echo '<td><span class="badge badge-orange"><i class="bx bxs-user"></i>&nbsp;' . $course['count'] . '</span></td>';
+      echo "<td><a href=\"class.php?classID=$classID\">View</a></td>";
+      echo '</tr>';
+
+    }
+  echo '</tbody></table>';
+}
+
+function printClassCardDeck($cards) {
+  echo '<div class="card-deck">';
+
+  $count = 0;
+  while ($card = $cards->fetch(PDO::FETCH_ASSOC)) {
+    if ($count == 3) {
+      echo '</div><div class="card-deck">';
+      $count = 0;
+    }
+
+    echo getClassCard($card['cid'], $card['Dept'], $card['Number'], $card['Title'], $card['count']);
+    $count++;
+  }
+}
+
+function printStudentCardDeck($students) {
+  echo '<div class="card-deck">';
+  $count = 0;
+
+  while ($student = $students->fetch(PDO::FETCH_ASSOC)) {
+    if ($count == 3) {
+      echo '</div><div class="card-deck">';
+      $count = 0;
+    }
+
+    echo getStudentCard($student['sid'], $student['First'], $student['Last'], $student['Email'], $student['enrollmentCount'], $student['followersCount']);
+    $count++;
+  }
+
+  echo '</div>';
 }
 
 
@@ -321,10 +412,6 @@ function validateLoginAttempt($email, $password) {
   }
 }
 
-
-
-
-
 function insertStudent($first, $last, $email, $password) {
   $pdo = dbConnect();
   $sql = $pdo->prepare('INSERT INTO Student (First, Last, Email, Password) VALUES (:first, :last, :email, :password)');
@@ -345,38 +432,6 @@ function insertStudent($first, $last, $email, $password) {
   $sql = null;
   $pdo = null;
 
-}
-
-function printClassCardDeck($cards) {
-  echo '<div class="card-deck">';
-
-  $count = 0;
-  while ($card = $cards->fetch(PDO::FETCH_ASSOC)) {
-    if ($count == 3) {
-      echo '</div><div class="card-deck">';
-      $count = 0;
-    }
-
-    echo getClassCard($card['cid'], $card['Dept'], $card['Number'], $card['Title'], $card['count']);
-    $count++;
-  }
-}
-
-function printStudentCardDeck($students) {
-  echo '<div class="card-deck">';
-  $count = 0;
-
-  while ($student = $students->fetch(PDO::FETCH_ASSOC)) {
-    if ($count == 3) {
-      echo '</div><div class="card-deck">';
-      $count = 0;
-    }
-
-    echo getStudentCard($student['sid'], $student['First'], $student['Last'], $student['Email'], $student['enrollmentCount'], $student['followersCount']);
-    $count++;
-  }
-
-  echo '</div>';
 }
 
 function getStudentFollowersByQuery($studentID, $query) {
@@ -419,68 +474,6 @@ function getStudentFollowingByQuery($studentID, $query) {
 
   $sql->execute();
   return $sql;
-}
-
-function printCourseCardTable($courses) {
-  echo '<br>';
-  echo '<table class="table">
-    <thead>
-      <tr>
-        <th>Course</th>
-        <th>Title</th>
-        <th>Size</th>
-        <th>Link</th>
-      </tr>
-    </thead>
-
-    <tbody>';
-
-    while ($course = $courses->fetch(PDO::FETCH_ASSOC)) {
-      echo '<tr>';
-
-      $classID = $course['cid'];
-
-      echo '<td>' . $course['Dept'] . '-' . $course['Number'] . '</td>';
-      echo '<td>' . $course['Title'] . '</td>';
-      echo '<td><span class="badge badge-orange"><i class="bx bxs-user"></i>&nbsp;' . $course['count'] . '</span></td>';
-      echo "<td><a href=\"class.php?classID=$classID\">View</a></td>";
-      echo '</tr>';
-
-    }
-  echo '</tbody></table>';
-}
-
-function printStudentCardTable($students) {
-  echo '<div class="table-responsive"><table class="table">
-        <thead>
-          <tr>
-            <th>First</th>
-            <th>Last</th>
-            <th>Email</th>
-            <th>Courses</th>
-            <th>Followers</th>
-            <th>View</th>
-          </tr>
-        </thead><tbody>';
-
-
-  while ($student = $students->fetch(PDO::FETCH_ASSOC)) {
-
-    $id = $student['sid'];
-    $enrollmentCount = $student['enrollmentCount'];
-    $followerCount = $student['followersCount'];
-
-    echo '<tr>';
-    echo '<td>' . $student['First'] . '</td>';
-    echo '<td>' . $student['Last'] . '</td>';
-    echo '<td>' . $student['Email'] . '</td>';
-    echo "<td><span class=\"badge badge-primary\"><i class='bx bx-chalkboard'></i> $enrollmentCount</span></td>";
-    echo "<td><span class=\"badge badge-orange\"><i class='bx bx-glasses'></i> $followerCount</span></td>";
-    echo "<td><a href=\"student.php?studentID=$id\"><i class='bx bx-link-external'></i></a></td>";
-    echo '</tr>';
-  }
-
-  echo '</tbody></table></div>';
 }
 
 function isStudentEnrolled($studentID, $classID) {
