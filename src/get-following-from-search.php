@@ -1,8 +1,6 @@
 <?php
-
 include_once('functions.php');
-
-$following = getStudentFollowingByQuery($_GET['studentID'], $_GET['query']);
+$following = getStudentFollowing($_GET['studentID'], $_GET['query']);
 
 if (isset($_GET['view'])) {
   if ($_GET['view'] == 'table') {
@@ -14,8 +12,4 @@ if (isset($_GET['view'])) {
 }
 
 exit;
-
-
-
-
 ?>
