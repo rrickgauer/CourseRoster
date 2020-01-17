@@ -587,11 +587,11 @@ function insertActivity($studentID, $targetID, $type) {
 
   $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
   $targetID = filter_var($targetID, FILTER_SANITIZE_NUMBER_INT);
-  $type = filter_var($type, FILTER_SANITIZE_NUMBER_INT);
+  $type = filter_var($type, FILTER_SANITIZE_STRING);
 
   $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
   $sql->bindParam(':targetID', $targetID, PDO::PARAM_INT);
-  $sql->bindParam(':type', $type, PDO::PARAM_INT);
+  $sql->bindParam(':type', $type, PDO::PARAM_STR);
 
   $sql->execute();
 }
