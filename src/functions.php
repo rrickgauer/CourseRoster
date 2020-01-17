@@ -596,6 +596,11 @@ function insertActivity($studentID, $targetID, $type) {
   $sql->execute();
 }
 
+function getActivity() {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Activity.ActivityID, Activity.StudentID, Activity.Type, Activity.TargetID as tid, if (Activity.Type = "enrolled" or Activity.Type = "dropped", (select concat(Class.Dept, "-", Class.Number) FROM Class where Class.ClassID=tid), (select concat(Student.First, " ", Student.Last) FROM Student where Student.StudentID=tid) ) as target, Activity.Time, date_format(Activity.Time, "%c/%e/%y") as display_date, date_format(Activity.Time, "%r") display_time from Activity order by Activity.Time desc, Activity.ActivityID desc');
+}
+
 
 
 
