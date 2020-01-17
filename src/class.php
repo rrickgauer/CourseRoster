@@ -36,6 +36,7 @@
 
 
     <!-- register / drop -->
+    <!-- see update-class-registration.php -->
     <button type="button" name="button" class="btn btn-primary custom-font" id="update-register-btn" data-class-id="<?php echo $_GET['classID']; ?>"><?php printDropRegisterButton($isUserEnrolled); ?></button>
 
     <br><br>
