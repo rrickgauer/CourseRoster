@@ -580,4 +580,25 @@ function printFooter() {
   echo '<p class="footer">Made by&nbsp;<a href="https://www.ryanrickgauer.com/resume/index.html" target="_blank">Ryan Rickgauer</a>&nbsp;&copy; 2020</p>';
 }
 
+
+function insertActivity($studentID, $targetID, $type) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('INSERT INTO Activity (StudentID, TargetID, Type, Time) VALUES (:studentID, :targetID, :type, now())');
+
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $targetID = filter_var($targetID, FILTER_SANITIZE_NUMBER_INT);
+  $type = filter_var($type, FILTER_SANITIZE_NUMBER_INT);
+
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+  $sql->bindParam(':targetID', $targetID, PDO::PARAM_INT);
+  $sql->bindParam(':type', $type, PDO::PARAM_INT);
+
+  $sql->execute();
+}
+
+
+
+
+
+
 ?>
