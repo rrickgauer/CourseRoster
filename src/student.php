@@ -36,6 +36,7 @@ $student = getStudentInfo($_GET['studentID'])->fetch(PDO::FETCH_ASSOC);
         <div class="d-inline home-count-stat"><span class="number"><?php echo $student['followingCount']; ?></span> following</div>
       </div>
 
+      <!-- see update-following.php -->
       <?php isUserProfile(); ?>
     </div>
 
