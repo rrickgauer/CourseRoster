@@ -599,6 +599,22 @@ function insertActivity($studentID, $targetID, $type) {
 function getActivity() {
   $pdo = dbConnect();
   $sql = $pdo->prepare('SELECT Activity.ActivityID, Activity.StudentID, Student.First, Student.Last, Activity.Type, Activity.TargetID as tid, if (Activity.Type = "enrolled" or Activity.Type = "dropped", (select concat(Class.Dept, "-", Class.Number) FROM Class where Class.ClassID=tid), (select concat(Student.First, " ", Student.Last) FROM Student where Student.StudentID=tid) ) as target, Activity.Time, date_format(Activity.Time, "%c/%e/%y") as display_date, date_format(Activity.Time, "%r") display_time from Activity left join Student on Activity.StudentID=Student.StudentID order by Activity.Time desc, Activity.ActivityID desc');
+
+  $sql->execute();
+  return $sql;
+
+}
+
+function getStudentActivity($studentID) {
+  $pdo = dbConnect();
+  $sql = $pdo->prepare('SELECT Activity.ActivityID, Activity.StudentID, Student.First, Student.Last, Activity.Type, Activity.TargetID as tid, if (Activity.Type = "enrolled" or Activity.Type = "dropped", (select concat(Class.Dept, "-", Class.Number) FROM Class where Class.ClassID=tid), (select concat(Student.First, " ", Student.Last) FROM Student where Student.StudentID=tid) ) as target, Activity.Time, date_format(Activity.Time, "%c/%e/%y") as display_date, date_format(Activity.Time, "%r") display_time from Activity left join Student on Activity.StudentID=Student.StudentID where Activity.StudentID=:studentID or (Activity.Type="followed" AND Activity.TargetID=:studentID2) order by Activity.Time desc, Activity.ActivityID desc');
+
+  $studentID = filter_var($studentID, FILTER_SANITIZE_NUMBER_INT);
+  $sql->bindParam(':studentID', $studentID, PDO::PARAM_INT);
+  $sql->bindParam(':studentID2', $studentID, PDO::PARAM_INT);
+
+  $sql->execute();
+  return $sql;
 }
 
 
