@@ -58,6 +58,7 @@ if (isset($_POST['old-password']) && isset($_POST['new-password-1']) && isset($_
       </div>
 
       <input type="submit" value="Save" id="save-password-btn" class="btn btn-primary" disabled>
+      <p><a href="forgot-password.php">Forgot your password?</a></p>
       <p>Update your <a href="account-info.php">account settings</a></p>
     </form>
 
