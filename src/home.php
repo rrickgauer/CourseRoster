@@ -16,7 +16,7 @@ $activities = getActivity();
 
 <head>
   <?php include('head.php'); ?>
-  <title>Course Roster</title>
+  <title>Course Roster - Home</title>
 </head>
 
 <body>
@@ -67,16 +67,16 @@ function printActivity($activity) {
   echo "<a href=\"student.php?studentID=$studentID\">$first $last</a>";
 
   if ($type == 'enrolled') {
-    echo " enrolled in <a href=\"class.php?classID=$targetID\"> $target";
+    echo " <i>enrolled</i> in <a href=\"class.php?classID=$targetID\"> $target</a>";
   } else if ($type == 'followed') {
-    echo " followed <a href=\"class.php?classID=$targetID\"> $target";
+    echo " <i>followed</i> <a href=\"student.php?studentID=$targetID\"> $target</a>";
   } else if ($type == 'dropped') {
-    echo " dropped <a href=\"class.php?classID=$targetID\"> $target";
+    echo " <i>dropped</i> <a href=\"class.php?classID=$targetID\"> $target</a>";
   }
 
+  echo '<br>';
 
-
-  echo "<span class=\"badge badge-secondary float-right\"> $displayDate</span>";
+  echo "<i class='bx bx-time'></i> $displayDate &bull; $displayTime";
   echo '</li>';
 
 
