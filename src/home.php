@@ -24,7 +24,7 @@ $activities = getActivity();
   <div class="container">
     <h1 class="custom-font text-center"><span class="blue-font">Course</span><span class="orange-font">&nbsp;roster</span></h1>
 
-    <h3>Latest activity</h3>
+    <h6>Latest activity</h6>
 
     <ul class="list-group list-group-flush">
     <?php
@@ -64,15 +64,19 @@ function printActivity($activity) {
 
   echo '<li class="list-group-item">';
 
-  echo "<a href=\"#\">$first $last</a>";
+  echo "<a href=\"student.php?studentID=$studentID\">$first $last</a>";
 
-  if ($type == 'followed') {
-    echo " $type $target";
-  } else {
-    echo " $type in $target";
+  if ($type == 'enrolled') {
+    echo " enrolled in <a href=\"class.php?classID=$targetID\"> $target";
+  } else if ($type == 'followed') {
+    echo " followed <a href=\"class.php?classID=$targetID\"> $target";
+  } else if ($type == 'dropped') {
+    echo " dropped <a href=\"class.php?classID=$targetID\"> $target";
   }
 
-  echo "<span class=\"badge badge-secondary float-right\"> 1/16/20</span>";
+
+
+  echo "<span class=\"badge badge-secondary float-right\"> $displayDate</span>";
   echo '</li>';
 
 
