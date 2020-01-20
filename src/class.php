@@ -24,7 +24,7 @@
 
 <head>
   <?php include('head.php'); ?>
-  <title><?php echo $class['Dept']." ".$class['Number'] . ' - ' . $class['Title'];?></title>
+  <title><?php echo $class['Dept'] . '-' . $class['Number']; ?></title>
 </head>
 
 <body>
