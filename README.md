@@ -26,3 +26,8 @@ In order to get all the class information such as the department, course number,
 * [Bootstrap 4](https://getbootstrap.com/)
 * [Boxicons](https://boxicons.com/)
 * [Select2](https://select2.org/)
+
+
+## Author
+
+Course Roster was written by [Ryan Rickgauer](https://www.ryanrickgauer.com/resume/index.html)
