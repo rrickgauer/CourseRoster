@@ -1,11 +1,10 @@
-# Course Roster
+<br>
 
-![Course Roster logo](src/img/logo.png)
+![Logo](logo.png)
 
-<img src="https://github.com/sindresorhus/pure/blob/master/screenshot.png?raw=true" width="864">
+<br>
 
-## Website
-www.courseroster.com
+You can visit the site by clicking [here](https://courseroster.com/login.php) or by going to www.courseroster.com
 
 ## Background
 Course Roster is a project I created for [Northern Illinois University](https://www.niu.edu/index.shtml) students to see what courses other NIU students are taking in a given semester. After [signing up](https://courseroster.com/createAccount.php) for an account, students can then search for a course by dept and add it to their “roster”. Users can also search for other users by first and last name, or email to see what courses they are registered for. Users also have the option to follow other students so they can quickly reference them whenever they choose.
