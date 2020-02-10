@@ -46,10 +46,8 @@ if (isset($_POST['old-password']) && isset($_POST['new-password-1']) && isset($_
 
       <!-- new password 1 -->
       <div class="new-password-group">
-        <input type="password" class="form-control" id="new-password-1" name="new-password-1" placeholder="Confirm new password" required>
+        <input type="password" class="form-control" id="new-password-1" name="new-password-1" placeholder="New password" required>
       </div>
-
-
 
       <!-- new-password 2 -->
       <div class="new-password-group" id="new-password-group-2">
