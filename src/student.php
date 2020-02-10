@@ -67,8 +67,8 @@ $student = getStudentInfo($_GET['studentID'])->fetch(PDO::FETCH_ASSOC);
               <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
               <div class="dropdown-menu">
                 <h6 class="dropdown-header">View</h6>
-                <a class="dropdown-item view active" data-view-type="card" href="#">Card</a>
-                <a class="dropdown-item view" data-view-type="table" href="#">Table</a>
+                <a class="dropdown-item view active" data-view-type="card" href="#"><i class='bx bx-card'></i>&nbsp;Card</a>
+                <a class="dropdown-item view" data-view-type="table" href="#"><i class='bx bx-table'></i>&nbsp;Table</a>
               </div>
             </div>
           </div>
@@ -89,8 +89,8 @@ $student = getStudentInfo($_GET['studentID'])->fetch(PDO::FETCH_ASSOC);
               <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
               <div class="dropdown-menu">
                 <h6 class="dropdown-header">View</h6>
-                <a class="dropdown-item view active" href="#">Card</a>
-                <a class="dropdown-item view" href="#">Table</a>
+                <a class="dropdown-item view active" href="#"><i class='bx bx-card'></i>&nbsp;Card</a>
+                <a class="dropdown-item view" href="#"><i class='bx bx-table'></i>&nbsp;Table</a>
               </div>
             </div>
           </div>
@@ -112,8 +112,8 @@ $student = getStudentInfo($_GET['studentID'])->fetch(PDO::FETCH_ASSOC);
               <button class="btn btn-outline-secondary dropleft" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class='bx bx-dots-horizontal-rounded'></i></button>
               <div class="dropdown-menu">
                 <h6 class="dropdown-header">View</h6>
-                <a class="dropdown-item view active" href="#">Card</a>
-                <a class="dropdown-item view" href="#">Table</a>
+                <a class="dropdown-item view active" href="#"><i class='bx bx-card'></i>&nbsp;Card</a>
+                <a class="dropdown-item view" href="#"><i class='bx bx-table'></i>&nbsp;Table</a>
               </div>
             </div>
           </div>

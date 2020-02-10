@@ -38,13 +38,14 @@ $depts = getDistinctDepts();
 
     <br>
 
+    <!-- view dropdown -->
     <div class="dropdown">
       <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         View
       </button>
       <div class="dropdown-menu view-menu">
-        <button class="dropdown-item view active" type="button">Card</button>
-        <button class="dropdown-item view" type="button">Table</button>
+        <button class="dropdown-item view active" type="button"><i class='bx bx-card'></i>&nbsp;Card</button>
+        <button class="dropdown-item view" type="button"><i class='bx bx-table'></i>&nbsp;Table</button>
       </div>
     </div>
 
