@@ -203,16 +203,27 @@ a.dropdown-item {
 }
 
 #home-summary .top-line .name {
-  /* display: inline-block; */
   font-family: customFont;
   font-size: 48px;
-  /* color: #0099ff; */
+  color: #0099ff;
+  margin-bottom: 0;
+  line-height: 1;
 }
 
+#home-summary .top-line .email {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+#home-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
 
 #home-summary button,
 #home-summary a {
- margin-top: 10px;
+  margin-top: 10px;
 }
 
 #home-summary .second-line {
@@ -220,10 +231,13 @@ a.dropdown-item {
 }
 
 
+
 #home-summary .home-count-stat {
   margin-left: 5px;
   margin-right: 5px;
+  display: inline;
 }
+
 #home-summary .number {
   font-weight: bold;
 }
@@ -257,6 +271,13 @@ a.dropdown-item {
   padding: 0;
   margin-right: 50px;
   margin-left: 50px;
+}
+
+.split {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
 }
 
 .btn-primary {
@@ -345,6 +366,12 @@ table * {
   text-align: center;
 }
 
+tr.following .name,
+tr.following .email {
+  color: #28a745;
+  font-weight: bold;
+}
+
 @media (max-width: 768px) {
   .form-compact {
     padding-left: 0;
@@ -371,4 +398,36 @@ table * {
   #navbar ul {
     background-color: white;
   }
+
+  #home-summary {
+    display: block !important;
+  }
+
+  #home-summary .second-line {
+    margin-right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+  }
+
+  #home-summary .left-side .name,
+  #home-summary .left-side .email {
+    text-align: center;
+  }
+
+  #home-content {
+    margin-top: 20px;
+  }
+
+  #home-summary .right-side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #update-following-btn {
+    padding: 4px 8px;
+  }
+
+
 }

@@ -31,15 +31,22 @@
   <?php include('navbar.php'); ?>
   <div class="container">
 
-    <h1 class="custom-font blue-font text-center"><?php echo $class['Dept'] ." ". $class['Number']; ?></h1>
-    <h3 class="custom-font text-center"><?php echo $class['Title']; ?>&nbsp;&nbsp;<span class="badge badge-orange h3" id="class-enrollment-badge"><i class='bx bxs-user'></i>&nbsp;<?php echo $class['count']; ?></span></h3>
+    <div class="split">
 
+      <div class="left-side">
+        <h1 class="custom-font blue-font"><?php echo $class['Dept'] ." ". $class['Number']; ?></h1>
+        <h3 class="custom-font"><?php echo $class['Title']; ?>&nbsp;&nbsp;
 
-    <!-- register / drop -->
-    <!-- see update-class-registration.php -->
-    <button type="button" name="button" class="btn btn-primary custom-font" id="update-register-btn" data-class-id="<?php echo $_GET['classID']; ?>"><?php printDropRegisterButton($isUserEnrolled); ?></button>
+        </h3>
+        <h3><span class="badge badge-orange h3" id="class-enrollment-badge"><i class='bx bxs-user'></i>&nbsp;<?php echo $class['count']; ?></span></h3>
+      </div>
 
-    <br><br>
+      <div class="right-side">
+        <!-- register / drop -->
+        <!-- see update-class-registration.php -->
+        <button type="button" name="button" class="btn btn-primary btn-lg custom-font" id="update-register-btn" data-class-id="<?php echo $_GET['classID']; ?>"><?php printDropRegisterButton($isUserEnrolled); ?></button>
+      </div>
+    </div>
 
     <h4 class="custom-font">Current roster</h4>
 

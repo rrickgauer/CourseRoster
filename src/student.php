@@ -26,18 +26,25 @@ $student = getStudentInfo($_GET['studentID'])->fetch(PDO::FETCH_ASSOC);
 
     <div id="home-summary">
 
-      <div class="top-line">
-        <div class="name"><?php echo $student['First'] . ' ' . $student['Last']; ?> </div>
-      </div>
+      <div class="left-side">
+        <div class="top-line">
+          <div class="name"><?php echo $student['First'] . ' ' . $student['Last']; ?> </div>
+          <div class="email">&nbsp;<?php echo $student['Email']; ?></div>
+        </div>
 
-      <div class="second-line">
-        <div class="d-inline home-count-stat"><span class="number"><?php echo $student['coursesCount'];   ?></span> courses</div>
-        <div class="d-inline home-count-stat" id="followers-count-stat"><span class="number"><?php echo $student['followersCount']; ?></span> followers</div>
-        <div class="d-inline home-count-stat"><span class="number"><?php echo $student['followingCount']; ?></span> following</div>
+        <div class="second-line">
+          <div class="home-count-stat"><span class="number"><?php echo $student['coursesCount'];   ?></span>&nbsp;courses</div>
+          <div class="home-count-stat" id="followers-count-stat"><span class="number"><?php echo $student['followersCount']; ?></span>&nbsp;followers</div>
+          <div class="home-count-stat"><span class="number"><?php echo $student['followingCount']; ?></span>&nbsp;following</div>
+        </div>
+
       </div>
 
       <!-- see update-following.php -->
-      <?php isUserProfile(); ?>
+      <div class="right-side">
+        <?php isUserProfile(); ?>
+      </div>
+
     </div>
 
     <div id="home-content">
@@ -290,7 +297,7 @@ function isUserProfile() {
 }
 
 function printFollowButton() {
-  echo '<button class="btn btn-primary custom-font" id="update-following-btn">';
+  echo '<button class="btn btn-primary btn-lg custom-font" id="update-following-btn">';
 
   if (isFollowing($_GET['studentID'], $_SESSION['userID'])) {
     echo 'Following';

@@ -22,7 +22,7 @@ $activities = getActivity();
 <body>
   <?php include('navbar.php'); ?>
   <div class="container">
-    <h1 class="custom-font text-center"><span class="blue-font">Course</span><span class="orange-font">&nbsp;roster</span></h1>
+    <h1 class="custom-font text-center"><span class="blue-font">Course</span><span class="orange-font">&nbsp;Roster</span></h1>
 
     <h6>Latest activity</h6>
 

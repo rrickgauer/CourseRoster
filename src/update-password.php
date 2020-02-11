@@ -32,7 +32,7 @@ if (isset($_POST['old-password']) && isset($_POST['new-password-1']) && isset($_
   <?php include('navbar.php'); ?>
   <div class="container">
 
-    <h1 class="custom-font text-center">Update password</h1>
+    <h1 class="custom-font text-center blue-font">Update password</h1>
 
     <form class="form form-compact form-password" method="post">
       <?php

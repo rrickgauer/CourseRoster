@@ -25,7 +25,7 @@ $student = getStudentInfo($_SESSION['userID'])->fetch(PDO::FETCH_ASSOC);
 
   <?php include('navbar.php'); ?>
   <div class="container">
-    <h1 class="custom-font text-center">Account settings</h1>
+    <h1 class="custom-font text-center blue-font">Account settings</h1>
 
     <?php
     if (isset($successfulUpdate)) {
