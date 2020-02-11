@@ -291,6 +291,12 @@ $student = getStudentInfo($_GET['studentID'])->fetch(PDO::FETCH_ASSOC);
 function isUserProfile() {
   if ($_GET['studentID'] == $_SESSION['userID']) {
     printAccountSettingsLink();
+    echo 
+      '<script>
+      $(document).ready(function() {
+        $("#nav-item-profile").addClass("active");
+      });
+      </script>';
   } else {
     printFollowButton();
   }

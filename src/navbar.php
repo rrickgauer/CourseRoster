@@ -15,6 +15,7 @@
           <div class="dropdown-menu" aria-labelledby="nav-item-more">
             <a class="dropdown-item" id="nav-item-profile" href="my-profile.php">My profile</a>
             <a class="dropdown-item" id="nav-item-settings" href="account-info.php">Settings</a>
+            <a class="dropdown-item" id="nav-item-about" href="about.php">About</a>
             <a class="dropdown-item" id="nav-item-logout" href="logout.php">Logout</a>
           </div>
         </li>
